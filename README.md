@@ -2,6 +2,7 @@
 
 Modern, responsive portfolio website showcasing experience, skills, and projects. Built with plain HTML, CSS, and a few lines of vanilla JavaScript. No build tools or frameworks required.
 
+<<<<<<< HEAD
 ### Features
 - **Responsive layout**: Scales from mobile to desktop with a clean grid system.
 - **Sticky navigation + mobile drawer**: Accessible keyboard focus and a toggleable drawer on small screens.
@@ -11,10 +12,13 @@ Modern, responsive portfolio website showcasing experience, skills, and projects
 - **Contact form (mailto)**: Opens the user’s email client with prefilled subject/body; no backend needed.
 - **Accessible defaults**: Focus outlines, sensible color contrast, semantic HTML.
 
+=======
+>>>>>>> 5fcc4346171e2e832e82fdead2981be5bfc12619
 ### Tech Stack
 - **HTML5** for structure
 - **CSS3** with custom properties (CSS variables) for theming and responsive layouts
 - **Vanilla JavaScript** for small UI interactions (mobile menu, contact mailto)
+<<<<<<< HEAD
 
 ### Project Structure
 ```
@@ -90,3 +94,5 @@ Modern, responsive portfolio website showcasing experience, skills, and projects
 This project is provided as‑is for portfolio purposes. If you plan to reuse or distribute it, add a LICENSE of your choice (e.g., MIT) to the repository.
 
 
+=======
+>>>>>>> 5fcc4346171e2e832e82fdead2981be5bfc12619

@@ -1,22 +1,55 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>[Rustam Timilsina] | Full Stack Portfolio</title>
-    <meta name="description" content="Portfolio of Rustam Timilsina, Full-Stack Developer skilled in Python, .NET, SQL, C/C++, HTML/CSS, Java, JavaScript, and React." />
+    <!-- Base meta -->
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Rustam Timilsina — Full-Stack Developer</title>
+    <meta name="description" content="Full-Stack Developer crafting reliable, user-focused apps with Python, .NET, React, SQL. Clean architecture, API-first backends, and accessible UI." />
+    <link rel="canonical" href="https://rustamtimalsina.com.np/">
+
+    <!-- Open Graph / Twitter -->
+    <meta property="og:title" content="Rustam Timilsina — Full-Stack Developer" />
+    <meta property="og:description" content="Clean architecture, API-first backends, and accessible UI." />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://rustamtimalsina.com.np/" />
+    <meta property="og:image" content="assets/preview.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+
+    <!-- Performance -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+
+    <!-- Styles -->
     <link rel="stylesheet" href="styles.css" />
+
+    <!-- JSON-LD (Organization/Person) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@type": "Person",
+      "name": "Rustam Timilsina",
+      "jobTitle": "Full-Stack Developer",
+      "url": "https://rustamtimalsina.com.np/",
+      "sameAs": [
+        "https://github.com/rustamtimalsina",
+        "https://www.linkedin.com/in/rustamtimalsina"
+      ]
+    }
+    </script>
   </head>
   <body>
-    <header>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <!-- Header -->
+    <header class="site-header" role="banner">
       <div class="container nav">
-        <div class="brand">
+        <a class="brand" href="#hero" aria-label="Home">
           <span class="brand-dot" aria-hidden="true"></span>
-          <span>Rustam Timilsina</span>
-        </div>
+          <span class="brand-text">Rustam Timilsina</span>
+        </a>
+
         <nav class="nav-links" aria-label="Primary">
           <a href="#about">About</a>
           <a href="#skills">Skills</a>
@@ -24,173 +57,218 @@
           <a href="#experience">Experience</a>
           <a href="#contact">Contact</a>
         </nav>
-        <button class="nav-toggle" aria-label="Toggle menu" onclick="document.querySelector('.drawer').classList.toggle('open')">
-          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true"><path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/></svg>
+
+        <button class="nav-toggle" aria-label="Toggle menu" aria-expanded="false">
+          <svg width="22" height="22" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M4 6H20M4 12H20M4 18H20" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>
+          </svg>
         </button>
       </div>
-      <div class="drawer" style="display:none"></div>
+
+      <!-- Mobile drawer -->
+      <div class="drawer" hidden>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#experience">Experience</a>
+        <a href="#contact">Contact</a>
+      </div>
     </header>
 
-    <main>
-      <section class="hero">
-        <div class="container hero-inner">
-          <div>
-            <span class="badge">Full-Stack Developer</span>
-            <h1>Building reliable, user‑focused web apps end‑to‑end</h1>
-            <p class="subtitle">I design and develop modern, scalable solutions across frontend and backend using Python, .NET, SQL, C/C++, HTML/CSS, Java, JavaScript, and React.</p>
+    <main id="main" tabindex="-1">
+      <!-- Hero -->
+      <section id="hero" class="hero section">
+        <div class="container hero-inner reveal">
+          <div class="hero-copy">
+            <span class="badge">
+              <svg width="14" height="14" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2l3 7h7l-5.5 4.2L18 21l-6-4-6 4 1.5-7.8L2 9h7l3-7z" fill="currentColor"/></svg>
+              Full-Stack Developer
+            </span>
+            <h1>Clean architecture. API-first backends. Accessible UI.</h1>
+            <p class="subtitle">
+              I build reliable, user-focused web apps end-to-end with Python, .NET, React, and SQL—shipped with performance and clarity.
+            </p>
             <div class="cta">
-              <a class="btn primary" href="#experience">View Experience</a>
+              <a class="btn primary" href="#projects">View Projects</a>
               <a class="btn" href="#skills">Explore Skills</a>
+              <a class="btn ghost" href="assets/Rustam_Timilsina_CV.pdf" target="_blank" rel="noopener">Download CV</a>
             </div>
+            <ul class="trusts">
+              <li>Clean Architecture</li>
+              <li>API Design</li>
+              <li>UI/UX</li>
+              <li>SQL-Driven</li>
+            </ul>
           </div>
           <div class="hero-card">
             <div class="hero-grid">
               <div class="stat">
-                <h3>Clean Architecture</h3>
-                <p>Maintainable codebases</p>
+                <h3>+20</h3><p>Endpoints designed</p>
               </div>
               <div class="stat">
-                <h3>API First</h3>
-                <p>Robust backend services</p>
+                <h3>~99.9%</h3><p>API uptime targets</p>
               </div>
               <div class="stat">
-                <h3>UI/UX</h3>
-                <p>Accessible, responsive UI</p>
+                <h3><span aria-hidden="true">⚡</span> Core</h3><p>React • .NET • Python</p>
               </div>
               <div class="stat">
-                <h3>Data‑Driven</h3>
-                <p>SQL‑powered insights</p>
+                <h3>Perf</h3><p>Lighthouse-first builds</p>
               </div>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="about">
+      <!-- About -->
+      <section id="about" class="section">
         <div class="container">
-          <div class="section-header">
-            <h2 class="section-title">About Me</h2>
-            <p class="section-subtitle">Brief background and focus</p>
-          </div>
-          <div class="about">
-            <div class="card">
+          <header class="section-header reveal">
+            <h2 class="section-title">About</h2>
+            <p class="section-subtitle">Builder of scalable backends & thoughtful UI.</p>
+          </header>
+
+          <div class="about-grid reveal">
+            <article class="card">
               <p>
-                I'm Rustam Timilsina, a full‑stack developer with hands‑on experience delivering web solutions that are fast, reliable, and user‑centric. I enjoy turning complex requirements into elegant, scalable systems and clean, accessible interfaces. I have contributed as a Tutor and as an Intern at Nobel, focusing on leadership, communication, and web design—experiences that strengthen my technical execution with collaborative and design‑thinking skills.
+                I'm Rustam Timilsina, a full-stack developer focused on shipping fast, reliable, and accessible apps. I turn complex requirements into elegant, scalable systems with clean separation of concerns.
               </p>
-            </div>
-            <div class="card">
+            </article>
+            <article class="card">
               <p>
-                I work across the stack—from crafting responsive React frontends to building API‑driven services in Python and .NET, backed by robust SQL data models. I value clear architecture, thoughtful DX, and measurable outcomes.
+                I work across the stack—from React frontends and TypeScript tooling to API-first services in .NET/Python with SQL. I care about developer experience, testing, and measurable outcomes.
               </p>
-            </div>
+            </article>
           </div>
         </div>
       </section>
 
-      <section id="skills">
+      <!-- Skills -->
+      <section id="skills" class="section">
         <div class="container">
-          <div class="section-header">
+          <header class="section-header reveal">
             <h2 class="section-title">Skills</h2>
-            <p class="section-subtitle">Core technologies and tools</p>
-          </div>
-          <div class="skills-grid">
-            <div class="skill">Python</div>
-            <div class="skill">.NET</div>
-            <div class="skill">SQL</div>
-            <div class="skill">C/C++</div>
-            <div class="skill">HTML/CSS</div>
-            <div class="skill">Java</div>
-            <div class="skill">JavaScript</div>
-            <div class="skill">React</div>
-          </div>
+            <p class="section-subtitle">Core technologies & tools</p>
+          </header>
+
+          <ul class="skills-grid reveal" role="list">
+            <li class="skill"><span class="ic ic-python" aria-hidden="true"></span>Python</li>
+            <li class="skill"><span class="ic ic-dotnet" aria-hidden="true"></span>.NET</li>
+            <li class="skill"><span class="ic ic-sql" aria-hidden="true"></span>SQL</li>
+            <li class="skill"><span class="ic ic-c" aria-hidden="true"></span>C/C++</li>
+            <li class="skill"><span class="ic ic-html" aria-hidden="true"></span>HTML/CSS</li>
+            <li class="skill"><span class="ic ic-java" aria-hidden="true"></span>Java</li>
+            <li class="skill"><span class="ic ic-js" aria-hidden="true"></span>JavaScript</li>
+            <li class="skill"><span class="ic ic-react" aria-hidden="true"></span>React</li>
+          </ul>
         </div>
       </section>
 
-      <section id="projects">
+      <!-- Projects -->
+      <section id="projects" class="section">
         <div class="container">
-          <div class="section-header">
+          <header class="section-header reveal">
             <h2 class="section-title">Projects</h2>
-            <p class="section-subtitle">Selected work and case studies</p>
-          </div>
+            <p class="section-subtitle">Selected work & case studies</p>
+          </header>
+
           <div class="projects-grid">
-            <article class="project-card card">
+            <!-- Project 1 -->
+            <article class="project-card card reveal">
               <div class="project-media">
-                <img src="assets/image.png" alt="Screenshot of Online Shopping project (ASP.NET Core Web API)" onerror="this.closest('.project-card').classList.add('no-image'); this.remove();" />
+                <img src="assets/image.png" alt="Online Shopping API – admin dashboard screenshot" loading="lazy" />
               </div>
               <div class="project-content">
                 <h3 class="project-title">Online Shopping — ASP.NET Core Web API</h3>
-                <p class="project-desc">A full‑stack e‑commerce backend built with ASP.NET Core and Web API, featuring product catalog, authentication, and order management endpoints. Designed with clean architecture and SQL persistence.</p>
+                <p class="project-desc">
+                  E-commerce backend with product catalog, auth, and order flows. Clean architecture, repository pattern, SQL persistence, and JWT.
+                </p>
+                <ul class="bullets">
+                  <li>Endpoints: products, auth, orders, payments</li>
+                  <li>Layers: Domain • Application • Infrastructure • API</li>
+                  <li>DB: SQL Server (EF Core), migrations, seeding</li>
+                </ul>
                 <div class="project-tags">
                   <span class="tag">ASP.NET Core</span>
                   <span class="tag">Web API</span>
+                  <span class="tag">EF Core</span>
                   <span class="tag">SQL</span>
                 </div>
                 <div class="project-actions">
-                  <a class="btn primary" href="https://github.com/rustamtimalsina/OnlineShopping" target="_blank" rel="noopener">View Repository</a>
+                  <a class="btn primary" href="https://github.com/rustamtimalsina/OnlineShopping" target="_blank" rel="noopener">Repository</a>
                 </div>
               </div>
             </article>
-            <article class="project-card card">
-                <div class="project-media">
-                  <img src="assets/image.png" alt="Screenshot of Online Shopping project (ASP.NET Core Web API)" onerror="this.closest('.project-card').classList.add('no-image'); this.remove();" />
+
+            <!-- Project 2 -->
+            <article class="project-card card reveal">
+              <div class="project-media">
+                <img src="assets/image2.png" alt="Snipeer Game – gameplay mock" loading="lazy" />
+              </div>
+              <div class="project-content">
+                <h3 class="project-title">Snipeer Game — ASP.NET / C#</h3>
+                <p class="project-desc">
+                  A small game backend prototype exploring RESTful routes, sessions, and persistence. Built to practice API patterns and deployment.
+                </p>
+                <div class="project-tags">
+                  <span class="tag">ASP.NET</span>
+                  <span class="tag">C#</span>
+                  <span class="tag">REST</span>
                 </div>
-                <div class="project-content">
-                  <h3 class="project-title">On Shopping — ASP.NET Core Web API</h3>
-                  <p class="project-desc">A full‑stack e‑commerce backend built with ASP.NET Core and Web API, featuring product catalog, authentication, and order management endpoints. Designed with clean architecture and SQL persistence.</p>
-                  <div class="project-tags">
-                    <span class="tag">ASP.NET Core</span>
-                    <span class="tag">Web API</span>
-                    <span class="tag">SQL</span>
-                  </div>
-                  <div class="project-actions">
-                    <a class="btn primary" href="https://github.com/rustamtimalsina/OnlineShopping" target="_blank" rel="noopener">View Repository</a>
-                  </div>
+                <div class="project-actions">
+                  <a class="btn" href="https://github.com/rustamtimalsina/Snipeergame.git" target="_blank" rel="noopener">Repository</a>
                 </div>
-              </article>
+              </div>
+            </article>
           </div>
         </div>
       </section>
 
-      <section id="experience">
+      <!-- Experience -->
+      <section id="experience" class="section">
         <div class="container">
-          <div class="section-header">
+          <header class="section-header reveal">
             <h2 class="section-title">Experience</h2>
-            <p class="section-subtitle">Highlights of roles and impact</p>
-          </div>
-          <div class="timeline">
-            <div class="timeline-item card">
+            <p class="section-subtitle">Highlights of roles & impact</p>
+          </header>
+
+          <ol class="timeline" aria-label="Work timeline">
+            <li class="timeline-item card reveal">
               <div class="dot" aria-hidden="true"></div>
               <div class="timeline-content">
                 <h4>Tutor</h4>
-                <p>Guided learners in foundational programming and problem‑solving, emphasizing clarity, code quality, and practical projects.</p>
+                <p>Guided learners in programming fundamentals and project-based problem solving. Emphasis on code clarity and testing.</p>
               </div>
-            </div>
-            <div class="timeline-item card">
+            </li>
+            <li class="timeline-item card reveal">
               <div class="dot" aria-hidden="true"></div>
               <div class="timeline-content">
                 <h4>Intern — Nobel</h4>
-                <p>Focused on leadership, communication, and web design. Collaborated on user‑friendly interfaces and web content, translating ideas into coherent, accessible designs.</p>
+                <p>Worked on leadership, communication, and web design. Contributed UI patterns and accessible layout systems.</p>
               </div>
-            </div>
-          </div>
+            </li>
+          </ol>
         </div>
       </section>
 
-      <section id="contact">
+      <!-- Contact -->
+      <section id="contact" class="section">
         <div class="container">
-          <div class="section-header">
-            <h2 class="section-title">Contact Me</h2>
-            <p class="section-subtitle">Have a question or want to collaborate? Send a message.</p>
-          </div>
+          <header class="section-header reveal">
+            <h2 class="section-title">Contact</h2>
+            <p class="section-subtitle">Have a question or want to collaborate?</p>
+          </header>
+
           <div class="contact-grid">
-            <div class="card contact-intro">
+            <div class="card contact-intro reveal">
               <h3 style="margin-top:0;margin-bottom:6px">Let’s build something impactful</h3>
-              <p style="margin:0;color:var(--muted)">I’m open to roles, freelance projects, and collaborations across full‑stack development, API design, and frontend engineering. Share your goals and timeline, and I’ll get back to you.</p>
+              <p class="muted">Open to roles, freelance projects, and collaborations across full-stack development, API design, and frontend engineering.</p>
               <div class="contact-quick">
                 <a class="btn" href="#contact-form">Jump to form</a>
+                <a class="btn ghost" href="mailto:" id="mailto-direct">Email directly</a>
               </div>
             </div>
-            <form id="contact-form" class="card contact-form" autocomplete="on">
+
+            <form id="contact-form" class="card contact-form reveal" autocomplete="on" data-mailto="">
               <div class="form-row">
                 <div class="form-field">
                   <label for="name">Name</label>
@@ -210,74 +288,73 @@
                 <textarea id="message" name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
               </div>
               <button class="btn primary" type="submit">Send Message</button>
-              <p class="form-hint">No backend required: this opens your email client with the message pre‑filled.</p>
+              <p class="form-hint">This opens your email client with the message pre-filled.</p>
             </form>
           </div>
         </div>
       </section>
     </main>
 
-    <footer>
+    <footer class="site-footer">
       <div class="container">
         <small>© <span id="year"></span> Rustam Timilsina. All rights reserved.</small>
       </div>
     </footer>
 
     <script>
-      const drawer = document.querySelector('.drawer');
-      if (drawer) {
-        drawer.style.display = 'block';
-        drawer.style.position = 'fixed';
-        drawer.style.top = '64px';
-        drawer.style.right = '16px';
-        drawer.style.left = '16px';
-        drawer.style.background = 'rgba(15,20,36,0.98)';
-        drawer.style.border = '1px solid rgba(255,255,255,0.08)';
-        drawer.style.borderRadius = '12px';
-        drawer.style.padding = '12px';
-        drawer.style.boxShadow = '0 18px 40px rgba(0,0,0,0.45)';
-        drawer.style.transform = 'translateY(-16px)';
-        drawer.style.opacity = '0';
-        drawer.style.pointerEvents = 'none';
-        drawer.innerHTML = '<a href="#about" style="display:block;padding:10px 12px;color:#e6eaf2">About</a><a href="#skills" style="display:block;padding:10px 12px;color:#e6eaf2">Skills</a><a href="#projects" style="display:block;padding:10px 12px;color:#e6eaf2">Projects</a><a href="#experience" style="display:block;padding:10px 12px;color:#e6eaf2">Experience</a><a href="#contact" style="display:block;padding:10px 12px;color:#e6eaf2">Contact</a>';
-      }
-      document.addEventListener('click', (e) => {
-        if (!drawer) return;
-        const toggle = e.target.closest('.nav-toggle');
-        const clickedInsideDrawer = e.target.closest('.drawer');
-        if (toggle) {
-          const isOpen = drawer.classList.toggle('open');
-          drawer.style.opacity = isOpen ? '1' : '0';
-          drawer.style.transform = isOpen ? 'translateY(0)' : 'translateY(-16px)';
-          drawer.style.pointerEvents = isOpen ? 'auto' : 'none';
-          return;
-        }
-        if (!clickedInsideDrawer && drawer.classList.contains('open')) {
-          drawer.classList.remove('open');
-          drawer.style.opacity = '0';
-          drawer.style.transform = 'translateY(-16px)';
-          drawer.style.pointerEvents = 'none';
-        }
-      });
-      const yearEl = document.getElementById('year');
-      if (yearEl) yearEl.textContent = new Date().getFullYear();
+      // Year
+      document.getElementById('year').textContent = new Date().getFullYear();
 
-      const contactForm = document.getElementById('contact-form');
-      if (contactForm) {
-        contactForm.addEventListener('submit', (event) => {
-          event.preventDefault();
-          const name = document.getElementById('name').value.trim();
-          const email = document.getElementById('email').value.trim();
-          const subject = document.getElementById('subject').value.trim();
-          const message = document.getElementById('message').value.trim();
-          const mailtoAddress = '';
-          const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0A${encodeURIComponent(message)}`;
-          const href = `mailto:${mailtoAddress}?subject=${encodeURIComponent(subject)}&body=${body}`;
-          window.location.href = href;
+      // Mobile drawer
+      const toggle = document.querySelector('.nav-toggle');
+      const drawer = document.querySelector('.drawer');
+      toggle.addEventListener('click', () => {
+        const open = drawer.hasAttribute('hidden');
+        drawer.toggleAttribute('hidden');
+        toggle.setAttribute('aria-expanded', String(open));
+      });
+      drawer.addEventListener('click', e => {
+        if (e.target.matches('a')) drawer.setAttribute('hidden','');
+      });
+
+      // Smooth scroll & active link highlight
+      const links = [...document.querySelectorAll('header a[href^="#"], .drawer a[href^="#"]')];
+      links.forEach(a => {
+        a.addEventListener('click', (e) => {
+          e.preventDefault();
+          const id = a.getAttribute('href');
+          const el = document.querySelector(id);
+          if (!el) return;
+          const y = el.getBoundingClientRect().top + window.scrollY - 72;
+          window.scrollTo({ top: y, behavior: 'smooth' });
         });
-      }
+      });
+
+      // Reveal on scroll
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach((en) => {
+          if (en.isIntersecting) en.target.classList.add('in');
+        });
+      }, { rootMargin: '0px 0px -10% 0px', threshold: 0.12 });
+      document.querySelectorAll('.reveal').forEach(el => io.observe(el));
+
+      // Contact: mailto builder
+      const form = document.getElementById('contact-form');
+      const directMail = document.getElementById('mailto-direct');
+      // TODO: put your email here:
+      const MAIL_TO = ''; // e.g. 'hello@rustamtimalsina.com.np'
+      form.dataset.mailto = MAIL_TO;
+      directMail.href = MAIL_TO ? `mailto:${MAIL_TO}` : 'mailto:';
+      form.addEventListener('submit', (event) => {
+        event.preventDefault();
+        const name = document.getElementById('name').value.trim();
+        const email = document.getElementById('email').value.trim();
+        const subject = document.getElementById('subject').value.trim();
+        const message = document.getElementById('message').value.trim();
+        const body = `Name: ${name}%0D%0AEmail: ${email}%0D%0A%0D%0A${encodeURIComponent(message)}`;
+        const href = `mailto:${MAIL_TO}?subject=${encodeURIComponent(subject)}&body=${body}`;
+        window.location.href = href;
+      });
     </script>
   </body>
 </html>
-
-
