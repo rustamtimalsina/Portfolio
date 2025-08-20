@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>How I Built My First Portfolio</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body {
+      font-family: 'Inter', sans-serif;
+      margin: 0;
+      padding: 0;
+      background: #f9fafb;
+      color: #333;
+      line-height: 1.7;
+    }
+
+    header {
+      background: linear-gradient(135deg, #111, #222);
+      padding: 2rem;
+      text-align: center;
+      color: #fff;
+    }
+
+    header h1 {
+      font-size: 2.4rem;
+      margin: 0.5rem 0;
+    }
+
+    header p {
+      font-size: 1.1rem;
+      color: #bbb;
+    }
+
+    .hero-image {
+      width: 100%;
+      max-height: 400px;
+      object-fit: cover;
+      border-bottom: 5px solid #00bcd4;
+    }
+
+    main {
+      max-width: 850px;
+      margin: 2rem auto;
+      padding: 0 1rem;
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
+    }
+
+    article {
+      padding: 2rem;
+    }
+
+    article h2 {
+      font-size: 1.8rem;
+      margin-top: 2rem;
+      color: #111;
+    }
+
+    article p {
+      margin: 1rem 0;
+      font-size: 1.05rem;
+      color: #444;
+    }
+
+    blockquote {
+      border-left: 4px solid #00bcd4;
+      padding-left: 1rem;
+      margin: 1.5rem 0;
+      font-style: italic;
+      color: #555;
+      background: #f1faff;
+      border-radius: 6px;
+    }
+
+    pre {
+      background: #1e1e1e;
+      color: #e5e5e5;
+      padding: 1rem;
+      border-radius: 8px;
+      overflow-x: auto;
+      margin: 1.5rem 0;
+      font-size: 0.95rem;
+    }
+
+    .highlight {
+      background: #e0f7fa;
+      padding: 1rem;
+      border-radius: 8px;
+      margin: 1.5rem 0;
+      font-weight: 500;
+    }
+
+    footer {
+      margin-top: 2rem;
+      text-align: center;
+      padding: 1rem;
+      color: #777;
+      font-size: 0.9rem;
+    }
+
+    a.back-link {
+      display: inline-block;
+      margin: 1rem 0;
+      text-decoration: none;
+      color: #00bcd4;
+      font-weight: 600;
+    }
+
+    a.back-link:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🚀 How I Built My First Portfolio</h1>
+    <p>From a blank editor to a live website on Vercel — my step-by-step journey.</p>
+  </header>
+
+  <img src="assets/blog1.png" alt="Portfolio Screenshot" class="hero-image">
+
+  <main>
+    <article>
+      <p>Building my first personal portfolio was both exciting and terrifying. I knew it had to represent *me* — not just as a developer, but as someone who’s learning, experimenting, and putting themselves out there on the web.</p>
+
+      <h2>💡 Starting from Scratch</h2>
+      <p>I didn’t use fancy templates or prebuilt themes. I opened up a blank editor (Cursor in my case) and started writing plain HTML and CSS. At first, it was messy. Things didn’t align, fonts looked boring, and I doubted myself. But slowly, I shaped it into something meaningful.</p>
+
+      <blockquote>
+        “The best way to learn web development is by actually building and deploying something — no matter how small.”
+      </blockquote>
+
+      <h2>⚙️ Tools I Used</h2>
+      <ul>
+        <li>HTML, CSS, and some JavaScript</li>
+        <li>Cursor IDE for coding</li>
+        <li>GitHub for version control</li>
+        <li>Vercel for deployment (super easy!)</li>
+      </ul>
+
+      <pre><code>&lt;header&gt;
+  &lt;h1&gt;Rustam Timalsina&lt;/h1&gt;
+  &lt;nav&gt;
+    &lt;a href="index.html"&gt;Home&lt;/a&gt;
+    &lt;a href="blog.html"&gt;Blog&lt;/a&gt;
+  &lt;/nav&gt;
+&lt;/header&gt;
+</code></pre>
+
+      <h2>🚀 Deployment Journey</h2>
+      <p>When I first hit “Deploy” on Vercel, I thought something would break. But in less than a minute, I had a live URL to share. That feeling of seeing <strong>rustamtimalsina.com.np</strong> online for the first time? Pure magic. It motivated me to keep building more.</p>
+
+      <div class="highlight">
+        🔑 Lesson Learned: Don’t wait for perfection. Publish your work early — you’ll improve it over time.
+      </div>
+
+      <h2>✨ What’s Next</h2>
+      <p>This portfolio isn’t the end. It’s the foundation. Next, I plan to add a proper blog (like this one!), a projects showcase with live demos, and maybe even an interactive resume. Step by step, I’ll make it more professional.</p>
+
+      <a href="blog.html" class="back-link">← Back to Blog</a>
+    </article>
+  </main>
+
+  <footer>
+    &copy; 2025 Rustam Timalsina — All rights reserved.
+  </footer>
+</body>
+</html>

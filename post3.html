@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Lessons From Building My First Game Backend</title>
+  <link rel="stylesheet" href="styles.css" />
+  <style>
+    body { font-family:'Inter',sans-serif; background:#f9fafb; margin:0; padding:0; }
+    header { background:linear-gradient(135deg,#2d3436,#636e72); color:#fff; padding:2rem; text-align:center; }
+    header h1 { font-size:2.2rem; margin:0.5rem 0; }
+    header p { color:#bbb; font-size:1.1rem; }
+    .hero-image { width:100%; max-height:400px; object-fit:cover; border-bottom:5px solid #6c5ce7; }
+    main { max-width:850px; margin:2rem auto; padding:0 1rem; background:#fff; border-radius:12px; box-shadow:0 4px 14px rgba(0,0,0,0.08); }
+    article { padding:2rem; line-height:1.7; color:#333; }
+    h2 { margin-top:2rem; font-size:1.6rem; color:#111; }
+    p { margin:1rem 0; }
+    blockquote { border-left:4px solid #6c5ce7; padding-left:1rem; font-style:italic; background:#f5f0ff; margin:1.5rem 0; border-radius:6px; }
+    .highlight { background:#ecebff; padding:1rem; border-radius:8px; margin:1.5rem 0; font-weight:500; }
+    footer { margin-top:2rem; text-align:center; padding:1rem; color:#777; font-size:0.9rem; }
+    a.back-link { display:inline-block; margin-top:1rem; text-decoration:none; color:#6c5ce7; font-weight:600; }
+  </style>
+</head>
+<body>
+  <header>
+    <h1>🎮 Lessons From Building My First Game Backend</h1>
+    <p>What I discovered while connecting APIs, sessions, and databases together.</p>
+  </header>
+
+  <img src="assets/OIP.webp" alt="Game Backend" class="hero-image">
+
+  <main>
+    <article>
+      <p>When I built a simple “Sniper Game” backend, I wasn’t just learning C# — I was learning how real-world applications communicate. Even though it was a small project, the lessons I got from handling APIs, sessions, and persistence were huge.</p>
+
+      <h2>🌍 Understanding APIs</h2>
+      <p>I realized that APIs are like bridges. My frontend needed information, my backend stored it — and APIs made that exchange possible. Learning to design RESTful routes gave me a glimpse of how games like PUBG or Fortnite actually handle data.</p>
+
+      <blockquote>
+        “APIs aren’t just code — they’re contracts between systems.”
+      </blockquote>
+
+      <h2>🗄️ Sessions & Persistence</h2>
+      <p>At first, sessions confused me. But when I understood how they help keep players “logged in” and remembered, it clicked. Persistence made it possible to store scores, profiles, and history — which is exactly what makes games engaging.</p>
+
+      <div class="highlight">
+        🎯 Key Takeaway: Even small projects teach you big concepts — don’t underestimate your practice apps.
+      </div>
+
+      <h2>📈 Future Plans</h2>
+      <p>Next, I want to integrate a proper database and maybe even leaderboard features. Every small step adds up, and this project taught me that I *can* break down complex systems into manageable pieces.</p>
+
+      <a href="blog.html" class="back-link">← Back to Blog</a>
+    </article>
+  </main>
+
+  <footer>
+    &copy; 2025 Rustam Timalsina — All rights reserved.
+  </footer>
+</body>
+</html>
