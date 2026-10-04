@@ -455,6 +455,28 @@ body {
   text-decoration: none;
   transition: gap 0.2s ease, color 0.2s ease;
 }
+/* Live Demo Pill Button */
+.card-btn.live {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 10px;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.35);
+  border-radius: 6px;
+  color: var(--cyan);
+  font-size: 0.82rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.2s ease;
+}
+
+.card-btn.live:hover {
+  background: var(--cyan);
+  color: #050608;
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.4);
+  transform: translateY(-1px);
+}
 
 .card-btn:hover {
   color: #fff;
