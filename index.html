@@ -19,6 +19,8 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- Top Scroll Progress Bar -->
+  <div id="scroll-progress"></div>
   <!-- 3D Background Canvas -->
   <canvas id="canvas3d"></canvas>
 
@@ -58,10 +60,15 @@
         </p>
         <div class="hero-actions">
           <a href="#projects" class="btn btn-primary">Explore Featured Projects</a>
+          <button class="btn btn-secondary copy-email-btn" onclick="copyEmail()">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg>
+            <span id="copy-text">Copy Email</span>
+          </button>
           <a href="https://github.com/rustamtimalsina" target="_blank" rel="noopener" class="btn btn-secondary">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
-            GitHub Profile
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0024 12c0-6.63-5.37-12-12-12z"/></svg>
+            GitHub
           </a>
+        </div>
           <a href="assets/Rustam_Timilsina_CV.pdf" target="_blank" rel="noopener" class="btn btn-ghost">Download CV</a>
         </div>
       </div>
@@ -95,7 +102,8 @@
                 <span class="pill">Local AI</span>
               </div>
               <div class="card-links">
-                <a href="https://github.com/rustamtimalsina/Uriel" target="_blank" rel="noopener" class="card-btn primary">Explore Architecture →</a>
+                <button class="card-btn primary" onclick="openArchModal('uriel')">Inspect Architecture ⚡</button>
+                <a href="https://github.com/rustamtimalsina/Uriel" target="_blank" rel="noopener" class="card-btn secondary">GitHub →</a>
               </div>
             </div>
           </article>
@@ -118,7 +126,8 @@
                 <span class="pill">REST API</span>
               </div>
               <div class="card-links">
-                <a href="https://github.com/rustamtimalsina/NestHub" target="_blank" rel="noopener" class="card-btn primary">Explore Codebase →</a>
+                <button class="card-btn primary" onclick="openArchModal('nesthub')">Inspect Architecture ⚡</button>
+                <a href="https://github.com/rustamtimalsina/NestHub" target="_blank" rel="noopener" class="card-btn secondary">GitHub →</a>
               </div>
             </div>
           </article>
@@ -141,7 +150,8 @@
                 <span class="pill">MVC</span>
               </div>
               <div class="card-links">
-                <a href="https://github.com/rustamtimalsina/ClientHub" target="_blank" rel="noopener" class="card-btn primary">Explore Codebase →</a>
+                <button class="card-btn primary" onclick="openArchModal('clienthub')">Inspect Architecture ⚡</button>
+                <a href="https://github.com/rustamtimalsina/ClientHub" target="_blank" rel="noopener" class="card-btn secondary">GitHub →</a>
               </div>
             </div>
           </article>
@@ -163,9 +173,11 @@
                 <span class="pill">Pandas</span>
                 <span class="pill">Streamlit / API</span>
               </div>
-              <div class="card-links">
-                <a href="https://github.com/rustamtimalsina/End-to-End-Movie-Recommendation-System" target="_blank" rel="noopener" class="card-btn primary">Explore Codebase →</a>
-              </div>
+             <!-- 4. End-to-End Recommendation Engine -->
+<div class="card-links">
+  <button class="card-btn primary" onclick="openArchModal('recommendation')">Inspect Architecture ⚡</button>
+  <a href="https://github.com/rustamtimalsina/End-to-End-Movie-Recommendation-System" target="_blank" rel="noopener" class="card-btn secondary">GitHub →</a>
+</div>
             </div>
           </article>
 
@@ -186,9 +198,11 @@
                 <span class="pill">Relational DB</span>
                 <span class="pill">State Management</span>
               </div>
-              <div class="card-links">
-                <a href="https://github.com/rustamtimalsina/Syntecxhub_Task_Manager" target="_blank" rel="noopener" class="card-btn primary">Explore Codebase →</a>
-              </div>
+              <!-- 5. Syntecxhub Task Manager -->
+<div class="card-links">
+  <button class="card-btn primary" onclick="openArchModal('taskmanager')">Inspect Architecture ⚡</button>
+  <a href="https://github.com/rustamtimalsina/Syntecxhub_Task_Manager" target="_blank" rel="noopener" class="card-btn secondary">GitHub →</a>
+</div>
             </div>
           </article>
 
@@ -209,9 +223,11 @@
                 <span class="pill">Responsive CSS</span>
                 <span class="pill">UX Design</span>
               </div>
-              <div class="card-links">
-                <a href="https://github.com/rustamtimalsina/restaurant-demo" target="_blank" rel="noopener" class="card-btn primary">Explore Codebase →</a>
-              </div>
+              <<!-- 6. Restaurant Experience Demo -->
+<div class="card-links">
+  <button class="card-btn primary" onclick="openArchModal('restaurant')">Inspect Architecture ⚡</button>
+  <a href="https://github.com/rustamtimalsina/restaurant-demo" target="_blank" rel="noopener" class="card-btn secondary">GitHub →</a>
+</div>
             </div>
           </article>
         </div>
@@ -472,6 +488,234 @@
         card.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) translateY(0)';
       });
     });
+    // -------------------------------------------------------------
+    // SCROLL PROGRESS BAR
+    // -------------------------------------------------------------
+    window.addEventListener('scroll', () => {
+      const winScroll = document.documentElement.scrollTop;
+      const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+      const scrolled = (winScroll / height) * 100;
+      document.getElementById('scroll-progress').style.width = scrolled + '%';
+    });
+
+    // -------------------------------------------------------------
+    // CLICK TO COPY EMAIL
+    // -------------------------------------------------------------
+    function copyEmail() {
+      const email = 'rustamtimalsina7@gmail.com';
+      navigator.clipboard.writeText(email).then(() => {
+        const textSpan = document.getElementById('copy-text');
+        textSpan.textContent = 'Copied to Clipboard! ✓';
+        setTimeout(() => {
+          textSpan.textContent = 'Copy Email';
+        }, 2500);
+      });
+    }
+
+    // -------------------------------------------------------------
+    // ARCHITECTURE MODAL ENGINE
+    // -------------------------------------------------------------
+  const blueprints = {
+      uriel: {
+        title: "Uriel — Contextual Retrieval Engine",
+        eyebrow: "SYSTEM ARCHITECTURE • LOCAL RAG PIPELINE",
+        flow: `[Source Documents]
+       │
+       ▼ (Sliding Window Chunker)
+[Vector Embedding Engine]
+       │
+       ▼
+[ChromaDB Vector Store] <─── [User Query Semantic Search]
+       │
+       ▼ (Top-K Re-ranking)
+[Local LLM Generation] ─────> [Deterministic Grounded Response]`,
+        specs: [
+          { label: "Privacy Boundary", val: "Zero cloud telemetry. Executes 100% locally on client/host." },
+          { label: "Vector Search", val: "Dense similarity search using cosine distance metrics." },
+          { label: "Chunk Strategy", val: "Sliding window overlap preserving contextual boundaries." },
+          { label: "Latency", val: "Sub-200ms semantic retrieval across indexed corpus." }
+        ],
+        details: [
+          "Eliminates hallucination by enforcing strict context boundaries inside prompt injection.",
+          "Engineered as a local capstone solution preventing confidential document leakage."
+        ]
+      },
+
+      nesthub: {
+        title: "NestHub — Real Estate Platform Architecture",
+        eyebrow: "SYSTEM ARCHITECTURE • FULL-STACK RESIDENTIAL PLATFORM",
+        flow: `[React UI Client]
+       │
+       ▼ (JWT Bearer Token)
+[Node / Express API Gateway]
+       │
+       ├──> [Role Guard & Session Middleware]
+       │
+       ▼ (Transactional Service Layer)
+[PostgreSQL Relational DB] ───> [Compound Search Index]`,
+        specs: [
+          { label: "Data Integrity", val: "ACID-compliant relational schema with foreign key cascades." },
+          { label: "Auth Pattern", val: "Stateless JWT access tokens with secure refresh token rotation." },
+          { label: "Access Control", val: "Role-based tiers: Administrator, Property Agent, Tenant." },
+          { label: "Query Speed", val: "Sub-100ms multi-parameter indexing on price, location, and status." }
+        ],
+        details: [
+          "End-to-end property lifecycle management with reservation locks and tenant inquiries.",
+          "Optimized relational schema minimizing N+1 queries during multi-attribute property filtering."
+        ]
+      },
+
+      clienthub: {
+        title: "ClientHub — Milestone & Delivery Engine",
+        eyebrow: "SYSTEM ARCHITECTURE • WORKFLOW ORCHESTRATION",
+        flow: `[Client & PM Web Portal]
+       │
+       ▼ (Session & CSRF Token)
+[Laravel MVC Router]
+       │
+       ├──> [Role Middleware Gateways]
+       ├──> [Milestone Finite State Machine]
+       │
+       ▼ (Transactional DB Operations)
+[MySQL Store] <─── [Immutable Timestamped Audit Trail]`,
+        specs: [
+          { label: "Workflow Engine", val: "Finite-state machine for draft, submitted, approved, and paid milestones." },
+          { label: "Audit Trail", val: "Immutable timestamped logs for approvals, comments, and delivery updates." },
+          { label: "Database", val: "Normalized MySQL with indexed foreign keys across deliverables." },
+          { label: "Security", val: "Strict CSRF protection, hashed credentials, and parameterized query execution." }
+        ],
+        details: [
+          "Built to bridge agency freelancers and enterprise clients with transparent progress validation.",
+          "Decoupled controllers ensure milestone approvals trigger transactional status changes reliably."
+        ]
+      },
+
+      recommendation: {
+        title: "Recommendation System — Machine Learning Pipeline",
+        eyebrow: "SYSTEM ARCHITECTURE • PREDICTIVE FILTERING",
+        flow: `[Raw Interaction Matrix]
+       │
+       ▼ (ETL & Sparse Matrix Construction)
+[Cosine Similarity Vector Engine]
+       │
+       ▼
+[Candidate Generator (Top-K Items)]
+       │
+       ▼ (Inference API Serving)
+[Real-Time Scored Recommendations]`,
+        specs: [
+          { label: "Model Architecture", val: "Hybrid collaborative filtering and content similarity vectors." },
+          { label: "Inference Engine", val: "Optimized vectorized matrix multiplication using NumPy and Scikit-Learn." },
+          { label: "Data Pipeline", val: "Automated ETL processing missing attributes, deduplication, and normalization." },
+          { label: "Response Window", val: "Sub-50ms inference generation for top-K item retrieval." }
+        ],
+        details: [
+          "Handles cold-start items gracefully via metadata fallback and feature clustering.",
+          "Designed as an end-to-end pipeline covering ingestion, feature extraction, and lightweight API serving."
+        ]
+      },
+
+      taskmanager: {
+        title: "Syntecxhub Task Manager — Priority Engine",
+        eyebrow: "SYSTEM ARCHITECTURE • SPRINT & TASK SCHEDULING",
+        flow: `[Frontend Task Dashboard]
+       │
+       ▼ (Async JSON Requests)
+[RESTful API Gateway]
+       │
+       ├──> [Task State Transition Machine]
+       ├──> [Priority & Deadline Filter Pipeline]
+       │
+       ▼ (Persistence Layer)
+[Relational DB Schema]`,
+        specs: [
+          { label: "State Transitions", val: "Deterministic states: Backlog → In Progress → Review → Done." },
+          { label: "Data Filtering", val: "Composite query filters by deadline proximity, assignee, and priority tier." },
+          { label: "API Design", val: "RESTful JSON endpoints with standardized HTTP status codes." },
+          { label: "Reliability", val: "Payload validation preventing corrupted timestamps or orphaned tasks." }
+        ],
+        details: [
+          "Engineered for high developer ergonomics and rapid board updates under active sprints.",
+          "Modular API design cleanly separates task persistence from notification and user grouping logic."
+        ]
+      },
+
+      restaurant: {
+        title: "Restaurant Demo — Performant Frontend Architecture",
+        eyebrow: "SYSTEM ARCHITECTURE • ACCESSIBLE UI & CLIENT ENGINE",
+        flow: `[Client Viewport]
+       │
+       ├──> [Accessible Semantic DOM Hierarchy]
+       ├──> [In-Memory Menu Indexer & Filter Cache]
+       │
+       ▼
+[Booking Validation Engine & Real-Time Feedback]`,
+        specs: [
+          { label: "Rendering Target", val: "Strict 60 FPS scrolling and instantaneous category filtering." },
+          { label: "Accessibility", val: "Semantic HTML5 landmarks with full keyboard navigation and ARIA tags." },
+          { label: "Performance", val: "Zero-dependency vanilla JavaScript for maximum Lighthouse scores." },
+          { label: "Responsive Matrix", val: "Fluid CSS clamp sizing matching desktop, tablet, and mobile screens." }
+        ],
+        details: [
+          "Showcases core frontend engineering: zero bloat, clean CSS architecture, and high perceived speed.",
+          "Includes real-time reservation validation with instant visual state feedback."
+        ]
+      }
+    };
+  
+    function openArchModal(id) {
+      const data = blueprints[id];
+      if (!data) return;
+
+      document.getElementById('modal-title').textContent = data.title;
+      document.getElementById('modal-eyebrow').textContent = data.eyebrow;
+
+      let specHtml = data.specs.map(s => `
+        <div class="arch-spec-item">
+          <strong>${s.label}</strong>
+          <p>${s.val}</p>
+        </div>
+      `).join('');
+
+      let detailHtml = data.details.map(d => `<li>${d}</li>`).join('');
+
+      document.getElementById('modal-body').innerHTML = `
+        <div class="arch-flow-diagram">${data.flow}</div>
+        <div class="arch-spec-grid">${specHtml}</div>
+        <ul class="arch-list">${detailHtml}</ul>
+      `;
+
+      document.getElementById('arch-modal').classList.add('active');
+    }
+
+    function closeArchModal(e) {
+      if (e.target.id === 'arch-modal') {
+        document.getElementById('arch-modal').classList.remove('active');
+      }
+    }
+
+    function forceCloseModal() {
+      document.getElementById('arch-modal').classList.remove('active');
+    }
+
+    document.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape') forceCloseModal();
+    });
   </script>
+  <!-- System Architecture Drawer / Modal -->
+  <div id="arch-modal" class="modal-backdrop" onclick="closeArchModal(event)">
+    <div class="modal-window">
+      <div class="modal-header">
+        <div>
+          <span id="modal-eyebrow" class="eyebrow">SYSTEM BLUEPRINT</span>
+          <h3 id="modal-title" class="modal-h3">Architecture Deep-Dive</h3>
+        </div>
+        <button class="modal-close" onclick="forceCloseModal()">✕</button>
+      </div>
+      <div id="modal-body" class="modal-body-content">
+        <!-- Injected dynamically via JS -->
+      </div>
+    </div>
+  </div>
 </body>
 </html>
