@@ -350,8 +350,8 @@
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
 
-    // -------------------------------------------------------------
-    // THREE.JS: 3D WIREFRAME CORE + KINETIC DUST FIELD
+   // -------------------------------------------------------------
+    // THREE.JS: RESPONSIVE 3D WIREFRAME CORE
     // -------------------------------------------------------------
     const canvas = document.getElementById('canvas3d');
     const scene = new THREE.Scene();
@@ -362,31 +362,43 @@
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    // 1. Centerpiece: 3D Floating Cyber Wireframe Core
-    const coreGeometry = new THREE.IcosahedronGeometry(110, 2);
+    // Core mesh
+    const coreGeometry = new THREE.IcosahedronGeometry(105, 2);
     const wireframeGeometry = new THREE.WireframeGeometry(coreGeometry);
     const lineMaterial = new THREE.LineBasicMaterial({
       color: 0x38bdf8,
       transparent: true,
-      opacity: 0.25
+      opacity: 0.22
     });
     const coreMesh = new THREE.LineSegments(wireframeGeometry, lineMaterial);
-    coreMesh.position.set(180, 0, -40); // Offset to the right side of the hero
     scene.add(coreMesh);
 
-    // Inner glowing core
-    const innerGeometry = new THREE.IcosahedronGeometry(70, 1);
+    // Inner core
+    const innerGeometry = new THREE.IcosahedronGeometry(65, 1);
     const innerMaterial = new THREE.MeshBasicMaterial({
       color: 0x818cf8,
       wireframe: true,
       transparent: true,
-      opacity: 0.35
+      opacity: 0.28
     });
     const innerCore = new THREE.Mesh(innerGeometry, innerMaterial);
     coreMesh.add(innerCore);
 
-    // 2. Star Particle Mesh
-    const particleCount = 600;
+    // Adjust position & scale for mobile vs desktop
+    function updateLayoutForDevice() {
+      const isMobile = window.innerWidth < 860;
+      if (isMobile) {
+        coreMesh.scale.set(0.65, 0.65, 0.65); // Scale down on mobile
+        coreMesh.position.set(0, 110, -80);    // Push higher up in the Hero
+      } else {
+        coreMesh.scale.set(1, 1, 1);
+        coreMesh.position.set(180, 0, -40);   // Right-side hero offset on desktop
+      }
+    }
+    updateLayoutForDevice();
+
+    // 2. Star Particle Mesh (subtle background dust)
+    const particleCount = 500;
     const starGeometry = new THREE.BufferGeometry();
     const positions = new Float32Array(particleCount * 3);
     const colors = new Float32Array(particleCount * 3);
@@ -409,41 +421,34 @@
     starGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
 
     const starMaterial = new THREE.PointsMaterial({
-      size: 2.5,
+      size: 2.2,
       vertexColors: true,
       transparent: true,
-      opacity: 0.7,
+      opacity: 0.65,
       blending: THREE.AdditiveBlending
     });
 
     const starField = new THREE.Points(starGeometry, starMaterial);
     scene.add(starField);
 
-    // Mouse Tracking with Inertia
-    let mouseX = 0;
-    let mouseY = 0;
-    let targetX = 0;
-    let targetY = 0;
-
-    window.addEventListener('mousemove', (e) => {
-      mouseX = (e.clientX - window.innerWidth / 2) * 0.3;
-      mouseY = (e.clientY - window.innerHeight / 2) * 0.3;
+    // Fade out 3D core when scrolling past Hero section
+    let scrollFade = 1;
+    window.addEventListener('scroll', () => {
+      const scrollY = window.scrollY;
+      const heroThreshold = window.innerHeight * 0.75;
+      
+      // Fades from 1 (top of hero) to 0 (projects section)
+      scrollFade = Math.max(0, 1 - (scrollY / heroThreshold));
+      lineMaterial.opacity = 0.22 * scrollFade;
+      innerMaterial.opacity = 0.28 * scrollFade;
     });
 
     window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
-      if (window.innerWidth < 860) {
-        coreMesh.position.set(0, 80, -100); // Center on mobile
-      } else {
-        coreMesh.position.set(180, 0, -40);
-      }
+      updateLayoutForDevice();
     });
-
-    if (window.innerWidth < 860) {
-      coreMesh.position.set(0, 80, -100);
-    }
 
     function animate() {
       requestAnimationFrame(animate);

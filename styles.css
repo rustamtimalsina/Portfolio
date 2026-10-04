@@ -632,12 +632,74 @@ body {
 }
 
 /* Mobile Responsiveness */
+/* Mobile Optimized Navbar & Layout */
 @media (max-width: 860px) {
-  .navbar { width: calc(100% - 32px); top: 12px; }
-  .nav-links { display: none; }
-  .exp-card { grid-template-columns: 1fr; gap: 16px; }
-  .contact-box { padding: 48px 20px; }
-  .projects-grid { grid-template-columns: 1fr; }
+  .navbar {
+    top: 10px;
+    width: calc(100% - 24px);
+    padding: 6px 14px;
+    border-radius: 14px; /* cleaner, less bulky pill on phones */
+    background: rgba(10, 14, 23, 0.85);
+  }
+
+  .nav-content {
+    height: 40px; /* Slimmer height */
+  }
+
+  .brand-monogram {
+    width: 28px;
+    height: 28px;
+    font-size: 0.72rem;
+  }
+
+  .brand-name {
+    font-size: 0.88rem;
+  }
+
+  /* Show quick action buttons instead of hiding everything */
+  .nav-links {
+    display: flex;
+    gap: 8px;
+  }
+
+  /* Hide the text links on mobile, but keep the prominent CTA */
+  .nav-links a:not(.btn-nav) {
+    display: none;
+  }
+
+  .nav-links .btn-nav {
+    padding: 5px 12px;
+    font-size: 0.78rem;
+  }
+
+  /* Section padding tweaks for mobile */
+  .section {
+    padding: 70px 0;
+  }
+
+  .hero-section {
+    padding-top: 100px;
+    min-height: 85vh;
+  }
+
+  .exp-card {
+    grid-template-columns: 1fr;
+    gap: 14px;
+    padding: 22px;
+  }
+
+  .contact-box {
+    padding: 40px 18px;
+  }
+
+  .projects-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .project-card {
+    padding: 24px 20px;
+  }
 }
 /* --- Scroll Progress Bar --- */
 #scroll-progress {
