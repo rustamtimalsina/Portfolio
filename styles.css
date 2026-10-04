@@ -631,13 +631,61 @@ body {
   color: var(--cyan);
 }
 
-/* Mobile Responsiveness */
+/* Mobile: Show all desktop nav links cleanly */
 @media (max-width: 860px) {
-  .navbar { width: calc(100% - 32px); top: 12px; }
-  .nav-links { display: none; }
-  .exp-card { grid-template-columns: 1fr; gap: 16px; }
-  .contact-box { padding: 48px 20px; }
-  .projects-grid { grid-template-columns: 1fr; }
+  .navbar {
+    top: 10px;
+    width: calc(100% - 16px);
+    max-width: 100%;
+    padding: 6px 10px;
+    border-radius: 12px;
+  }
+
+  .nav-content {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+  }
+
+  /* Keep the compact RT monogram, hide the full name text to free up horizontal space */
+  .brand-monogram {
+    width: 26px;
+    height: 26px;
+    font-size: 0.7rem;
+    flex-shrink: 0;
+  }
+
+  .brand-name {
+    display: none;
+  }
+
+  /* Force nav-links to display on mobile instead of hiding */
+  .nav-links {
+    display: flex !important;
+    align-items: center;
+    gap: 4px;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* Size all nav buttons/links down so they fit side-by-side */
+  .nav-links a {
+    display: inline-flex !important;
+    align-items: center;
+    font-size: 0.68rem;
+    padding: 4px 6px;
+    white-space: nowrap;
+    letter-spacing: -0.01em;
+  }
+
+  /* CTA button styling on mobile */
+  .nav-links .btn-nav {
+    padding: 4px 8px;
+    font-size: 0.68rem;
+    margin-left: 2px;
+  }
 }
 /* --- Scroll Progress Bar --- */
 #scroll-progress {
