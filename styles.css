@@ -686,7 +686,33 @@ body {
     font-size: 0.68rem;
     margin-left: 2px;
   }
+
+  /* --- Fix Crushed Experience & Timeline Cards on Mobile --- */
+  .exp-card,
+  .experience-card,
+  .timeline-item {
+    display: flex !important;
+    flex-direction: column !important;
+    grid-template-columns: 1fr !important;
+    gap: 14px !important;
+    padding: 24px 20px !important;
+  }
+
+  .exp-card > *,
+  .experience-card > * {
+    width: 100% !important;
+    max-width: 100% !important;
+  }
+
+  .exp-card p,
+  .experience-card p,
+  .exp-card div,
+  .experience-card div {
+    white-space: normal !important;
+    word-break: normal !important;
+  }
 }
+
 /* --- Scroll Progress Bar --- */
 #scroll-progress {
   position: fixed;
