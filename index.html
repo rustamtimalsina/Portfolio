@@ -704,6 +704,130 @@
     document.addEventListener('keydown', (e) => {
       if (e.key === 'Escape') forceCloseModal();
     });
+    // -------------------------------------------------------------
+    // COMMAND PALETTE (Ctrl/Cmd + K)
+    // -------------------------------------------------------------
+    const cmdBackdrop = document.getElementById('cmd-palette-backdrop');
+    const cmdInput = document.getElementById('cmd-input');
+    const cmdResults = document.getElementById('cmd-results');
+    let selectedIndex = 0;
+
+    const cmdActions = [
+      { id: 'uriel-arch', title: 'Blueprint: Uriel RAG Engine', tag: 'Architecture', action: () => openArchModal('uriel') },
+      { id: 'nesthub-arch', title: 'Blueprint: NestHub Platform', tag: 'Architecture', action: () => openArchModal('nesthub') },
+      { id: 'clienthub-arch', title: 'Blueprint: ClientHub State Machine', tag: 'Architecture', action: () => openArchModal('clienthub') },
+      { id: 'rec-arch', title: 'Blueprint: ML Recommendation Engine', tag: 'Architecture', action: () => openArchModal('recommendation') },
+      { id: 'task-arch', title: 'Blueprint: Syntecxhub Task Engine', tag: 'Architecture', action: () => openArchModal('taskmanager') },
+      { id: 'rest-arch', title: 'Blueprint: Restaurant Client Engine', tag: 'Architecture', action: () => openArchModal('restaurant') },
+      { id: 'nav-systems', title: 'Navigate: Selected Projects', tag: 'Jump', action: () => document.getElementById('systems')?.scrollIntoView({ behavior: 'smooth' }) },
+      { id: 'nav-exp', title: 'Navigate: Experience & Timeline', tag: 'Jump', action: () => document.getElementById('experience')?.scrollIntoView({ behavior: 'smooth' }) },
+      { id: 'nav-skills', title: 'Navigate: Technical Matrix', tag: 'Jump', action: () => document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' }) },
+      { id: 'nav-contact', title: 'Navigate: Connect / Email', tag: 'Jump', action: () => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }) },
+      { id: 'copy-email', title: 'Action: Copy Direct Email', tag: 'Quick Action', action: () => copyEmail() },
+      { id: 'github-prof', title: 'External: GitHub Profile', tag: 'Link', action: () => window.open('https://github.com/rustamtimalsina', '_blank') }
+    ];
+
+    let filteredCmds = [...cmdActions];
+
+    function renderCmds() {
+      cmdResults.innerHTML = '';
+      if (filteredCmds.length === 0) {
+        cmdResults.innerHTML = `<div style="padding: 16px; text-align: center; color: var(--text-dim); font-size: 0.85rem;">No matching commands found.</div>`;
+        return;
+      }
+
+      filteredCmds.forEach((item, index) => {
+        const el = document.createElement('div');
+        el.className = `cmd-item ${index === selectedIndex ? 'selected' : ''}`;
+        el.innerHTML = `
+          <div class="cmd-item-left">
+            <span class="cmd-item-title">${item.title}</span>
+          </div>
+          <span class="cmd-item-badge">${item.tag}</span>
+        `;
+        el.addEventListener('mouseenter', () => {
+          selectedIndex = index;
+          updateSelectionHighlight();
+        });
+        el.addEventListener('click', () => {
+          executeCommand(item);
+        });
+        cmdResults.appendChild(el);
+      });
+    }
+
+    function updateSelectionHighlight() {
+      const items = cmdResults.querySelectorAll('.cmd-item');
+      items.forEach((item, idx) => {
+        item.classList.toggle('selected', idx === selectedIndex);
+        if (idx === selectedIndex) {
+          item.scrollIntoView({ block: 'nearest' });
+        }
+      });
+    }
+
+    function executeCommand(cmd) {
+      closeCmdPalette();
+      cmd.action();
+    }
+
+    function openCmdPalette() {
+      cmdBackdrop.classList.add('active');
+      cmdInput.value = '';
+      filteredCmds = [...cmdActions];
+      selectedIndex = 0;
+      renderCmds();
+      setTimeout(() => cmdInput.focus(), 50);
+    }
+
+    function closeCmdPalette() {
+      cmdBackdrop.classList.remove('active');
+    }
+
+    function handleCmdBackdropClick(e) {
+      if (e.target === cmdBackdrop) {
+        closeCmdPalette();
+      }
+    }
+
+    cmdInput.addEventListener('input', (e) => {
+      const query = e.target.value.toLowerCase().trim();
+      filteredCmds = cmdActions.filter(c => c.title.toLowerCase().includes(query) || c.tag.toLowerCase().includes(query));
+      selectedIndex = 0;
+      renderCmds();
+    });
+
+    window.addEventListener('keydown', (e) => {
+      // Toggle palette on Ctrl+K or Cmd+K
+      if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') {
+        e.preventDefault();
+        if (cmdBackdrop.classList.contains('active')) {
+          closeCmdPalette();
+        } else {
+          openCmdPalette();
+        }
+      }
+
+      if (!cmdBackdrop.classList.contains('active')) return;
+
+      if (e.key === 'Escape') {
+        e.preventDefault();
+        closeCmdPalette();
+      } else if (e.key === 'ArrowDown') {
+        e.preventDefault();
+        selectedIndex = (selectedIndex + 1) % filteredCmds.length;
+        updateSelectionHighlight();
+      } else if (e.key === 'ArrowUp') {
+        e.preventDefault();
+        selectedIndex = (selectedIndex - 1 + filteredCmds.length) % filteredCmds.length;
+        updateSelectionHighlight();
+      } else if (e.key === 'Enter') {
+        e.preventDefault();
+        if (filteredCmds[selectedIndex]) {
+          executeCommand(filteredCmds[selectedIndex]);
+        }
+      }
+    });
   </script>
   <!-- System Architecture Drawer / Modal -->
   <div id="arch-modal" class="modal-backdrop" onclick="closeArchModal(event)">
@@ -720,5 +844,23 @@
       </div>
     </div>
   </div>
+  <!-- Command Palette Trigger & Modal -->
+<div id="cmd-palette-backdrop" class="cmd-backdrop" onclick="handleCmdBackdropClick(event)">
+  <div class="cmd-box">
+    <div class="cmd-input-wrap">
+      <span class="cmd-icon">⌘</span>
+      <input type="text" id="cmd-input" placeholder="Type a command or jump to system..." autocomplete="off" spellcheck="false" />
+      <span class="cmd-esc">ESC</span>
+    </div>
+    <div class="cmd-list" id="cmd-results">
+      <!-- Injected via JavaScript -->
+    </div>
+    <div class="cmd-footer">
+      <span><kbd>↑</kbd> <kbd>↓</kbd> to navigate</span>
+      <span><kbd>↵</kbd> to select</span>
+      <span><kbd>esc</kbd> to dismiss</span>
+    </div>
+  </div>
+</div>
 </body>
 </html>
