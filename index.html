@@ -85,10 +85,16 @@
           <h2 class="section-title">Selected Engineering Projects</h2>
           <p class="section-desc">Real-world systems highlighting architecture, data consistency, and practical intelligence.</p>
         </div>
-
+<!-- Project Category Filters -->
+        <div class="project-filters">
+          <button type="button" class="filter-btn active" onclick="filterProjects('all')">All Systems <span class="filter-count">6</span></button>
+          <button type="button" class="filter-btn" onclick="filterProjects('ai')">AI & Retrieval</button>
+          <button type="button" class="filter-btn" onclick="filterProjects('backend')">Backend & Architecture</button>
+          <button type="button" class="filter-btn" onclick="filterProjects('fullstack')">Full-Stack / UI</button>
+        </div>
         <div class="projects-grid">
           <!-- 1. Uriel -->
-          <article class="project-card tilt-card">
+          <article class="project-card tilt-card" data-category="ai">
             <div class="card-inner">
               <div class="card-top">
                 <span class="project-badge research">AI & Information Retrieval</span>
@@ -112,7 +118,7 @@
           </article>
 
           <!-- 2. NestHub -->
-          <article class="project-card tilt-card">
+          <article class="project-card tilt-card" data-category="fullstack">
             <div class="card-inner">
               <div class="card-top">
                 <span class="project-badge fullstack">Full-Stack Application</span>
@@ -137,7 +143,7 @@
           </article>
 
           <!-- 3. ClientHub -->
-          <article class="project-card tilt-card">
+         <article class="project-card tilt-card" data-category="backend">
             <div class="card-inner">
               <div class="card-top">
                 <span class="project-badge management">Workflow Engine</span>
@@ -161,7 +167,7 @@
           </article>
 
           <!-- 4. End-to-End Recommendation System -->
-          <article class="project-card tilt-card">
+          <article class="project-card tilt-card" data-category="ai">
             <div class="card-inner">
               <div class="card-top">
                 <span class="project-badge ml">Data Science & ML</span>
@@ -185,7 +191,7 @@
           </article>
 
           <!-- 5. Syntecxhub Task Manager -->
-          <article class="project-card tilt-card">
+          <article class="project-card tilt-card" data-category="backend">
             <div class="card-inner">
               <div class="card-top">
                 <span class="project-badge fullstack">Task Optimization</span>
@@ -210,7 +216,7 @@
           </article>
 
           <!-- 6. Restaurant Demo -->
-          <article class="project-card tilt-card">
+         <article class="project-card tilt-card" data-category="fullstack">
             <div class="card-inner">
               <div class="card-top">
                 <span class="project-badge frontend">UI/UX & Experience</span>
@@ -874,6 +880,28 @@
         }
       }
     });
+    // -------------------------------------------------------------
+    // PROJECT FILTER SYSTEM
+    // -------------------------------------------------------------
+    window.filterProjects = function(category) {
+      const buttons = document.querySelectorAll('.filter-btn');
+      const cards = document.querySelectorAll('.projects-grid .project-card');
+
+      buttons.forEach(btn => btn.classList.remove('active'));
+      const activeBtn = Array.from(buttons).find(b => 
+        b.getAttribute('onclick')?.includes(`'${category}'`)
+      );
+      if (activeBtn) activeBtn.classList.add('active');
+
+      cards.forEach(card => {
+        const cardCat = card.getAttribute('data-category');
+        if (category === 'all' || cardCat === category) {
+          card.classList.remove('hidden');
+        } else {
+          card.classList.add('hidden');
+        }
+      });
+    };
   </script>
 </body>
 </html>
