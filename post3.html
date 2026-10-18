@@ -16,6 +16,9 @@
   <link rel="stylesheet" href="styles.css" />
 </head>
 <body>
+  <!-- Reading Progress Bar -->
+  <div id="reading-progress"></div>
+
   <!-- Ambient Glow Orbs -->
   <div class="ambient-glow glow-1"></div>
   <div class="ambient-glow glow-2"></div>
@@ -94,6 +97,35 @@
 
   <script>
     document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Reading Progress Bar
+    window.addEventListener('scroll', () => {
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrolled = (window.scrollY / docHeight) * 100;
+      const bar = document.getElementById('reading-progress');
+      if (bar) bar.style.width = scrolled + '%';
+    });
+
+    // 1-Click Code Copy Engine
+    document.querySelectorAll('pre').forEach(pre => {
+      const wrap = document.createElement('div');
+      wrap.className = 'code-block-wrap';
+      pre.parentNode.insertBefore(wrap, pre);
+      wrap.appendChild(pre);
+
+      const copyBtn = document.createElement('button');
+      copyBtn.type = 'button';
+      copyBtn.className = 'code-copy-btn';
+      copyBtn.textContent = 'Copy';
+      copyBtn.onclick = () => {
+        const codeText = pre.querySelector('code')?.innerText || pre.innerText;
+        navigator.clipboard.writeText(codeText).then(() => {
+          copyBtn.textContent = 'Copied! ✓';
+          setTimeout(() => copyBtn.textContent = 'Copy', 2000);
+        });
+      };
+      wrap.appendChild(copyBtn);
+    });
   </script>
 </body>
 </html>
