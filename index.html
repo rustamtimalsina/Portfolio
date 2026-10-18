@@ -179,7 +179,8 @@ Try 'help' to see all available system actions.</div>
                 <span class="pill">Google Gemini</span>
               </div>
               <div class="card-links">
-                <button class="card-btn primary" onclick="openArchModal('nexusai')">Inspect Architecture ⚡</button>
+                <a href="https://client-two-tau-83.vercel.app" target="_blank" rel="noopener" class="card-btn live">Live Demo ↗</a>
+                <button class="card-btn primary" onclick="openArchModal('nexusai')">Architecture ⚡</button>
                 <a href="https://github.com/rustamtimalsina/nexus-ai-studio" target="_blank" rel="noopener" class="card-btn secondary">GitHub →</a>
               </div>
             </div>
@@ -1022,6 +1023,7 @@ CV Document: assets/Rustam_Timilsina_CV.pdf (Click 'Download CV' above to read f
     let selectedIndex = 0;
 
     const cmdActions = [
+      { id: 'nexus-live', title: 'Live Demo: NexusAI Studio', tag: 'Live Preview', action: () => window.open('https://client-two-tau-83.vercel.app', '_blank') },
       { id: 'nexus-arch', title: 'Blueprint: NexusAI Studio', tag: 'Architecture', action: () => window.openArchModal('nexusai') },
       { id: 'uriel-arch', title: 'Blueprint: Uriel RAG Engine', tag: 'Architecture', action: () => window.openArchModal('uriel') },
       { id: 'nesthub-arch', title: 'Blueprint: NestHub Platform', tag: 'Architecture', action: () => window.openArchModal('nesthub') },
