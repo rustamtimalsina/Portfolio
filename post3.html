@@ -1,61 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Lessons From Building My First Game Backend</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Lessons From Building My First Game Backend — Rustam Timalsina</title>
+  <meta name="description" content="What I discovered while connecting REST APIs, session persistence, and databases for a game prototype." />
+  <link rel="canonical" href="https://www.rustamtimalsina.com.np/post3.html" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%230d111a%22/><text y=%2265%22 x=%2250%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-size=%2250%22 font-weight=%22800%22 fill=%22%2338bdf8%22>RT</text></svg>" />
+
+  <!-- Preconnect & Modern Typefaces -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    body { font-family:'Inter',sans-serif; background:#f9fafb; margin:0; padding:0; }
-    header { background:linear-gradient(135deg,#2d3436,#636e72); color:#fff; padding:2rem; text-align:center; }
-    header h1 { font-size:2.2rem; margin:0.5rem 0; }
-    header p { color:#bbb; font-size:1.1rem; }
-    .hero-image { width:100%; max-height:400px; object-fit:cover; border-bottom:5px solid #6c5ce7; }
-    main { max-width:850px; margin:2rem auto; padding:0 1rem; background:#fff; border-radius:12px; box-shadow:0 4px 14px rgba(0,0,0,0.08); }
-    article { padding:2rem; line-height:1.7; color:#333; }
-    h2 { margin-top:2rem; font-size:1.6rem; color:#111; }
-    p { margin:1rem 0; }
-    blockquote { border-left:4px solid #6c5ce7; padding-left:1rem; font-style:italic; background:#f5f0ff; margin:1.5rem 0; border-radius:6px; }
-    .highlight { background:#ecebff; padding:1rem; border-radius:8px; margin:1.5rem 0; font-weight:500; }
-    footer { margin-top:2rem; text-align:center; padding:1rem; color:#777; font-size:0.9rem; }
-    a.back-link { display:inline-block; margin-top:1rem; text-decoration:none; color:#6c5ce7; font-weight:600; }
-  </style>
 </head>
 <body>
-  <header>
-    <h1>🎮 Lessons From Building My First Game Backend</h1>
-    <p>What I discovered while connecting APIs, sessions, and databases together.</p>
+  <!-- Ambient Glow Orbs -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <!-- Studio Header -->
+  <header class="navbar">
+    <div class="container nav-content">
+      <a href="index.html#hero" class="brand" aria-label="Home">
+        <span class="brand-monogram">RT</span>
+        <span class="brand-name">Rustam Timalsina</span>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html#projects">Systems</a>
+        <a href="index.html#experience">Milestones</a>
+        <a href="index.html#skills">Tech Matrix</a>
+        <a href="blog.html" class="active" style="color: var(--cyan);">Blog</a>
+        <a href="index.html#contact" class="btn btn-nav">Connect</a>
+      </nav>
+    </div>
   </header>
 
-  <img src="assets/OIP.webp" alt="Game Backend" class="hero-image">
+  <main class="article-container">
+    <div class="article-hero">
+      <div class="eyebrow">Distributed Systems • Game Engineering</div>
+      <h1 class="article-title">🎮 Lessons From Building My First Game Backend</h1>
+      <p class="article-subtitle">What I discovered while designing REST APIs, handling session state, and synchronizing player data.</p>
+      <div class="article-info-bar">
+        <span>By Rustam Timalsina</span>
+        <span>•</span>
+        <span>October 2025</span>
+        <span>•</span>
+        <span>3 min read</span>
+      </div>
+    </div>
 
-  <main>
-    <article>
-      <p>When I built a simple “Sniper Game” backend, I wasn’t just learning C# — I was learning how real-world applications communicate. Even though it was a small project, the lessons I got from handling APIs, sessions, and persistence were huge.</p>
+    <div class="article-featured-img-wrap">
+      <img src="assets/image3.webp" alt="Game Backend Architecture" class="article-featured-img" />
+    </div>
 
-      <h2>🌍 Understanding APIs</h2>
-      <p>I realized that APIs are like bridges. My frontend needed information, my backend stored it — and APIs made that exchange possible. Learning to design RESTful routes gave me a glimpse of how games like PUBG or Fortnite actually handle data.</p>
+    <article class="article-body">
+      <p>Building a game prototype backend wasn't just an exercise in syntax — it was my first real test of how distributed client-server systems communicate under asynchronous conditions. While the game mechanics were simple, managing state across multiple concurrent requests forced me to think deeply about system contracts.</p>
+
+      <h2>🌍 Understanding APIs as Contracts</h2>
+      <p>APIs aren't just endpoints that return JSON; they are explicit contracts between different systems. Designing clean, idempotent RESTful routes taught me to treat payloads with defensive validation: preventing malformed scores, sanitizing inputs, and returning standard HTTP status codes (200, 400, 401, 404, 500) that clients can handle gracefully.</p>
 
       <blockquote>
-        “APIs aren’t just code — they’re contracts between systems.”
+        “APIs aren't just lines of code — they are the contracts that govern how systems trust and speak to each other.”
       </blockquote>
 
-      <h2>🗄️ Sessions & Persistence</h2>
-      <p>At first, sessions confused me. But when I understood how they help keep players “logged in” and remembered, it clicked. Persistence made it possible to store scores, profiles, and history — which is exactly what makes games engaging.</p>
+      <h2>🗄️ Sessions, State & Persistence</h2>
+      <p>Managing player sessions and state persistence was the most illuminating challenge. Understanding how tokens correlate stateless requests back to authenticated users helped demystify how production platforms maintain user continuity across page reloads and connection drops.</p>
 
-      <div class="highlight">
-        🎯 Key Takeaway: Even small projects teach you big concepts — don’t underestimate your practice apps.
+      <div class="highlight-box">
+        🎯 <strong>Key Takeaway:</strong> Even small practice projects introduce fundamental distributed systems concepts. Never underestimate prototype applications — they are the testing grounds for production architecture.
       </div>
 
-      <h2>📈 Future Plans</h2>
-      <p>Next, I want to integrate a proper database and maybe even leaderboard features. Every small step adds up, and this project taught me that I *can* break down complex systems into manageable pieces.</p>
+      <h2>📈 Next Iterations</h2>
+      <p>Moving forward, I am focusing on real-time WebSocket communication, Redis-backed leaderboard caching, and transactional consistency across high-frequency write operations.</p>
 
-      <a href="blog.html" class="back-link">← Back to Blog</a>
+      <div class="article-nav-footer">
+        <a href="post2.html" class="btn btn-secondary">← Previous: ASP.NET & C#</a>
+        <a href="blog.html" class="btn btn-primary">Back to Blog Index →</a>
+      </div>
     </article>
   </main>
 
-  <footer>
-    &copy; 2025 Rustam Timalsina — All rights reserved.
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>© <span id="year"></span> Rustam Timalsina. Kathmandu, Nepal.</p>
+      <div style="display: flex; gap: 1.5rem; align-items: center;">
+        <a href="index.html" style="color: var(--text-dim); text-decoration: none; font-size: 0.85rem;">Home</a>
+        <a href="#" class="back-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">Back to top ↑</a>
+      </div>
+    </div>
   </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>

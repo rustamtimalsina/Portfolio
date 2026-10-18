@@ -1,147 +1,114 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Rustam's Blog</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Engineering Blog — Rustam Timalsina</title>
+  <meta name="description" content="Technical writings, architecture deep dives, and engineering reflections by Rustam Timalsina." />
+  <link rel="canonical" href="https://www.rustamtimalsina.com.np/blog.html" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%230d111a%22/><text y=%2265%22 x=%2250%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-size=%2250%22 font-weight=%22800%22 fill=%22%2338bdf8%22>RT</text></svg>" />
+
+  <!-- Preconnect & Modern Typefaces -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    body {
-      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f9f9f9;
-      color: #333;
-    }
-
-    header {
-      background: #111;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    header h1 {
-      color: #fff;
-      margin: 0;
-    }
-
-    header nav a {
-      color: #fff;
-      margin-left: 20px;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    header nav a:hover {
-      color: #00bcd4;
-    }
-
-    main {
-      max-width: 1100px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-    }
-
-    .blog-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-      gap: 2rem;
-    }
-
-    .blog-card {
-      background: #fff;
-      border-radius: 12px;
-      overflow: hidden;
-      box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-      transition: transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .blog-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 6px 16px rgba(0,0,0,0.15);
-    }
-
-    .blog-card img {
-      width: 100%;
-      height: 200px;
-      object-fit: cover;
-    }
-
-    .blog-card-content {
-      padding: 1.5rem;
-    }
-
-    .blog-card-content h2 {
-      font-size: 1.3rem;
-      margin: 0 0 0.5rem;
-    }
-
-    .blog-card-content p {
-      font-size: 1rem;
-      color: #555;
-      margin-bottom: 1rem;
-    }
-
-    .blog-card-content a {
-      display: inline-block;
-      padding: 0.6rem 1.2rem;
-      background: #00bcd4;
-      color: #fff;
-      text-decoration: none;
-      border-radius: 6px;
-      font-size: 0.9rem;
-      transition: background 0.3s ease;
-    }
-
-    .blog-card-content a:hover {
-      background: #0097a7;
-    }
-  </style>
 </head>
 <body>
-  <header>
-    <h1>Rustam's Blog</h1>
-    <nav>
-      <a href="index.html">Home</a>
-      <a href="blog.html">Blog</a>
-    </nav>
+  <!-- Ambient Glow Orbs -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <!-- Studio Header -->
+  <header class="navbar">
+    <div class="container nav-content">
+      <a href="index.html#hero" class="brand" aria-label="Home">
+        <span class="brand-monogram">RT</span>
+        <span class="brand-name">Rustam Timalsina</span>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html#projects">Systems</a>
+        <a href="index.html#experience">Milestones</a>
+        <a href="index.html#skills">Tech Matrix</a>
+        <a href="blog.html" class="active" style="color: var(--cyan);">Blog</a>
+        <a href="index.html#contact" class="btn btn-nav">Connect</a>
+      </nav>
+    </div>
   </header>
 
-  <main>
-    <h2 style="text-align:center; margin-bottom:2rem;">📚 Latest Posts</h2>
-    <div class="blog-grid">
-      <!-- Blog Card 1 -->
-      <div class="blog-card">
-        <img src="assets/blog1.png" alt="Portfolio Screenshot">
-        <div class="blog-card-content">
-          <h2>🚀 How I Built My First Portfolio</h2>
-          <p>From scratch coding to deploying on Vercel, here’s my journey of building my first portfolio.</p>
-          <a href="post1.html">Read More</a>
-        </div>
+  <main class="section">
+    <div class="container">
+      <div class="blog-header">
+        <div class="eyebrow">Insights & Learnings</div>
+        <h1>Engineering <span class="gradient-text">Reflections.</span></h1>
+        <p>A collection of project case studies, architectural decisions, and honest takeaways from building software systems.</p>
       </div>
 
-      <!-- Blog Card 2 -->
-      <div class="blog-card">
-        <img src="assets/image2.png" alt="Sniper Game Preview">
-        <div class="blog-card-content">
-          <h2>🎮 Lessons from Building a Sniper Game</h2>
-          <p>What I learned about APIs, sessions, and persistence while coding a small shooter prototype.</p>
-          <a href="post2.html">Read More</a>
-        </div>
-      </div>
+      <div class="blog-grid">
+        <!-- Post 1 -->
+        <article class="blog-card">
+          <div class="blog-card-media">
+            <img src="assets/blog1.png" alt="How I Built My First Portfolio" loading="lazy" />
+          </div>
+          <div class="blog-card-content">
+            <div class="blog-meta">
+              <span class="pill">Frontend & Deployment</span>
+              <span>October 2025</span>
+            </div>
+            <h2 class="blog-card-title">🚀 How I Built My First Portfolio</h2>
+            <p class="blog-card-summary">From a blank editor to deploying on Vercel — my step-by-step journey of coding vanilla HTML/CSS and shipping early.</p>
+            <a href="post1.html" class="blog-card-cta">Read Article →</a>
+          </div>
+        </article>
 
-      <!-- Blog Card 3 -->
-      <div class="blog-card">
-        <img src="assets/image3.webp" alt="Coding Journey">
-        <div class="blog-card-content">
-          <h2>💻 My Coding Journey So Far</h2>
-          <p>A look back at my early struggles, breakthroughs, and what motivates me to keep coding daily.</p>
-          <a href="post3.html">Read More</a>
-        </div>
+        <!-- Post 2 -->
+        <article class="blog-card">
+          <div class="blog-card-media">
+            <img src="assets/image2.png" alt="Why I Chose ASP.NET and C#" loading="lazy" />
+          </div>
+          <div class="blog-card-content">
+            <div class="blog-meta">
+              <span class="pill">Backend Architecture</span>
+              <span>October 2025</span>
+            </div>
+            <h2 class="blog-card-title">⚡ Why I Chose ASP.NET & C# for My Project</h2>
+            <p class="blog-card-summary">A beginner’s perspective on Microsoft’s robust ecosystem, strong typing confidence, and building structured backends.</p>
+            <a href="post2.html" class="blog-card-cta">Read Article →</a>
+          </div>
+        </article>
+
+        <!-- Post 3 -->
+        <article class="blog-card">
+          <div class="blog-card-media">
+            <img src="assets/image3.webp" alt="Lessons From Building My First Game Backend" loading="lazy" />
+          </div>
+          <div class="blog-card-content">
+            <div class="blog-meta">
+              <span class="pill">Systems & APIs</span>
+              <span>October 2025</span>
+            </div>
+            <h2 class="blog-card-title">🎮 Lessons From Building My First Game Backend</h2>
+            <p class="blog-card-summary">What I discovered while connecting REST APIs, session persistence, and relational databases for a game prototype.</p>
+            <a href="post3.html" class="blog-card-cta">Read Article →</a>
+          </div>
+        </article>
       </div>
     </div>
   </main>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>© <span id="year"></span> Rustam Timalsina. Kathmandu, Nepal.</p>
+      <div style="display: flex; gap: 1.5rem; align-items: center;">
+        <a href="index.html" style="color: var(--text-dim); text-decoration: none; font-size: 0.85rem;">Home</a>
+        <a href="#" class="back-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">Back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>

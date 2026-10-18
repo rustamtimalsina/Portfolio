@@ -1,61 +1,99 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Why I Chose ASP.NET & C# for My Project</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Why I Chose ASP.NET & C# — Rustam Timalsina</title>
+  <meta name="description" content="A beginner’s perspective on Microsoft’s robust ecosystem, strong typing confidence, and building structured backends." />
+  <link rel="canonical" href="https://www.rustamtimalsina.com.np/post2.html" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%230d111a%22/><text y=%2265%22 x=%2250%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-size=%2250%22 font-weight=%22800%22 fill=%22%2338bdf8%22>RT</text></svg>" />
+
+  <!-- Preconnect & Modern Typefaces -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    body { font-family: 'Inter', sans-serif; background: #f9fafb; margin:0; padding:0; }
-    header { background: linear-gradient(135deg,#0a3d62,#1e272e); color:#fff; padding:2rem; text-align:center; }
-    header h1 { font-size:2.2rem; margin:0.5rem 0; }
-    header p { color:#bbb; font-size:1.1rem; }
-    .hero-image { width:100%; max-height:400px; object-fit:cover; border-bottom:5px solid #0abde3; }
-    main { max-width:850px; margin:2rem auto; padding:0 1rem; background:#fff; border-radius:12px; box-shadow:0 4px 14px rgba(0,0,0,0.08); }
-    article { padding:2rem; line-height:1.7; color:#333; }
-    h2 { margin-top:2rem; font-size:1.6rem; color:#111; }
-    p { margin:1rem 0; }
-    blockquote { border-left:4px solid #0abde3; padding-left:1rem; font-style:italic; background:#f1faff; margin:1.5rem 0; border-radius:6px; }
-    .highlight { background:#e0f7fa; padding:1rem; border-radius:8px; margin:1.5rem 0; font-weight:500; }
-    footer { margin-top:2rem; text-align:center; padding:1rem; color:#777; font-size:0.9rem; }
-    a.back-link { display:inline-block; margin-top:1rem; text-decoration:none; color:#0abde3; font-weight:600; }
-  </style>
 </head>
 <body>
-  <header>
-    <h1>⚡ Why I Chose ASP.NET & C# for My Project</h1>
-    <p>A beginner’s perspective on Microsoft’s ecosystem and why it clicked for me.</p>
+  <!-- Ambient Glow Orbs -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <!-- Studio Header -->
+  <header class="navbar">
+    <div class="container nav-content">
+      <a href="index.html#hero" class="brand" aria-label="Home">
+        <span class="brand-monogram">RT</span>
+        <span class="brand-name">Rustam Timalsina</span>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html#projects">Systems</a>
+        <a href="index.html#experience">Milestones</a>
+        <a href="index.html#skills">Tech Matrix</a>
+        <a href="blog.html" class="active" style="color: var(--cyan);">Blog</a>
+        <a href="index.html#contact" class="btn btn-nav">Connect</a>
+      </nav>
+    </div>
   </header>
 
-  <img src="assets/image2.png" alt="ASP.NET C# Project" class="hero-image">
+  <main class="article-container">
+    <div class="article-hero">
+      <div class="eyebrow">Backend Architecture • Language Decisions</div>
+      <h1 class="article-title">⚡ Why I Chose ASP.NET & C# for My Project</h1>
+      <p class="article-subtitle">A beginner’s perspective on Microsoft’s structured ecosystem, compile-time safety, and building predictable backend services.</p>
+      <div class="article-info-bar">
+        <span>By Rustam Timalsina</span>
+        <span>•</span>
+        <span>October 2025</span>
+        <span>•</span>
+        <span>3 min read</span>
+      </div>
+    </div>
 
-  <main>
-    <article>
-      <p>When I started working on my small “Sniper Game” backend, I had dozens of choices: Node.js, Django, Spring Boot, Laravel… but something about ASP.NET with C# stood out. At first, I thought it was too “corporate” and heavy. But after diving in, I realized it’s actually a powerful framework — even for small projects.</p>
+    <div class="article-featured-img-wrap">
+      <img src="assets/image2.png" alt="ASP.NET C# Project" class="article-featured-img" />
+    </div>
 
-      <h2>🔧 The Ecosystem</h2>
-      <p>ASP.NET integrates smoothly with Visual Studio, NuGet packages, and Azure. Everything felt connected. For someone like me who was just exploring backend development, this meant less time on setup and more time actually coding.</p>
+    <article class="article-body">
+      <p>When I started engineering the backend for my game prototype, I faced the classic developer dilemma: Node.js, Django, Spring Boot, or Laravel? While dynamic languages are quick to set up, something about <strong>ASP.NET Core with C#</strong> resonated with my desire for architectural rigor.</p>
+
+      <h2>🔧 The First-Class Ecosystem</h2>
+      <p>ASP.NET integrates with Visual Studio, NuGet package resolution, and dependency injection right out of the box. There’s a cohesive philosophy: middleware pipelines, configuration providers, and logging abstractions are treated as core architectural primitives rather than third-party plugins. For an engineer exploring scalable backends, this structure reduces configuration friction and encourages clean code organization.</p>
 
       <blockquote>
-        “ASP.NET may feel intimidating at first, but once you get used to it, the productivity boost is real.”
+        “ASP.NET may feel intimidating at first, but once you appreciate strong architectural guardrails, the productivity and stability gains are real.”
       </blockquote>
 
-      <h2>💻 Strongly Typed Language Benefits</h2>
-      <p>C# felt different from JavaScript. Having a strongly typed language gave me confidence that my variables and models would behave consistently. I wasn’t chasing runtime errors — I was writing cleaner, safer code.</p>
+      <h2>💻 Strongly Typed Confidence</h2>
+      <p>Moving from JavaScript to C# was a revelation in developer ergonomics. Strongly typed models, nullability checks, and compile-time type validations meant that an entire class of runtime bugs was eliminated before code ever ran. Data transfer objects (DTOs), domain models, and API responses mapped cleanly to database schemas with zero ambiguity.</p>
 
-      <div class="highlight">
-        🔑 Lesson Learned: Picking the right stack isn’t about hype — it’s about what helps you stay consistent and motivated.
+      <div class="highlight-box">
+        🔑 <strong>Lesson Learned:</strong> Choosing a technology stack isn’t about chasing hype cycles — it’s about choosing tools that provide stability, compile-time guarantees, and keep you confident in your code.
       </div>
 
-      <h2>🚀 Deployment & Beyond</h2>
-      <p>Even though I eventually deployed on Vercel for my portfolio, learning ASP.NET showed me how enterprise-level apps are structured. That knowledge is priceless, because now I can compare frameworks and choose wisely in the future.</p>
+      <h2>🚀 Architectural Takeaways</h2>
+      <p>Learning ASP.NET demonstrated how enterprise systems enforce boundaries, decouple concerns via repository patterns, and manage lifecycle scopes (transient, scoped, singleton). That conceptual grounding carries across any framework I work with today.</p>
 
-      <a href="blog.html" class="back-link">← Back to Blog</a>
+      <div class="article-nav-footer">
+        <a href="post1.html" class="btn btn-secondary">← Previous: Building Portfolio</a>
+        <a href="post3.html" class="btn btn-primary">Next: Game Backend Lessons →</a>
+      </div>
     </article>
   </main>
 
-  <footer>
-    &copy; 2025 Rustam Timalsina — All rights reserved.
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>© <span id="year"></span> Rustam Timalsina. Kathmandu, Nepal.</p>
+      <div style="display: flex; gap: 1.5rem; align-items: center;">
+        <a href="index.html" style="color: var(--text-dim); text-decoration: none; font-size: 0.85rem;">Home</a>
+        <a href="#" class="back-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">Back to top ↑</a>
+      </div>
+    </div>
   </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>

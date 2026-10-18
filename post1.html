@@ -1,170 +1,116 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>How I Built My First Portfolio</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>How I Built My First Portfolio — Rustam Timalsina</title>
+  <meta name="description" content="From a blank editor to deploying on Vercel — my step-by-step journey of coding vanilla HTML/CSS and shipping early." />
+  <link rel="canonical" href="https://www.rustamtimalsina.com.np/post1.html" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%230d111a%22/><text y=%2265%22 x=%2250%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-size=%2250%22 font-weight=%22800%22 fill=%22%2338bdf8%22>RT</text></svg>" />
+
+  <!-- Preconnect & Modern Typefaces -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
   <link rel="stylesheet" href="styles.css" />
-  <style>
-    body {
-      font-family: 'Inter', sans-serif;
-      margin: 0;
-      padding: 0;
-      background: #f9fafb;
-      color: #333;
-      line-height: 1.7;
-    }
-
-    header {
-      background: linear-gradient(135deg, #111, #222);
-      padding: 2rem;
-      text-align: center;
-      color: #fff;
-    }
-
-    header h1 {
-      font-size: 2.4rem;
-      margin: 0.5rem 0;
-    }
-
-    header p {
-      font-size: 1.1rem;
-      color: #bbb;
-    }
-
-    .hero-image {
-      width: 100%;
-      max-height: 400px;
-      object-fit: cover;
-      border-bottom: 5px solid #00bcd4;
-    }
-
-    main {
-      max-width: 850px;
-      margin: 2rem auto;
-      padding: 0 1rem;
-      background: #fff;
-      border-radius: 12px;
-      box-shadow: 0 4px 14px rgba(0,0,0,0.08);
-    }
-
-    article {
-      padding: 2rem;
-    }
-
-    article h2 {
-      font-size: 1.8rem;
-      margin-top: 2rem;
-      color: #111;
-    }
-
-    article p {
-      margin: 1rem 0;
-      font-size: 1.05rem;
-      color: #444;
-    }
-
-    blockquote {
-      border-left: 4px solid #00bcd4;
-      padding-left: 1rem;
-      margin: 1.5rem 0;
-      font-style: italic;
-      color: #555;
-      background: #f1faff;
-      border-radius: 6px;
-    }
-
-    pre {
-      background: #1e1e1e;
-      color: #e5e5e5;
-      padding: 1rem;
-      border-radius: 8px;
-      overflow-x: auto;
-      margin: 1.5rem 0;
-      font-size: 0.95rem;
-    }
-
-    .highlight {
-      background: #e0f7fa;
-      padding: 1rem;
-      border-radius: 8px;
-      margin: 1.5rem 0;
-      font-weight: 500;
-    }
-
-    footer {
-      margin-top: 2rem;
-      text-align: center;
-      padding: 1rem;
-      color: #777;
-      font-size: 0.9rem;
-    }
-
-    a.back-link {
-      display: inline-block;
-      margin: 1rem 0;
-      text-decoration: none;
-      color: #00bcd4;
-      font-weight: 600;
-    }
-
-    a.back-link:hover {
-      text-decoration: underline;
-    }
-  </style>
 </head>
 <body>
-  <header>
-    <h1>🚀 How I Built My First Portfolio</h1>
-    <p>From a blank editor to a live website on Vercel — my step-by-step journey.</p>
+  <!-- Ambient Glow Orbs -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <!-- Studio Header -->
+  <header class="navbar">
+    <div class="container nav-content">
+      <a href="index.html#hero" class="brand" aria-label="Home">
+        <span class="brand-monogram">RT</span>
+        <span class="brand-name">Rustam Timalsina</span>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html#projects">Systems</a>
+        <a href="index.html#experience">Milestones</a>
+        <a href="index.html#skills">Tech Matrix</a>
+        <a href="blog.html" class="active" style="color: var(--cyan);">Blog</a>
+        <a href="index.html#contact" class="btn btn-nav">Connect</a>
+      </nav>
+    </div>
   </header>
 
-  <img src="assets/blog1.png" alt="Portfolio Screenshot" class="hero-image">
+  <main class="article-container">
+    <div class="article-hero">
+      <div class="eyebrow">Frontend & Deployment • Case Study</div>
+      <h1 class="article-title">🚀 How I Built My First Portfolio</h1>
+      <p class="article-subtitle">From a blank editor to a live production website on Vercel — reflections on learning the fundamentals and shipping without fear.</p>
+      <div class="article-info-bar">
+        <span>By Rustam Timalsina</span>
+        <span>•</span>
+        <span>October 2025</span>
+        <span>•</span>
+        <span>4 min read</span>
+      </div>
+    </div>
 
-  <main>
-    <article>
-      <p>Building my first personal portfolio was both exciting and terrifying. I knew it had to represent *me* — not just as a developer, but as someone who’s learning, experimenting, and putting themselves out there on the web.</p>
+    <div class="article-featured-img-wrap">
+      <img src="assets/blog1.png" alt="Portfolio Screenshot" class="article-featured-img" />
+    </div>
+
+    <article class="article-body">
+      <p>Building my first personal portfolio was both exciting and terrifying. I knew it had to represent <em>me</em> — not just as a developer who can write code, but as someone who is continuously learning, experimenting with architectures, and putting themselves out there on the web.</p>
 
       <h2>💡 Starting from Scratch</h2>
-      <p>I didn’t use fancy templates or prebuilt themes. I opened up a blank editor (Cursor in my case) and started writing plain HTML and CSS. At first, it was messy. Things didn’t align, fonts looked boring, and I doubted myself. But slowly, I shaped it into something meaningful.</p>
+      <p>I deliberately avoided heavy boilerplates and prebuilt themes. I opened a blank editor and started writing plain semantic HTML5 and modern CSS. At first, things were rough — alignments felt off, fonts looked unpolished, and I questioned every visual decision. But by focusing on structural consistency and clean layout rules, the site quickly began taking shape.</p>
 
       <blockquote>
         “The best way to learn web development is by actually building and deploying something — no matter how small.”
       </blockquote>
 
-      <h2>⚙️ Tools I Used</h2>
+      <h2>⚙️ Tools & Architecture</h2>
+      <p>Rather than adding gigabytes of node dependencies, I focused on core engineering discipline:</p>
       <ul>
-        <li>HTML, CSS, and some JavaScript</li>
-        <li>Cursor IDE for coding</li>
-        <li>GitHub for version control</li>
-        <li>Vercel for deployment (super easy!)</li>
+        <li><strong>HTML5 & Semantic Landmarks:</strong> Clean header, main, section, and article tags for accessibility.</li>
+        <li><strong>Modern CSS3:</strong> Custom variables, fluid clamp typography, and glassmorphism styling.</li>
+        <li><strong>Vanilla JavaScript:</strong> High-performance event handlers without framework runtime overhead.</li>
+        <li><strong>Vercel & Git:</strong> Continuous automated deployment linked directly to GitHub commits.</li>
       </ul>
 
-      <pre><code>&lt;header&gt;
-  &lt;h1&gt;Rustam Timalsina&lt;/h1&gt;
-  &lt;nav&gt;
+      <pre><code>&lt;header class="navbar"&gt;
+  &lt;a href="index.html" class="brand"&gt;Rustam Timalsina&lt;/a&gt;
+  &lt;nav class="nav-links"&gt;
     &lt;a href="index.html"&gt;Home&lt;/a&gt;
     &lt;a href="blog.html"&gt;Blog&lt;/a&gt;
   &lt;/nav&gt;
-&lt;/header&gt;
-</code></pre>
+&lt;/header&gt;</code></pre>
 
       <h2>🚀 Deployment Journey</h2>
-      <p>When I first hit “Deploy” on Vercel, I thought something would break. But in less than a minute, I had a live URL to share. That feeling of seeing <strong>rustamtimalsina.com.np</strong> online for the first time? Pure magic. It motivated me to keep building more.</p>
+      <p>When I first hit “Deploy” on Vercel, I half-expected something to break. But within 45 seconds, the build passed, SSL certificates were generated, and I had a live, globally CDN-distributed URL. Seeing <strong>rustamtimalsina.com.np</strong> resolve online for the first time was pure momentum. It immediately transformed coding from an isolated local experiment into something real that anyone in the world could interact with.</p>
 
-      <div class="highlight">
-        🔑 Lesson Learned: Don’t wait for perfection. Publish your work early — you’ll improve it over time.
+      <div class="highlight-box">
+        🔑 <strong>Key Takeaway:</strong> Don’t wait for perfection before shipping. Publish your work early — iteration in production teaches you faster than hesitation in draft mode.
       </div>
 
       <h2>✨ What’s Next</h2>
-      <p>This portfolio isn’t the end. It’s the foundation. Next, I plan to add a proper blog (like this one!), a projects showcase with live demos, and maybe even an interactive resume. Step by step, I’ll make it more professional.</p>
+      <p>This portfolio is an evolving foundation. Next, I plan to continue detailing real-world backend architectures, documenting lessons from local AI and retrieval pipelines, and demonstrating practical software design principles.</p>
 
-      <a href="blog.html" class="back-link">← Back to Blog</a>
+      <div class="article-nav-footer">
+        <a href="blog.html" class="btn btn-secondary">← Back to Engineering Blog</a>
+        <a href="post2.html" class="btn btn-primary">Next: ASP.NET & C# →</a>
+      </div>
     </article>
   </main>
 
-  <footer>
-    &copy; 2025 Rustam Timalsina — All rights reserved.
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>© <span id="year"></span> Rustam Timalsina. Kathmandu, Nepal.</p>
+      <div style="display: flex; gap: 1.5rem; align-items: center;">
+        <a href="index.html" style="color: var(--text-dim); text-decoration: none; font-size: 0.85rem;">Home</a>
+        <a href="#" class="back-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">Back to top ↑</a>
+      </div>
+    </div>
   </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
