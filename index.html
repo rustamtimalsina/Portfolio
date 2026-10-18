@@ -40,6 +40,7 @@
         <a href="#projects">Systems</a>
         <a href="#experience">Milestones</a>
         <a href="#skills">Tech Matrix</a>
+        <a href="blog.html">Blog</a>
         <a href="#contact" class="btn btn-nav">Connect</a>
         <button type="button" id="cmd-btn" class="cmd-trigger-btn" onclick="openCmdPalette()" title="Command Palette">
           <span>⌘K</span>
@@ -335,7 +336,7 @@
             Open to software engineering positions, backend development contracts, and architectural collaborations.
           </p>
           <div class="contact-buttons">
-            <a href="mailto:rustamtimalsina7@gmail.com" class="btn btn-primary">Email Me Directly</a>
+            <a href="mailto:rustamtimalsina179@gmail.com" class="btn btn-primary">Email Me Directly</a>
             <a href="https://www.linkedin.com/in/rustamtimalsina" target="_blank" rel="noopener" class="btn btn-secondary">LinkedIn</a>
             <a href="https://github.com/rustamtimalsina" target="_blank" rel="noopener" class="btn btn-secondary">GitHub</a>
           </div>
@@ -347,7 +348,10 @@
   <footer class="footer">
     <div class="container footer-content">
       <p>© <span id="year"></span> Rustam Timilsina. Kathmandu, Nepal.</p>
-      <a href="#hero" class="back-top">Back to top ↑</a>
+      <div style="display: flex; gap: 1.5rem; align-items: center;">
+        <a href="blog.html" style="color: var(--text-dim); text-decoration: none; font-size: 0.85rem;">Blog</a>
+        <a href="#hero" class="back-top">Back to top ↑</a>
+      </div>
     </div>
   </footer>
 
@@ -546,7 +550,7 @@
     // CLICK TO COPY EMAIL
     // -------------------------------------------------------------
     window.copyEmail = function() {
-      const email = 'rustamtimalsina7@gmail.com';
+      const email = 'rustamtimalsina179@gmail.com';
       navigator.clipboard.writeText(email).then(() => {
         const textSpan = document.getElementById('copy-text');
         if (textSpan) {
@@ -762,6 +766,7 @@
       { id: 'nav-systems', title: 'Navigate: Selected Projects', tag: 'Jump', action: () => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' }) },
       { id: 'nav-exp', title: 'Navigate: Experience & Timeline', tag: 'Jump', action: () => document.getElementById('experience')?.scrollIntoView({ behavior: 'smooth' }) },
       { id: 'nav-skills', title: 'Navigate: Technical Matrix', tag: 'Jump', action: () => document.getElementById('skills')?.scrollIntoView({ behavior: 'smooth' }) },
+      { id: 'nav-blog', title: 'Navigate: Engineering Blog', tag: 'Jump', action: () => window.location.href = 'blog.html' },
       { id: 'nav-contact', title: 'Navigate: Connect / Email', tag: 'Jump', action: () => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }) },
       { id: 'copy-email', title: 'Action: Copy Direct Email', tag: 'Quick Action', action: () => window.copyEmail() },
       { id: 'github-prof', title: 'External: GitHub Profile', tag: 'Link', action: () => window.open('https://github.com/rustamtimalsina', '_blank') }
