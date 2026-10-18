@@ -154,13 +154,38 @@ Try 'help' to see all available system actions.</div>
         </div>
 <!-- Project Category Filters -->
         <div class="project-filters">
-          <button type="button" class="filter-btn active" onclick="filterProjects('all')">All Systems <span class="filter-count">6</span></button>
+          <button type="button" class="filter-btn active" onclick="filterProjects('all')">All Systems <span class="filter-count">7</span></button>
           <button type="button" class="filter-btn" onclick="filterProjects('ai')">AI & Retrieval</button>
           <button type="button" class="filter-btn" onclick="filterProjects('backend')">Backend & Architecture</button>
           <button type="button" class="filter-btn" onclick="filterProjects('fullstack')">Full-Stack / UI</button>
         </div>
         <div class="projects-grid">
-          <!-- 1. Uriel -->
+          <!-- 1. NexusAI Studio -->
+          <article class="project-card tilt-card" data-category="ai fullstack">
+            <div class="card-inner">
+              <div class="card-top">
+                <span class="project-badge research">AI & Streaming Architecture</span>
+                <span class="project-year">Production Build</span>
+              </div>
+              <h3 class="card-title">NexusAI Studio — Multi-Persona AI Workspace</h3>
+              <p class="card-text">
+                Full-stack AI workspace featuring token-by-token Server-Sent Events (SSE) streaming, specialized workspace personas, prompt template library, and hybrid Google Gemini API + offline simulation.
+              </p>
+              <div class="tech-stack">
+                <span class="pill">React 18 & Vite</span>
+                <span class="pill">TypeScript</span>
+                <span class="pill">Node / Express</span>
+                <span class="pill">SSE Streaming</span>
+                <span class="pill">Google Gemini</span>
+              </div>
+              <div class="card-links">
+                <button class="card-btn primary" onclick="openArchModal('nexusai')">Inspect Architecture ⚡</button>
+                <a href="https://github.com/rustamtimalsina/nexus-ai-studio" target="_blank" rel="noopener" class="card-btn secondary">GitHub →</a>
+              </div>
+            </div>
+          </article>
+
+          <!-- 2. Uriel -->
           <article class="project-card tilt-card" data-category="ai">
             <div class="card-inner">
               <div class="card-top">
@@ -671,18 +696,27 @@ Try 'help' to see all available system actions.</div>
   cat cv.txt       - Display career summary & resume link
   contact          - Jump to direct contact dispatch
   clear            - Wipe terminal buffer`,
-      projects: () => `[1] Uriel — Local Contextual Document Retrieval (Dense Vector Embedding RAG)
-[2] NestHub — Real Estate Relational Platform (React + Express + Relational DB)
-[3] ClientHub — Delivery State Machine (Finite-State Transitions + MySQL)
-[4] Recommendation System — Hybrid Filtering ML Pipeline
-[5] Syntecxhub Task Engine — Sprint Scheduling & State Validation
-[6] Restaurant Demo — 60 FPS Accessible Client Engine
+      projects: () => `[1] NexusAI Studio — Multi-Persona AI Workspace (React 18 + SSE + Gemini API)
+[2] Uriel — Local Contextual Document Retrieval (Dense Vector Embedding RAG)
+[3] NestHub — Real Estate Relational Platform (React + Express + Relational DB)
+[4] ClientHub — Delivery State Machine (Finite-State Transitions + MySQL)
+[5] Recommendation System — Hybrid Filtering ML Pipeline
+[6] Syntecxhub Task Engine — Sprint Scheduling & State Validation
+[7] Restaurant Demo — 60 FPS Accessible Client Engine
 
-Type 'curl /api/uriel' for a live architecture query!`,
+Type 'curl /api/nexusai' or 'curl /api/uriel' for a live architecture query!`,
       skills: () => `Languages:  Python, C# / ASP.NET, JavaScript (ES6+), TypeScript, SQL, HTML5/CSS3
 Backend:    RESTful APIs, JWT Auth, Microservices, Relational DBs, Sliding-Window RAG
 AI/ML:      Vector Embeddings, Semantic Search, Cosine Similarity, ETL Pipelines
 DevOps/Tool: Git, Vercel, Docker, Postman, Linux, Vite`,
+      'curl /api/nexusai': () => `HTTP/1.1 200 OK
+Content-Type: text/event-stream
+Transfer-Encoding: chunked
+
+event: token
+data: {"delta": "NexusAI Studio initialized. Multi-persona streaming online."}
+event: done
+data: {"status": "complete", "model": "Google Gemini 1.5 Pro"}`,
       'curl /api/uriel': () => `HTTP/1.1 200 OK
 Content-Type: application/json
 X-Telemetry: Local-Only (0% Cloud Leakage)
@@ -772,6 +806,31 @@ CV Document: assets/Rustam_Timilsina_CV.pdf (Click 'Download CV' above to read f
     // ARCHITECTURE MODAL ENGINE
     // -------------------------------------------------------------
     const blueprints = {
+      nexusai: {
+        title: "NexusAI Studio — Streaming Architecture",
+        eyebrow: "SYSTEM ARCHITECTURE • SSE STREAMING & MULTI-PERSONA AI",
+        flow: `[React 18 Client] <─── [SSE Token Stream]
+       │
+       ▼ (HTTP POST /api/messages/stream)
+[Express Gateway & Persona Router]
+       │
+       ├──> [System Instruction Injector]
+       ├──> [Dual Engine: Local Simulator | Gemini 1.5 API]
+       │
+       ▼ (EventStream Protocol)
+[Chunked Delta Generator] ───> [Real-Time Markdown & Code Renderer]`,
+        specs: [
+          { label: "Streaming Protocol", val: "Server-Sent Events (SSE) with HTTP/1.1 chunked transfer encoding." },
+          { label: "AI Integration", val: "Hybrid: Google Gemini API (1.5 Pro / Flash) with fallback offline simulator." },
+          { label: "State Isolation", val: "Multi-persona context boundaries across Architect, Research, and Custom workspaces." },
+          { label: "Latency", val: "Sub-50ms first-token time-to-render (TTFT) across streaming responses." }
+        ],
+        details: [
+          "Eliminates UI freeze via asynchronous token streaming with syntax-highlighted code block parsing.",
+          "Automatic local persistence across sessions, prompt templates, and custom workspace instructions."
+        ]
+      },
+
       uriel: {
         title: "Uriel — Contextual Retrieval Engine",
         eyebrow: "SYSTEM ARCHITECTURE • LOCAL RAG PIPELINE",
@@ -963,6 +1022,7 @@ CV Document: assets/Rustam_Timilsina_CV.pdf (Click 'Download CV' above to read f
     let selectedIndex = 0;
 
     const cmdActions = [
+      { id: 'nexus-arch', title: 'Blueprint: NexusAI Studio', tag: 'Architecture', action: () => window.openArchModal('nexusai') },
       { id: 'uriel-arch', title: 'Blueprint: Uriel RAG Engine', tag: 'Architecture', action: () => window.openArchModal('uriel') },
       { id: 'nesthub-arch', title: 'Blueprint: NestHub Platform', tag: 'Architecture', action: () => window.openArchModal('nesthub') },
       { id: 'clienthub-arch', title: 'Blueprint: ClientHub State Machine', tag: 'Architecture', action: () => window.openArchModal('clienthub') },
@@ -1105,8 +1165,8 @@ CV Document: assets/Rustam_Timilsina_CV.pdf (Click 'Download CV' above to read f
       if (activeBtn) activeBtn.classList.add('active');
 
       cards.forEach(card => {
-        const cardCat = card.getAttribute('data-category');
-        if (category === 'all' || cardCat === category) {
+        const cardCat = card.getAttribute('data-category') || '';
+        if (category === 'all' || cardCat.includes(category)) {
           card.classList.remove('hidden');
         } else {
           card.classList.add('hidden');
