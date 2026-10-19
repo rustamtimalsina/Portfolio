@@ -1710,3 +1710,67 @@ body {
   color: var(--cyan);
   border-color: var(--cyan);
 }
+
+/* ==========================================================================
+   4D HYPER-DIMENSIONAL QUANTUM TELEMETRY HUD
+   ========================================================================== */
+
+.hud-4d {
+  display: inline-flex;
+  align-items: center;
+  gap: 12px;
+  background: rgba(10, 14, 26, 0.75);
+  border: 1px solid var(--border-glass);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  padding: 6px 14px;
+  border-radius: 999px;
+  font-family: var(--font-mono);
+  font-size: 0.72rem;
+  color: var(--text-dim);
+  margin-top: 14px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+  transition: all 0.3s ease;
+}
+
+.hud-4d:hover {
+  border-color: rgba(56, 189, 248, 0.4);
+  box-shadow: 0 0 20px rgba(56, 189, 248, 0.15);
+}
+
+.hud-4d-status {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--cyan);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+}
+
+.hud-4d-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 8px var(--cyan);
+  animation: pulse-cyan 1.8s infinite ease-in-out;
+}
+
+.hud-mode-btn {
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  color: #f8fafc;
+  font-family: var(--font-mono);
+  font-size: 0.7rem;
+  padding: 3px 10px;
+  border-radius: 999px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.hud-mode-btn:hover {
+  background: rgba(56, 189, 248, 0.25);
+  border-color: var(--cyan);
+  box-shadow: 0 0 12px rgba(56, 189, 248, 0.3);
+  transform: translateY(-1px);
+}

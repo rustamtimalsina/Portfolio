@@ -93,6 +93,12 @@
           <span class="status-dot"></span>
           <span>Available for Engineering Roles & Architecture Contracts</span>
         </div>
+        <div class="hud-4d">
+          <span class="hud-4d-status"><span class="hud-4d-dot"></span> 4D QUANTUM LATTICE</span>
+          <span>•</span>
+          <span id="dimension-text">MODE: 4D TESSERACT</span>
+          <button type="button" class="hud-mode-btn" onclick="cycle4DMode()">MORPH ⚡</button>
+        </div>
         <h1 class="hero-title">
           Architecting resilient backends & <span class="gradient-text">intelligent web systems.</span>
         </h1>
@@ -512,118 +518,313 @@ Try 'help' to see all available system actions.</div>
     document.getElementById('year').textContent = new Date().getFullYear();
 
     // -------------------------------------------------------------
-    // THREE.JS: 3D WIREFRAME CORE + KINETIC DUST FIELD
+    // HYPER-DIMENSIONAL 4D QUANTUM LATTICE ENGINE (Three.js WebGL)
     // -------------------------------------------------------------
     const canvas = document.getElementById('canvas3d');
     const scene = new THREE.Scene();
-    const camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 1, 1000);
-    camera.position.z = 320;
+    const camera = new THREE.PerspectiveCamera(50, window.innerWidth / window.innerHeight, 1, 2000);
+    camera.position.set(0, 0, 360);
 
-    const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true });
+    const renderer = new THREE.WebGLRenderer({ canvas: canvas, alpha: true, antialias: true, powerPreference: 'high-performance' });
     renderer.setSize(window.innerWidth, window.innerHeight);
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
 
-    const coreGeometry = new THREE.IcosahedronGeometry(110, 2);
-    const wireframeGeometry = new THREE.WireframeGeometry(coreGeometry);
-    const lineMaterial = new THREE.LineBasicMaterial({
-      color: 0x38bdf8,
-      transparent: true,
-      opacity: 0.25
-    });
-    const coreMesh = new THREE.LineSegments(wireframeGeometry, lineMaterial);
-    coreMesh.position.set(180, 0, -40);
-    scene.add(coreMesh);
+    // Master 4D Anchor Group (positioned to the right on desktop, centered on mobile)
+    const hyperGroup = new THREE.Group();
+    scene.add(hyperGroup);
 
-    const innerGeometry = new THREE.IcosahedronGeometry(70, 1);
-    const innerMaterial = new THREE.MeshBasicMaterial({
-      color: 0x818cf8,
-      wireframe: true,
-      transparent: true,
-      opacity: 0.35
-    });
-    const innerCore = new THREE.Mesh(innerGeometry, innerMaterial);
-    coreMesh.add(innerCore);
+    function updateAnchorPosition() {
+      if (window.innerWidth < 860) {
+        hyperGroup.position.set(0, 50, -80);
+        hyperGroup.scale.set(0.72, 0.72, 0.72);
+      } else {
+        hyperGroup.position.set(200, 10, -30);
+        hyperGroup.scale.set(1.05, 1.05, 1.05);
+      }
+    }
+    updateAnchorPosition();
 
-    const particleCount = 600;
-    const starGeometry = new THREE.BufferGeometry();
-    const positions = new Float32Array(particleCount * 3);
-    const colors = new Float32Array(particleCount * 3);
-
-    const cyan = new THREE.Color(0x38bdf8);
-    const indigo = new THREE.Color(0xa855f7);
-
-    for (let i = 0; i < particleCount * 3; i += 3) {
-      positions[i] = (Math.random() - 0.5) * 1200;
-      positions[i + 1] = (Math.random() - 0.5) * 1200;
-      positions[i + 2] = (Math.random() - 0.5) * 800;
-
-      const mixed = cyan.clone().lerp(indigo, Math.random());
-      colors[i] = mixed.r;
-      colors[i + 1] = mixed.g;
-      colors[i + 2] = mixed.b;
+    // 1. MATHEMATICAL 4D TESSERACT (16 Vertices, 32 Edges)
+    const tesseract4DVertices = [];
+    for (let x = -1; x <= 1; x += 2) {
+      for (let y = -1; y <= 1; y += 2) {
+        for (let z = -1; z <= 1; z += 2) {
+          for (let w = -1; w <= 1; w += 2) {
+            tesseract4DVertices.push([x, y, z, w]);
+          }
+        }
+      }
     }
 
-    starGeometry.setAttribute('position', new THREE.BufferAttribute(positions, 3));
-    starGeometry.setAttribute('color', new THREE.BufferAttribute(colors, 3));
+    const tesseractEdges = [];
+    for (let i = 0; i < 16; i++) {
+      for (let j = i + 1; j < 16; j++) {
+        let diff = 0;
+        for (let k = 0; k < 4; k++) {
+          if (tesseract4DVertices[i][k] !== tesseract4DVertices[j][k]) diff++;
+        }
+        if (diff === 1) tesseractEdges.push([i, j]);
+      }
+    }
 
-    const starMaterial = new THREE.PointsMaterial({
-      size: 2.5,
+    // Geometry for 32 hyper-edges (64 vertices)
+    const tesseractEdgeGeometry = new THREE.BufferGeometry();
+    const edgePositions = new Float32Array(32 * 2 * 3);
+    const edgeColors = new Float32Array(32 * 2 * 3);
+
+    const cyanColor = new THREE.Color(0x38bdf8);
+    const purpleColor = new THREE.Color(0xc084fc);
+
+    for (let i = 0; i < 32 * 2; i++) {
+      const col = (i % 2 === 0) ? cyanColor : purpleColor;
+      edgeColors[i * 3] = col.r;
+      edgeColors[i * 3 + 1] = col.g;
+      edgeColors[i * 3 + 2] = col.b;
+    }
+
+    tesseractEdgeGeometry.setAttribute('position', new THREE.BufferAttribute(edgePositions, 3));
+    tesseractEdgeGeometry.setAttribute('color', new THREE.BufferAttribute(edgeColors, 3));
+
+    const tesseractLineMaterial = new THREE.LineBasicMaterial({
       vertexColors: true,
       transparent: true,
-      opacity: 0.7,
+      opacity: 0.85,
       blending: THREE.AdditiveBlending
     });
 
-    const starField = new THREE.Points(starGeometry, starMaterial);
+    const tesseractMesh = new THREE.LineSegments(tesseractEdgeGeometry, tesseractLineMaterial);
+    hyperGroup.add(tesseractMesh);
+
+    // Glowing 4D Vertex Sprites (16 nodes)
+    const tesseractNodeGeometry = new THREE.BufferGeometry();
+    const nodePositions = new Float32Array(16 * 3);
+    tesseractNodeGeometry.setAttribute('position', new THREE.BufferAttribute(nodePositions, 3));
+
+    const nodeMaterial = new THREE.PointsMaterial({
+      size: 7,
+      color: 0x38bdf8,
+      transparent: true,
+      opacity: 0.95,
+      blending: THREE.AdditiveBlending
+    });
+    const tesseractNodes = new THREE.Points(tesseractNodeGeometry, nodeMaterial);
+    hyperGroup.add(tesseractNodes);
+
+    // 2. QUANTUM CALABI-YAU 6D KNOT (Intertwined Mathematical Ribbon)
+    const knotGeometry = new THREE.TorusKnotGeometry(92, 13, 140, 16, 2, 3);
+    const knotWireGeometry = new THREE.WireframeGeometry(knotGeometry);
+    const knotMaterial = new THREE.LineBasicMaterial({
+      color: 0x818cf8,
+      transparent: true,
+      opacity: 0.32,
+      blending: THREE.AdditiveBlending
+    });
+    const knotMesh = new THREE.LineSegments(knotWireGeometry, knotMaterial);
+    hyperGroup.add(knotMesh);
+
+    // 3. INNER QUANTUM SINGULARITY CORE
+    const coreGeo = new THREE.IcosahedronGeometry(42, 1);
+    const coreWire = new THREE.WireframeGeometry(coreGeo);
+    const coreMat = new THREE.LineBasicMaterial({
+      color: 0x38bdf8,
+      transparent: true,
+      opacity: 0.65,
+      blending: THREE.AdditiveBlending
+    });
+    const innerCore = new THREE.LineSegments(coreWire, coreMat);
+    hyperGroup.add(innerCore);
+
+    // 4. KINETIC CYBER HORIZON WARP PLANE (Gravitational Mesh)
+    const planeGeo = new THREE.PlaneGeometry(1600, 1600, 32, 32);
+    const planeWire = new THREE.WireframeGeometry(planeGeo);
+    const planeMat = new THREE.LineBasicMaterial({
+      color: 0x38bdf8,
+      transparent: true,
+      opacity: 0.12
+    });
+    const horizonPlane = new THREE.LineSegments(planeWire, planeMat);
+    horizonPlane.rotation.x = -Math.PI / 2.5;
+    horizonPlane.position.set(0, -160, -120);
+    scene.add(horizonPlane);
+
+    // 5. HYPER-DIMENSIONAL STELLAR NEBULA (Dynamic Particle Dust)
+    const starCount = window.innerWidth < 860 ? 350 : 750;
+    const starGeo = new THREE.BufferGeometry();
+    const starPos = new Float32Array(starCount * 3);
+    const starCols = new Float32Array(starCount * 3);
+
+    for (let i = 0; i < starCount * 3; i += 3) {
+      starPos[i] = (Math.random() - 0.5) * 1400;
+      starPos[i + 1] = (Math.random() - 0.5) * 1400;
+      starPos[i + 2] = (Math.random() - 0.5) * 900;
+
+      const c = cyanColor.clone().lerp(purpleColor, Math.random());
+      starCols[i] = c.r;
+      starCols[i + 1] = c.g;
+      starCols[i + 2] = c.b;
+    }
+    starGeo.setAttribute('position', new THREE.BufferAttribute(starPos, 3));
+    starGeo.setAttribute('color', new THREE.BufferAttribute(starCols, 3));
+
+    const starMat = new THREE.PointsMaterial({
+      size: 2.2,
+      vertexColors: true,
+      transparent: true,
+      opacity: 0.65,
+      blending: THREE.AdditiveBlending
+    });
+    const starField = new THREE.Points(starGeo, starMat);
     scene.add(starField);
 
-    let mouseX = 0;
-    let mouseY = 0;
-    let targetX = 0;
-    let targetY = 0;
+    // 4D ROTATION STATE
+    let rotXW = 0;
+    let rotZW = 0;
+    let rotYW = 0;
+    let rotXY = 0;
+
+    // Interactive mouse / touch state
+    let mouseX = 0, mouseY = 0;
+    let targetMouseX = 0, targetMouseY = 0;
 
     window.addEventListener('mousemove', (e) => {
-      mouseX = (e.clientX - window.innerWidth / 2) * 0.3;
-      mouseY = (e.clientY - window.innerHeight / 2) * 0.3;
+      targetMouseX = (e.clientX - window.innerWidth / 2) * 0.35;
+      targetMouseY = (e.clientY - window.innerHeight / 2) * 0.35;
     });
+
+    // Touch Interaction on Mobile
+    window.addEventListener('touchmove', (e) => {
+      if (e.touches && e.touches.length > 0) {
+        targetMouseX = (e.touches[0].clientX - window.innerWidth / 2) * 0.45;
+        targetMouseY = (e.touches[0].clientY - window.innerHeight / 2) * 0.45;
+      }
+    }, { passive: true });
 
     window.addEventListener('resize', () => {
       camera.aspect = window.innerWidth / window.innerHeight;
       camera.updateProjectionMatrix();
       renderer.setSize(window.innerWidth, window.innerHeight);
-      if (window.innerWidth < 860) {
-        coreMesh.position.set(0, 80, -100);
-      } else {
-        coreMesh.position.set(180, 0, -40);
-      }
+      updateAnchorPosition();
     });
 
-    if (window.innerWidth < 860) {
-      coreMesh.position.set(0, 80, -100);
+    // 4D Visualization Modes
+    let active4DMode = 0;
+    const modes = [
+      { name: "MODE: 4D TESSERACT", tesseract: true, knot: true, core: true, plane: true },
+      { name: "MODE: 6D CALABI-YAU", tesseract: false, knot: true, core: true, plane: true },
+      { name: "MODE: CYBER WARP GRID", tesseract: false, knot: false, core: true, plane: true },
+      { name: "MODE: FULL COSMOS", tesseract: true, knot: true, core: true, plane: true }
+    ];
+
+    window.cycle4DMode = function() {
+      active4DMode = (active4DMode + 1) % modes.length;
+      const m = modes[active4DMode];
+      const dimLabel = document.getElementById('dimension-text');
+      if (dimLabel) dimLabel.textContent = m.name;
+      tesseractMesh.visible = m.tesseract;
+      tesseractNodes.visible = m.tesseract;
+      knotMesh.visible = m.knot;
+      innerCore.visible = m.core;
+      horizonPlane.visible = m.plane;
+    };
+
+    // 4D Rotation Function
+    function rotatePoint4D(pt, aXW, aZW, aYW, aXY) {
+      let [x, y, z, w] = pt;
+
+      // XW plane rotation
+      let cosXW = Math.cos(aXW), sinXW = Math.sin(aXW);
+      let x1 = x * cosXW - w * sinXW;
+      let w1 = x * sinXW + w * cosXW;
+
+      // ZW plane rotation
+      let cosZW = Math.cos(aZW), sinZW = Math.sin(aZW);
+      let z2 = z * cosZW - w1 * sinZW;
+      let w2 = z * sinZW + w1 * cosZW;
+
+      // YW plane rotation
+      let cosYW = Math.cos(aYW), sinYW = Math.sin(aYW);
+      let y3 = y * cosYW - w2 * sinYW;
+      let w3 = y * sinYW + w2 * cosYW;
+
+      // XY rotation
+      let cosXY = Math.cos(aXY), sinXY = Math.sin(aXY);
+      let x4 = x1 * cosXY - y3 * sinXY;
+      let y4 = x1 * sinXY + y3 * cosXY;
+
+      return [x4, y4, z2, w3];
     }
+
+    // 4D Stereographic Perspective Projection
+    function project4D(pt4d, distance4D = 2.4, scale = 98) {
+      const [x, y, z, w] = pt4d;
+      const factor = 1 / (distance4D - w);
+      return [x * factor * scale, y * factor * scale, z * factor * scale];
+    }
+
+    let clockTime = 0;
 
     function animate() {
       requestAnimationFrame(animate);
+      clockTime += 0.015;
 
-      targetX += (mouseX - targetX) * 0.05;
-      targetY += (mouseY - targetY) * 0.05;
+      // Smooth mouse interpolation
+      mouseX += (targetMouseX - mouseX) * 0.05;
+      mouseY += (targetMouseY - mouseY) * 0.05;
 
-      coreMesh.rotation.x += 0.003;
-      coreMesh.rotation.y += 0.004;
-      innerCore.rotation.x -= 0.004;
-      innerCore.rotation.y -= 0.005;
+      // Continuous 4th Dimension Hyperplane Rotations + Mouse Influence
+      rotXW += 0.008 + (mouseX * 0.00004);
+      rotZW += 0.006 + (mouseY * 0.00004);
+      rotYW += 0.004;
+      rotXY += 0.003;
 
-      starField.rotation.y += 0.0004;
+      // 1. Calculate Projected 3D coordinates for all 16 4D Vertices
+      const projected3D = [];
+      const nodePosAttr = tesseractNodeGeometry.attributes.position;
 
-      // Hide 3D sphere when scrolling down on mobile
-      if (window.innerWidth < 860) {
-        coreMesh.visible = (window.scrollY < 300);
-      } else {
-        coreMesh.visible = true;
+      for (let i = 0; i < 16; i++) {
+        const rotated4D = rotatePoint4D(tesseract4DVertices[i], rotXW, rotZW, rotYW, rotXY);
+        const p3d = project4D(rotated4D, 2.35, 96);
+        projected3D.push(p3d);
+
+        nodePosAttr.setXYZ(i, p3d[0], p3d[1], p3d[2]);
       }
+      nodePosAttr.needsUpdate = true;
 
-      camera.position.x = targetX * 0.3;
-      camera.position.y = -targetY * 0.3;
+      // 2. Update all 32 4D Hypercube Edges
+      const edgePosAttr = tesseractEdgeGeometry.attributes.position;
+      let edgeIdx = 0;
+      for (let e = 0; e < 32; e++) {
+        const [v1, v2] = tesseractEdges[e];
+        const p1 = projected3D[v1];
+        const p2 = projected3D[v2];
+
+        edgePosAttr.setXYZ(edgeIdx++, p1[0], p1[1], p1[2]);
+        edgePosAttr.setXYZ(edgeIdx++, p2[0], p2[1], p2[2]);
+      }
+      edgePosAttr.needsUpdate = true;
+
+      // 3. Animate 6D Calabi-Yau Knot and Singularity Core
+      knotMesh.rotation.x += 0.004;
+      knotMesh.rotation.y += 0.006;
+      knotMesh.rotation.z -= 0.003;
+
+      innerCore.rotation.x -= 0.007;
+      innerCore.rotation.y -= 0.009;
+
+      // Pulse inner core scale with sinusoidal breathing
+      const pulse = 1 + Math.sin(clockTime * 2.5) * 0.12;
+      innerCore.scale.set(pulse, pulse, pulse);
+
+      // 4. Undulating Cyber Horizon Warp Grid
+      horizonPlane.rotation.z += 0.0008;
+      horizonPlane.position.x = mouseX * 0.2;
+
+      // 5. Starfield gentle drift
+      starField.rotation.y += 0.0003;
+
+      // Camera parallax
+      camera.position.x = mouseX * 0.25;
+      camera.position.y = -mouseY * 0.25;
       camera.lookAt(scene.position);
 
       renderer.render(scene, camera);

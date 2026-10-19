@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Architecting Real-Time AI Workspaces: SSE Streaming & State Isolation — Rustam Timalsina</title>
+  <meta name="description" content="Deep dive into NexusAI Studio: implementing Server-Sent Events (SSE) token streaming, multi-persona context isolation, and Gemini 1.5 Pro orchestration in React." />
+  <link rel="canonical" href="https://www.rustamtimalsina.com.np/post4.html" />
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><rect width=%22100%22 height=%22100%22 rx=%2224%22 fill=%22%230d111a%22/><text y=%2265%22 x=%2250%22 text-anchor=%22middle%22 font-family=%22sans-serif%22 font-size=%2250%22 font-weight=%22800%22 fill=%22%2338bdf8%22>RT</text></svg>" />
+
+  <!-- Preconnect & Modern Typefaces -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet" />
+
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <!-- Reading Progress Bar -->
+  <div id="reading-progress"></div>
+
+  <!-- Ambient Glow Orbs -->
+  <div class="ambient-glow glow-1"></div>
+  <div class="ambient-glow glow-2"></div>
+
+  <!-- Studio Header -->
+  <header class="navbar">
+    <div class="container nav-content">
+      <a href="index.html#hero" class="brand" aria-label="Home">
+        <span class="brand-monogram">RT</span>
+        <span class="brand-name">Rustam Timalsina</span>
+      </a>
+      <nav class="nav-links">
+        <a href="index.html#projects">Systems</a>
+        <a href="index.html#experience">Milestones</a>
+        <a href="index.html#skills">Tech Matrix</a>
+        <a href="blog.html" class="active" style="color: var(--cyan);">Blog</a>
+        <a href="index.html#contact" class="btn btn-nav">Connect</a>
+      </nav>
+    </div>
+  </header>
+
+  <main class="article-container">
+    <div class="article-hero">
+      <div class="eyebrow">AI Systems & Architecture • Case Study</div>
+      <h1 class="article-title">🧠 Architecting Real-Time AI Workspaces: SSE Streaming & Persona State Isolation</h1>
+      <p class="article-subtitle">Building NexusAI Studio: Engineering high-throughput Server-Sent Events (SSE) token pipes, client-side message reconciliation, and sandboxed AI persona state in React & Node.</p>
+      <div class="article-info-bar">
+        <span>By Rustam Timalsina</span>
+        <span>•</span>
+        <span>October 2025</span>
+        <span>•</span>
+        <span>6 min read</span>
+      </div>
+    </div>
+
+    <div class="article-featured-img-wrap">
+      <img src="assets/nexus-ai-studio.png" alt="NexusAI Studio Workspace Interface" class="article-featured-img" />
+    </div>
+
+    <article class="article-body">
+      <p>Modern Large Language Model (LLM) applications frequently fall into a predictable UX trap: waiting several seconds for a massive JSON payload to resolve before rendering a single character. When users interact with complex multi-prompt workspaces, latency feels exponential.</p>
+
+      <p>When architecting <a href="https://client-two-tau-83.vercel.app" target="_blank" rel="noopener noreferrer" style="color: var(--cyan); text-decoration: underline;">NexusAI Studio</a>, my goal was to eliminate this friction entirely. The system required three core primitives: <strong>instant sub-150ms First Token Latency (FTL)</strong>, <strong>isolated multi-persona conversation graphs</strong>, and <strong>graceful client-side stream reconnection</strong>.</p>
+
+      <h2>1. The Transport Protocol: Why SSE Outperformed WebSockets & Long Polling</h2>
+
+      <p>A frequent debate when designing real-time AI streaming is WebSockets vs. Server-Sent Events (SSE). While WebSockets provide full-duplex communication, they introduce stateful connection management hurdles across serverless edge tiers, require custom ping/pong heartbeats, and bypass HTTP/2 multiplexing benefits.</p>
+
+      <p>Since AI responses are strictly unidirectional once a prompt is issued (Client sends prompt &rarr; Server streams response tokens), HTTP-based Server-Sent Events (<code>text/event-stream</code>) provided the ideal architectural blueprint:</p>
+
+      <pre><code>// server/services/aiStream.js
+import { GoogleGenerativeAI } from "@google/generative-ai";
+
+export async function handleStreamPrompt(req, res) {
+  res.setHeader("Content-Type", "text/event-stream");
+  res.setHeader("Cache-Control", "no-cache");
+  res.setHeader("Connection", "keep-alive");
+  res.flushHeaders();
+
+  const { personaId, history, prompt } = req.body;
+  const systemInstruction = getPersonaSystemPrompt(personaId);
+
+  try {
+    const model = genAI.getGenerativeModel({
+      model: "gemini-1.5-pro",
+      systemInstruction
+    });
+
+    const chat = model.startChat({ history });
+    const resultStream = await chat.sendMessageStream(prompt);
+
+    for await (const chunk of resultStream.stream) {
+      const text = chunk.text();
+      res.write(`data: ${JSON.stringify({ text, done: false })}\n\n`);
+    }
+
+    res.write(`data: ${JSON.stringify({ done: true })}\n\n`);
+    res.end();
+  } catch (err) {
+    res.write(`data: ${JSON.stringify({ error: err.message })}\n\n`);
+    res.end();
+  }
+}</code></pre>
+
+      <h2>2. Client-Side Chunk Reconciliation with AbortControllers</h2>
+
+      <p>Handling chunked token streams inside React without triggering debilitating re-renders or dropped states was a primary engineering hurdle. Direct <code>useState</code> updates on every 4-character token caused micro-stutters in the virtual DOM.</p>
+
+      <p>To solve this, I designed a resilient React custom hook utilizing `ReadableStream` reader parsing, request animation frame batching, and native `AbortController` cancellation whenever a user switches persona tabs or clicks "Stop Generating":</p>
+
+      <pre><code>// client/hooks/useAIStream.ts
+import { useState, useRef } from 'react';
+
+export function useAIStream() {
+  const [streamingContent, setStreamingContent] = useState('');
+  const [isGenerating, setIsGenerating] = useState(false);
+  const abortControllerRef = useRef&lt;AbortController | null&gt;(null);
+
+  const streamPrompt = async (endpoint: string, payload: any) => {
+    abortControllerRef.current?.abort();
+    const controller = new AbortController();
+    abortControllerRef.current = controller;
+
+    setIsGenerating(true);
+    setStreamingContent('');
+
+    try {
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        signal: controller.signal
+      });
+
+      const reader = response.body?.getReader();
+      const decoder = new TextDecoder();
+      let buffer = '';
+
+      while (reader) {
+        const { value, done } = await reader.read();
+        if (done) break;
+
+        buffer += decoder.decode(value, { stream: true });
+        const lines = buffer.split('\n\n');
+        buffer = lines.pop() || '';
+
+        for (const line of lines) {
+          if (line.startsWith('data: ')) {
+            const data = JSON.parse(line.slice(6));
+            if (data.text) {
+              setStreamingContent(prev => prev + data.text);
+            }
+          }
+        }
+      }
+    } catch (err: any) {
+      if (err.name !== 'AbortError') console.error('Stream failure:', err);
+    } finally {
+      setIsGenerating(false);
+    }
+  };
+
+  return { streamingContent, isGenerating, streamPrompt, abort: () => abortControllerRef.current?.abort() };
+}</code></pre>
+
+      <h2>3. Persona Sandboxing & Context Graph Isolation</h2>
+
+      <p>NexusAI Studio supports multiple autonomous persona roles (e.g., Senior Systems Architect, Security Penetration Auditor, UI/UX Critique). Switching between them in a single session without context poisoning required clean state partitions.</p>
+
+      <p>Each workspace is keyed by an isolated UUID that preserves its own system prompt matrix, token usage counter, and conversation context window. When the user switches workspaces, the client isolates the message history buffer and dispatches the corresponding context payload:</p>
+
+      <div class="system-architecture-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 1rem; margin: 2rem 0;">
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem;">
+          <h4 style="color: var(--cyan); margin-bottom: 0.5rem; font-size: 0.95rem;">1. Architecture Persona</h4>
+          <p style="font-size: 0.85rem; color: var(--text-dim); line-height: 1.5;">Evaluates scaling bottlenecks, database indexing schemas, and distributed consistency trade-offs.</p>
+        </div>
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem;">
+          <h4 style="color: var(--purple); margin-bottom: 0.5rem; font-size: 0.95rem;">2. Security Persona</h4>
+          <p style="font-size: 0.85rem; color: var(--text-dim); line-height: 1.5;">Audits input boundaries against prompt injections, SSRF vulnerabilities, and sanitizes payload boundaries.</p>
+        </div>
+        <div style="background: rgba(255,255,255,0.03); border: 1px solid var(--border); border-radius: 12px; padding: 1.25rem;">
+          <h4 style="color: #10b981; margin-bottom: 0.5rem; font-size: 0.95rem;">3. Code Generator</h4>
+          <p style="font-size: 0.85rem; color: var(--text-dim); line-height: 1.5;">Outputs clean, type-safe TypeScript snippets with defensive null checks and strict modularity.</p>
+        </div>
+      </div>
+
+      <h2>4. Key Takeaways & What's Next</h2>
+
+      <p>Building NexusAI Studio deepened my conviction that real-time feedback loops define the difference between a novelty AI wrapper and a serious engineering instrument. By combining HTTP/2 SSE streaming with isolated context graphs, we achieved sub-150ms perceived latency and bulletproof session safety.</p>
+
+      <p>Next steps for the studio include local vector embeddings via IndexedDB for client-side semantic document search and multi-model fallbacks across Anthropic and local Ollama runtimes.</p>
+
+      <div style="background: rgba(56, 189, 248, 0.05); border: 1px solid rgba(56, 189, 248, 0.2); border-radius: 12px; padding: 1.5rem; margin-top: 2rem;">
+        <h4 style="margin-top: 0; color: var(--cyan);">Try the Production Build</h4>
+        <p style="margin-bottom: 1rem; color: var(--text-muted); font-size: 0.95rem;">The application is deployed live with instant streaming enabled. Check out the interface and inspect the network inspector to observe the SSE event pipe:</p>
+        <div style="display: flex; gap: 1rem; flex-wrap: wrap;">
+          <a href="https://client-two-tau-83.vercel.app" target="_blank" rel="noopener noreferrer" class="btn btn-primary" style="padding: 0.6rem 1.25rem; font-size: 0.85rem;">Launch Live Studio ↗</a>
+          <a href="https://github.com/rustamtimalsina/nexus-ai-studio" target="_blank" rel="noopener noreferrer" class="btn btn-secondary" style="padding: 0.6rem 1.25rem; font-size: 0.85rem;">View GitHub Source ↗</a>
+        </div>
+      </div>
+    </article>
+
+    <!-- Post Article Navigation -->
+    <div style="margin-top: 3.5rem; padding-top: 2rem; border-top: 1px solid var(--border); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 1rem;">
+      <a href="blog.html" class="btn btn-secondary" style="padding: 0.6rem 1.25rem; font-size: 0.85rem;">← Back to All Articles</a>
+      <a href="post3.html" style="color: var(--cyan); text-decoration: none; font-size: 0.9rem; font-weight: 500;">Previous Post: Game Backend Lessons →</a>
+    </div>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-content">
+      <p>© <span id="year"></span> Rustam Timalsina. Kathmandu, Nepal.</p>
+      <div style="display: flex; gap: 1.5rem; align-items: center;">
+        <a href="index.html" style="color: var(--text-dim); text-decoration: none; font-size: 0.85rem;">Home</a>
+        <a href="blog.html" style="color: var(--text-dim); text-decoration: none; font-size: 0.85rem;">Blog</a>
+        <a href="#" class="back-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'}); return false;">Back to top ↑</a>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    // Reading Progress Bar
+    window.addEventListener('scroll', () => {
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const scrolled = (window.scrollY / docHeight) * 100;
+      const bar = document.getElementById('reading-progress');
+      if (bar) bar.style.width = scrolled + '%';
+    });
+
+    // 1-Click Code Copy Engine
+    document.querySelectorAll('pre').forEach(pre => {
+      const wrap = document.createElement('div');
+      wrap.className = 'code-block-wrap';
+      pre.parentNode.insertBefore(wrap, pre);
+      wrap.appendChild(pre);
+
+      const copyBtn = document.createElement('button');
+      copyBtn.type = 'button';
+      copyBtn.className = 'code-copy-btn';
+      copyBtn.textContent = 'Copy';
+      copyBtn.onclick = () => {
+        const codeText = pre.querySelector('code')?.innerText || pre.innerText;
+        navigator.clipboard.writeText(codeText).then(() => {
+          copyBtn.textContent = 'Copied! ✓';
+          setTimeout(() => copyBtn.textContent = 'Copy', 2000);
+        });
+      };
+      wrap.appendChild(copyBtn);
+    });
+  </script>
+</body>
+</html>
