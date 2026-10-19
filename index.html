@@ -125,7 +125,7 @@
           </a>
         </div>
 
-        <!-- Interactive Recruiter Terminal Sandbox -->
+        <!-- Interactive Recruiter Terminal Sandbox & AI Agent -->
         <div class="terminal-window" id="recruiter-terminal">
           <div class="terminal-header">
             <div class="terminal-dots">
@@ -133,12 +133,19 @@
               <span class="terminal-dot dot-yellow"></span>
               <span class="terminal-dot dot-green"></span>
             </div>
-            <span class="terminal-title">rustam@sys-arch: ~/interactive-shell</span>
-            <span style="font-size: 0.72rem; color: var(--cyan); opacity: 0.85;">v2.4-live</span>
+            <span class="terminal-title">rustam@sys-arch: ~/ai-recruiter-agent</span>
+            <div class="terminal-badge-ai">
+              <span class="terminal-ai-dot"></span>
+              <span>AI Agent Online</span>
+            </div>
           </div>
           <div class="terminal-quick-cmds">
-            <span class="terminal-hint">Quick commands:</span>
-            <button type="button" class="cmd-pill" onclick="runTermCmd('help')">help</button>
+            <span class="terminal-hint">Ask AI:</span>
+            <button type="button" class="cmd-pill cmd-pill-ai" onclick="runTermCmd('ask why sse instead of websockets in nexusai?')">🤖 why SSE?</button>
+            <button type="button" class="cmd-pill cmd-pill-ai" onclick="runTermCmd('ask summarize rustam backend experience')">🤖 backend experience</button>
+            <button type="button" class="cmd-pill cmd-pill-ai" onclick="runTermCmd('ask how does uriel prevent data leakage?')">🤖 how Uriel works</button>
+            <button type="button" class="cmd-pill cmd-pill-ai" onclick="runTermCmd('ask why hire rustam?')">🤖 why hire Rustam?</button>
+            <span class="terminal-hint" style="margin-left: 6px;">Sys:</span>
             <button type="button" class="cmd-pill" onclick="runTermCmd('projects')">projects</button>
             <button type="button" class="cmd-pill" onclick="runTermCmd('skills')">skills</button>
             <button type="button" class="cmd-pill" onclick="runTermCmd('curl /api/uriel')">curl /api/uriel</button>
@@ -146,11 +153,11 @@
             <button type="button" class="cmd-pill" onclick="runTermCmd('clear')">clear</button>
           </div>
           <div class="terminal-body" id="term-body">
-            <div class="terminal-output" id="term-output">System initialized. Type a command or click a quick command pill above.
-Try 'help' to see all available system actions.</div>
+            <div class="terminal-output" id="term-output">System initialized. AI Recruiter Agent v2.5 loaded with Rustam's engineering knowledge base.
+Type any natural language question: e.g. "ask why SSE in NexusAI" or click a blue pill above!</div>
             <div class="terminal-input-row">
               <span class="terminal-prompt">rustam@portfolio:~$</span>
-              <input type="text" id="term-input" class="terminal-input" placeholder="Type command..." autocomplete="off" spellcheck="false" />
+              <input type="text" id="term-input" class="terminal-input" placeholder="Type 'ask <question>' or command (e.g. projects, skills)..." autocomplete="off" spellcheck="false" />
             </div>
           </div>
         </div>
@@ -897,21 +904,55 @@ Try 'help' to see all available system actions.</div>
     };
 
     // -------------------------------------------------------------
-    // INTERACTIVE RECRUITER TERMINAL ENGINE
+    // INTERACTIVE RECRUITER TERMINAL & IN-BROWSER AI AGENT ENGINE
     // -------------------------------------------------------------
     const termInput = document.getElementById('term-input');
     const termOutput = document.getElementById('term-output');
     const termBody = document.getElementById('term-body');
+    let isAIGenerating = false;
 
-    const termCommands = {
-      help: () => `Available commands:
-  projects         - List featured engineering systems
-  skills           - View technical matrix & core competencies
-  curl /api/uriel  - Query local contextual retrieval engine stats
-  cat cv.txt       - Display career summary & resume link
-  contact          - Jump to direct contact dispatch
-  clear            - Wipe terminal buffer`,
-      projects: () => `[1] NexusAI Studio — Multi-Persona AI Workspace (React 18 + SSE + Gemini API)
+    // RAG Knowledge Vector Corpus about Rustam Timalsina
+    const rustamKnowledgeBase = [
+      {
+        topics: ['sse', 'websocket', 'streaming', 'nexus', 'nexusai', 'why sse', 'server sent events'],
+        answer: `[AI RECORDER • ARCHITECTURE SYNTHESIS]
+In NexusAI Studio, Rustam selected Server-Sent Events (SSE) over WebSockets for three key engineering reasons:
+1. Directional Efficiency: Once a prompt is dispatched, the LLM data flow is strictly unidirectional (Server → Client token stream). WebSockets' bi-directional duplex capability introduces unnecessary complexity.
+2. HTTP/2 Native Multiplexing: SSE operates over standard HTTP/2 streams, allowing transparent proxying through CDNs, automatic connection reuse, and zero firewall traversal obstacles.
+3. Edge Compatibility: Native text/event-stream headers integrate cleanly with serverless edge endpoints (like Vercel & Cloudflare Workers) without requiring stateful socket session pinning.
+Check out Rustam's full case study at /post4.html!`
+      },
+      {
+        topics: ['backend', 'asp.net', 'c#', 'csharp', 'database', 'sql', 'postgres', 'laravel', 'architecture', 'api'],
+        answer: `[AI RECORDER • BACKEND COMPETENCY]
+Rustam specializes in structured, high-integrity backend engineering:
+• Frameworks: ASP.NET Core (.NET 8), Entity Framework Core, Node.js/Express, and Laravel (PHP).
+• Architectural Principles: Clean Architecture, Repository Pattern, Dependency Injection, and ACID-compliant transactional guarantees.
+• Data Stores: PostgreSQL and MySQL, designed with strict normalization, relational cascading integrity, and compound B-tree index optimizations to prevent N+1 bottlenecks.
+• Authentication: Stateless JWT access tokens with rotating refresh tokens and role-based access control (RBAC).`
+      },
+      {
+        topics: ['uriel', 'rag', 'vector', 'embeddings', 'leakage', 'privacy', 'local', 'chroma'],
+        answer: `[AI RECORDER • URIEL SYSTEM DEEP-DIVE]
+Uriel is Rustam's academic capstone project focused on zero-cloud contextual document intelligence:
+• Zero-Leakage Boundary: All document chunking, dense vector embedding, and similarity search execute 100% on the local host machine. No sensitive corporate PDFs or IP are ever transmitted to third-party cloud APIs.
+• Chunking Strategy: Sliding-window chunking with contextual overlap to preserve semantic continuity across paragraph splits.
+• Vector Retrieval: Dense cosine similarity ranking retrieves the Top-K most relevant passages in sub-200ms before prompt composition.`
+      },
+      {
+        topics: ['hire', 'why hire', 'interview', 'role', 'roles', 'open', 'contract', 'availability', 'location', 'nepal'],
+        answer: `[AI RECORDER • TALENT PROFILE & VALUE PROPOSITION]
+Why recruit or contract Rustam Timalsina?
+1. Production Systems Mindset: Rustam builds systems with real architectural rigor—from real-time SSE streaming to normalized relational databases and defensive null checks.
+2. Rapid Execution Speed: Proven ability to build, optimize, and deploy complete production solutions (Vercel, GitHub Actions, Three.js 4D engines, REST APIs).
+3. Availability: Open for Remote Full-Stack/Backend Engineering roles and Architectural Consulting contracts.
+4. Location: Kathmandu, Nepal (open to global time zone overlaps).
+Direct contact: rustamtimalsina179@gmail.com or dispatch a message in the contact section below!`
+      },
+      {
+        topics: ['projects', 'featured', 'portfolio', 'work'],
+        answer: `[SYSTEM • FEATURED REPOSITORIES]
+[1] NexusAI Studio — Multi-Persona AI Workspace (React 18 + SSE + Gemini API)
 [2] Uriel — Local Contextual Document Retrieval (Dense Vector Embedding RAG)
 [3] NestHub — Real Estate Relational Platform (React + Express + Relational DB)
 [4] ClientHub — Delivery State Machine (Finite-State Transitions + MySQL)
@@ -919,11 +960,69 @@ Try 'help' to see all available system actions.</div>
 [6] Syntecxhub Task Engine — Sprint Scheduling & State Validation
 [7] Restaurant Demo — 60 FPS Accessible Client Engine
 
-Type 'curl /api/nexusai' or 'curl /api/uriel' for a live architecture query!`,
-      skills: () => `Languages:  Python, C# / ASP.NET, JavaScript (ES6+), TypeScript, SQL, HTML5/CSS3
-Backend:    RESTful APIs, JWT Auth, Microservices, Relational DBs, Sliding-Window RAG
-AI/ML:      Vector Embeddings, Semantic Search, Cosine Similarity, ETL Pipelines
-DevOps/Tool: Git, Vercel, Docker, Postman, Linux, Vite`,
+Type 'curl /api/nexusai' or 'ask why sse' to explore!`
+      },
+      {
+        topics: ['skills', 'stack', 'tech', 'languages', 'tools'],
+        answer: `[SYSTEM • CAPABILITIES MATRIX]
+• Languages: Python, C# (.NET Core), JavaScript (ES6+), TypeScript, SQL, PHP, C/C++, Java
+• Frameworks: React, Express, ASP.NET Core, Laravel, Tailwind CSS, Three.js
+• Architecture: Clean Architecture, REST APIs, SSE Streaming, RAG & Vector Search
+• Database & DevOps: PostgreSQL, MySQL, Git/GitHub, Docker, Linux, Vercel`
+      },
+      {
+        topics: ['cv', 'resume', 'contact', 'email', 'touch'],
+        answer: `[SYSTEM • COMM CHANNELS]
+• Candidate: Rustam Timalsina
+• Email: rustamtimalsina179@gmail.com
+• Location: Kathmandu, Nepal
+• CV Document: assets/Rustam_Timilsina_CV.pdf (click 'Download CV' in header)
+• GitHub: https://github.com/rustamtimalsina`
+      }
+    ];
+
+    // Semantic query matcher
+    function matchAIQuery(query) {
+      const q = query.toLowerCase();
+      let bestMatch = null;
+      let highestScore = 0;
+
+      for (const item of rustamKnowledgeBase) {
+        let score = 0;
+        for (const topic of item.topics) {
+          if (q.includes(topic)) {
+            score += topic.length;
+          }
+        }
+        if (score > highestScore) {
+          highestScore = score;
+          bestMatch = item.answer;
+        }
+      }
+
+      if (highestScore > 0) return bestMatch;
+
+      return `[AI RECORDER • GENERAL INFERENCE]
+Rustam is a Full-Stack Systems & AI Engineer specializing in resilient backend architectures (ASP.NET Core, C#, Node.js, SQL), real-time streaming interfaces (SSE, WebGL), and contextual AI pipelines (RAG, Vector search).
+You can ask me specific questions like:
+• "ask why SSE instead of WebSockets?"
+• "ask summarize backend experience"
+• "ask how Uriel works"
+• "ask why hire Rustam"`;
+    }
+
+    const termCommands = {
+      help: () => `Available System Commands:
+  ask <question>   - Ask the AI Agent anything about Rustam's work
+  projects         - List featured engineering systems
+  skills           - View technical matrix & core competencies
+  curl /api/nexusai- Query live streaming engine telemetry
+  curl /api/uriel  - Query local contextual retrieval engine stats
+  cat cv.txt       - Display career summary & resume link
+  contact          - Jump to direct contact dispatch
+  clear            - Wipe terminal buffer`,
+      projects: () => rustamKnowledgeBase.find(k => k.topics.includes('projects')).answer,
+      skills: () => rustamKnowledgeBase.find(k => k.topics.includes('skills')).answer,
       'curl /api/nexusai': () => `HTTP/1.1 200 OK
 Content-Type: text/event-stream
 Transfer-Encoding: chunked
@@ -944,10 +1043,7 @@ X-Telemetry: Local-Only (0% Cloud Leakage)
   "privacy_boundary": "100% On-Prem / Local Host",
   "source_documents_indexed": 128
 }`,
-      'cat cv.txt': () => `Rustam Timalsina — Full-Stack Systems & AI Engineer
-Kathmandu, Nepal • rustamtimalsina179@gmail.com
-Education: Bachelor's in Computer Science & Engineering
-CV Document: assets/Rustam_Timilsina_CV.pdf (Click 'Download CV' above to read full PDF)`,
+      'cat cv.txt': () => rustamKnowledgeBase.find(k => k.topics.includes('cv')).answer,
       contact: () => {
         document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' });
         return `Redirecting to contact dispatch below...`;
@@ -958,25 +1054,63 @@ CV Document: assets/Rustam_Timilsina_CV.pdf (Click 'Download CV' above to read f
       }
     };
 
+    // Real-Time Token Streaming Output
+    function streamTerminalResponse(prefix, text) {
+      isAIGenerating = true;
+      if (termInput) termInput.disabled = true;
+
+      termOutput.textContent += `\n\n${prefix}\n`;
+      let i = 0;
+      const speed = 12; // ms per token char
+
+      function typeChar() {
+        if (i < text.length) {
+          termOutput.textContent += text.charAt(i);
+          i++;
+          if (termBody) termBody.scrollTop = termBody.scrollHeight;
+          setTimeout(typeChar, speed);
+        } else {
+          isAIGenerating = false;
+          if (termInput) {
+            termInput.disabled = false;
+            termInput.focus();
+          }
+        }
+      }
+      typeChar();
+    }
+
     window.runTermCmd = function(cmd) {
-      if (!termOutput) return;
+      if (!termOutput || isAIGenerating) return;
       cmd = cmd.trim();
+      if (!cmd) return;
       const lower = cmd.toLowerCase();
-      let res = '';
-      if (termCommands[lower]) {
-        res = termCommands[lower]();
+
+      if (lower === 'clear') {
+        termCommands.clear();
+        return;
+      }
+
+      const prefix = `rustam@portfolio:~$ ${cmd}`;
+
+      if (lower.startsWith('ask ') || lower.startsWith('ask:')) {
+        const query = cmd.replace(/^ask[:\s]+/i, '').trim();
+        const response = matchAIQuery(query);
+        streamTerminalResponse(prefix, response);
+      } else if (termCommands[lower]) {
+        const response = termCommands[lower]();
+        termOutput.textContent += `\n\n${prefix}\n${response}`;
+        if (termBody) termBody.scrollTop = termBody.scrollHeight;
       } else {
-        res = `command not found: '${cmd}'. Type 'help' for available actions.`;
+        // Fallback: If user typed a natural question without "ask", route to AI agent automatically!
+        const response = matchAIQuery(cmd);
+        streamTerminalResponse(prefix, response);
       }
-      if (lower !== 'clear') {
-        termOutput.textContent += `\n\nrustam@portfolio:~$ ${cmd}\n${res}`;
-      }
-      if (termBody) termBody.scrollTop = termBody.scrollHeight;
     };
 
     if (termInput) {
       termInput.addEventListener('keydown', (e) => {
-        if (e.key === 'Enter') {
+        if (e.key === 'Enter' && !isAIGenerating) {
           const val = termInput.value;
           termInput.value = '';
           if (val.trim()) window.runTermCmd(val);

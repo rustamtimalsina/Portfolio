@@ -1556,6 +1556,29 @@ body {
   color: var(--text-dim);
 }
 
+.terminal-badge-ai {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(56, 189, 248, 0.12);
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  padding: 3px 9px;
+  border-radius: 999px;
+  font-size: 0.68rem;
+  color: var(--cyan);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.terminal-ai-dot {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--cyan);
+  box-shadow: 0 0 8px var(--cyan);
+  animation: pulse-cyan 1.6s infinite ease-in-out;
+}
+
 .terminal-quick-cmds {
   display: flex;
   align-items: center;
@@ -1588,6 +1611,19 @@ body {
 .cmd-pill:hover {
   background: rgba(56, 189, 248, 0.15);
   border-color: var(--cyan);
+}
+
+.cmd-pill-ai {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: rgba(56, 189, 248, 0.28);
+  color: #e0f2fe;
+}
+
+.cmd-pill-ai:hover {
+  background: rgba(56, 189, 248, 0.22);
+  border-color: var(--cyan);
+  box-shadow: 0 0 10px rgba(56, 189, 248, 0.25);
+  transform: translateY(-1px);
 }
 
 .terminal-body {
