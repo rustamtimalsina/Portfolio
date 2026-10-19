@@ -706,24 +706,6 @@ Type any natural language question: e.g. "ask why SSE in NexusAI" or click a blu
     let mouseX = 0, mouseY = 0;
     let targetMouseX = 0, targetMouseY = 0;
 
-    // SCROLL-DRIVEN DOLLY ZOOM & WARP SPEED ENGINE
-    let scrollProgress = 0;
-    let targetScrollProgress = 0;
-    let scrollVelocity = 0;
-    let lastScrollY = window.scrollY;
-    let warpFactor = 0;
-
-    function onScrollUpdate() {
-      const maxScroll = document.documentElement.scrollHeight - window.innerHeight;
-      targetScrollProgress = maxScroll > 0 ? window.scrollY / maxScroll : 0;
-
-      const currentScrollY = window.scrollY;
-      const delta = Math.abs(currentScrollY - lastScrollY);
-      scrollVelocity = Math.min(delta * 0.08, 8.0);
-      lastScrollY = currentScrollY;
-    }
-    window.addEventListener('scroll', onScrollUpdate, { passive: true });
-
     window.addEventListener('mousemove', (e) => {
       targetMouseX = (e.clientX - window.innerWidth / 2) * 0.35;
       targetMouseY = (e.clientY - window.innerHeight / 2) * 0.35;
@@ -809,28 +791,19 @@ Type any natural language question: e.g. "ask why SSE in NexusAI" or click a blu
       mouseX += (targetMouseX - mouseX) * 0.05;
       mouseY += (targetMouseY - mouseY) * 0.05;
 
-      // Smooth scroll progress & velocity decay
-      scrollProgress += (targetScrollProgress - scrollProgress) * 0.06;
-      scrollVelocity *= 0.92;
-      warpFactor += (scrollVelocity - warpFactor) * 0.1;
-
-      // Continuous 4th Dimension Hyperplane Rotations + Scroll Acceleration
-      const scrollSpinBoost = warpFactor * 0.02;
-      rotXW += 0.008 + (mouseX * 0.00004) + scrollSpinBoost;
-      rotZW += 0.006 + (mouseY * 0.00004) + scrollSpinBoost;
-      rotYW += 0.004 + (scrollSpinBoost * 0.5);
+      // Continuous 4th Dimension Hyperplane Rotations + Mouse Influence
+      rotXW += 0.008 + (mouseX * 0.00004);
+      rotZW += 0.006 + (mouseY * 0.00004);
+      rotYW += 0.004;
       rotXY += 0.003;
 
       // 1. Calculate Projected 3D coordinates for all 16 4D Vertices
       const projected3D = [];
       const nodePosAttr = tesseractNodeGeometry.attributes.position;
 
-      // Dynamic scale driven by scrolling & warp stretching
-      const dynamicScale = 96 + (Math.sin(scrollProgress * Math.PI) * 26) + (warpFactor * 4);
-
       for (let i = 0; i < 16; i++) {
         const rotated4D = rotatePoint4D(tesseract4DVertices[i], rotXW, rotZW, rotYW, rotXY);
-        const p3d = project4D(rotated4D, 2.35, dynamicScale);
+        const p3d = project4D(rotated4D, 2.35, 96);
         projected3D.push(p3d);
 
         nodePosAttr.setXYZ(i, p3d[0], p3d[1], p3d[2]);
@@ -851,50 +824,28 @@ Type any natural language question: e.g. "ask why SSE in NexusAI" or click a blu
       edgePosAttr.needsUpdate = true;
 
       // 3. Animate 6D Calabi-Yau Knot and Singularity Core
-      knotMesh.rotation.x += 0.004 + scrollSpinBoost;
-      knotMesh.rotation.y += 0.006 + scrollSpinBoost;
+      knotMesh.rotation.x += 0.004;
+      knotMesh.rotation.y += 0.006;
       knotMesh.rotation.z -= 0.003;
 
       innerCore.rotation.x -= 0.007;
       innerCore.rotation.y -= 0.009;
 
-      // Pulse inner core scale with sinusoidal breathing + warp dilation
-      const pulse = 1 + Math.sin(clockTime * 2.5) * 0.12 + (warpFactor * 0.05);
+      // Pulse inner core scale with sinusoidal breathing
+      const pulse = 1 + Math.sin(clockTime * 2.5) * 0.12;
       innerCore.scale.set(pulse, pulse, pulse);
 
-      // 4. Undulating Cyber Horizon Warp Grid: responds to scroll depth
+      // 4. Undulating Cyber Horizon Warp Grid
       horizonPlane.rotation.z += 0.0008;
       horizonPlane.position.x = mouseX * 0.2;
-      horizonPlane.position.z = -120 + (scrollProgress * 200);
-      horizonPlane.position.y = -160 + (scrollProgress * 60);
 
-      // 5. Starfield hyper-space warp speed effect
-      const starAttr = starGeo.attributes.position;
-      const starSpeed = 0.5 + (warpFactor * 7.0);
-      for (let s = 2; s < starCount * 3; s += 3) {
-        starAttr.array[s] += starSpeed;
-        if (starAttr.array[s] > 400) {
-          starAttr.array[s] = -900;
-        }
-      }
-      starAttr.needsUpdate = true;
+      // 5. Starfield gentle drift
       starField.rotation.y += 0.0003;
 
-      // 6. SCROLL-DRIVEN CAMERA DOLLY ZOOM NAVIGATION
-      // As you scroll down the page, camera smoothly zooms along Z into the dimensional lattice
-      const baseCameraZ = 360;
-      const zoomDepth = 190; // Fly-through depth
-      camera.position.z = baseCameraZ - (scrollProgress * zoomDepth) - (warpFactor * 14);
-
-      // Parallax mouse sway + dynamic scroll elevation
+      // Camera parallax
       camera.position.x = mouseX * 0.25;
-      camera.position.y = (-mouseY * 0.25) - (scrollProgress * 55);
-
-      // Dynamic field-of-view warp during rapid scrolling
-      camera.fov = 50 + (warpFactor * 3.5);
-      camera.updateProjectionMatrix();
-
-      camera.lookAt(0, -scrollProgress * 20, 0);
+      camera.position.y = -mouseY * 0.25;
+      camera.lookAt(scene.position);
 
       renderer.render(scene, camera);
     }
