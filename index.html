@@ -210,6 +210,7 @@ Type any natural language question: e.g. "ask why SSE in NexusAI" or click a blu
                 <a href="https://client-two-tau-83.vercel.app" target="_blank" rel="noopener" class="card-btn live">Live Demo ↗</a>
                 <button type="button" class="card-btn arch-trigger" onclick="openArchModal('nexusai')">Architecture ⚡</button>
                 <button type="button" class="card-btn code-peek-btn" onclick="toggleCodePeek('nexusai', this)">View Code 💻</button>
+                <a href="post4.html" class="card-btn secondary" title="Read technical article">Article ⚡</a>
                 <a href="https://github.com/rustamtimalsina/nexus-ai-studio" target="_blank" rel="noopener" class="card-btn secondary">GitHub →</a>
               </div>
               <div class="code-peek-drawer" id="code-peek-nexusai">
@@ -280,6 +281,7 @@ app.post('/api/chat/stream', async (req, res) => {
               <div class="card-links">
                 <button type="button" class="card-btn arch-trigger" onclick="openArchModal('uriel')">Inspect Architecture ⚡</button>
                 <button type="button" class="card-btn code-peek-btn" onclick="toggleCodePeek('uriel', this)">View Code 💻</button>
+                <a href="post5.html" class="card-btn secondary" title="Read technical article">Article 🔒</a>
                 <a href="https://github.com/rustamtimalsina/Uriel" target="_blank" rel="noopener" class="card-btn secondary">GitHub →</a>
               </div>
               <div class="code-peek-drawer" id="code-peek-uriel">
@@ -1459,6 +1461,8 @@ export function validateTaskPayload(payload: Partial<TaskPayload>): TaskPayload 
     let selectedIndex = 0;
 
     const cmdActions = [
+      { id: 'uriel-article', title: 'Deep Dive: Designing Zero-Leakage Local RAG (Uriel)', tag: 'Article', action: () => window.location.href = 'post5.html' },
+      { id: 'nexus-article', title: 'Deep Dive: Architecting Real-Time AI Workspaces (NexusAI)', tag: 'Article', action: () => window.location.href = 'post4.html' },
       { id: 'nexus-live', title: 'Live Demo: NexusAI Studio', tag: 'Live Preview', action: () => window.open('https://client-two-tau-83.vercel.app', '_blank') },
       { id: 'nexus-arch', title: 'Blueprint: NexusAI Studio', tag: 'Architecture', action: () => window.openArchModal('nexusai') },
       { id: 'uriel-arch', title: 'Blueprint: Uriel RAG Engine', tag: 'Architecture', action: () => window.openArchModal('uriel') },
