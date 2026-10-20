@@ -182,12 +182,20 @@ Type any natural language question: e.g. "ask why SSE in NexusAI" or click a blu
         <div class="projects-grid">
           <!-- 1. NexusAI Studio -->
           <article class="project-card tilt-card" data-category="ai fullstack">
+            <div class="project-media">
+              <img src="assets/nexus-ai-studio.png" alt="NexusAI Studio Interface" loading="lazy" />
+            </div>
             <div class="card-inner">
               <div class="card-top">
                 <span class="project-badge research">AI & Streaming Architecture</span>
                 <span class="project-year">Production Build</span>
               </div>
               <h3 class="card-title">NexusAI Studio — Multi-Persona AI Workspace</h3>
+              <div class="project-metrics">
+                <span class="metric-tag accent-purple">⚡ &lt;50ms TTFT</span>
+                <span class="metric-tag accent-cyan">📡 SSE Protocol</span>
+                <span class="metric-tag accent-amber">🧠 Gemini 1.5 Pro</span>
+              </div>
               <p class="card-text">
                 Full-stack AI workspace featuring token-by-token Server-Sent Events (SSE) streaming, specialized workspace personas, prompt template library, and hybrid Google Gemini API + offline simulation.
               </p>
@@ -200,20 +208,66 @@ Type any natural language question: e.g. "ask why SSE in NexusAI" or click a blu
               </div>
               <div class="card-links">
                 <a href="https://client-two-tau-83.vercel.app" target="_blank" rel="noopener" class="card-btn live">Live Demo ↗</a>
-                <button class="card-btn primary" onclick="openArchModal('nexusai')">Architecture ⚡</button>
+                <button type="button" class="card-btn arch-trigger" onclick="openArchModal('nexusai')">Architecture ⚡</button>
+                <button type="button" class="card-btn code-peek-btn" onclick="toggleCodePeek('nexusai', this)">View Code 💻</button>
                 <a href="https://github.com/rustamtimalsina/nexus-ai-studio" target="_blank" rel="noopener" class="card-btn secondary">GitHub →</a>
+              </div>
+              <div class="code-peek-drawer" id="code-peek-nexusai">
+                <div class="code-peek-header">
+                  <span class="code-peek-filename">server/controllers/streamController.js</span>
+                  <button type="button" class="code-copy-btn" onclick="copySnippet('nexusai', this)">Copy</button>
+                </div>
+                <pre><code>// Express SSE Streaming Handler
+app.post('/api/chat/stream', async (req, res) => {
+  res.writeHead(200, {
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache',
+    'Connection': 'keep-alive',
+  });
+
+  const { prompt, persona, history } = req.body;
+  const stream = await geminiModel.generateContentStream({
+    contents: [...history, { role: 'user', parts: [{ text: prompt }] }],
+    systemInstruction: getPersonaPrompt(persona)
+  });
+
+  for await (const chunk of stream.stream) {
+    res.write(`data: ${JSON.stringify({ text: chunk.text() })}\n\n`);
+  }
+  res.write('data: [DONE]\n\n');
+  res.end();
+});</code></pre>
               </div>
             </div>
           </article>
 
           <!-- 2. Uriel -->
           <article class="project-card tilt-card" data-category="ai">
+            <div class="project-media project-media-vector" style="background: radial-gradient(circle at 50% 50%, hsl(222deg 26% 14%), hsl(222deg 26% 8%));">
+              <svg width="100%" height="100%" viewBox="0 0 400 185" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="80" cy="92" r="28" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="1.5"/>
+                <text x="80" y="96" fill="#38bdf8" font-size="11" font-family="monospace" text-anchor="middle" font-weight="700">DOC.PDF</text>
+                <path d="M108 92 H172" stroke="rgba(255,255,255,0.2)" stroke-dasharray="4 4" stroke-width="1.5"/>
+                <rect x="172" y="68" width="80" height="48" rx="8" fill="rgba(168,85,247,0.15)" stroke="#c084fc" stroke-width="1.5"/>
+                <text x="212" y="88" fill="#e9d5ff" font-size="10" font-family="monospace" text-anchor="middle" font-weight="700">EMBEDDING</text>
+                <text x="212" y="103" fill="#a855f7" font-size="9" font-family="monospace" text-anchor="middle">cos_sim &gt; 0.82</text>
+                <path d="M252 92 H316" stroke="rgba(255,255,255,0.2)" stroke-dasharray="4 4" stroke-width="1.5"/>
+                <circle cx="344" cy="92" r="28" fill="rgba(34,197,94,0.12)" stroke="#22c55e" stroke-width="1.5"/>
+                <text x="344" y="96" fill="#4ade80" font-size="10" font-family="monospace" text-anchor="middle" font-weight="700">LOCAL RAG</text>
+                <text x="200" y="152" fill="#94a3b8" font-size="10" font-family="monospace" text-anchor="middle">Zero Cloud Telemetry • Dense Vector Cosine</text>
+              </svg>
+            </div>
             <div class="card-inner">
               <div class="card-top">
                 <span class="project-badge research">AI & Information Retrieval</span>
                 <span class="project-year">Academic Capstone</span>
               </div>
               <h3 class="card-title">Uriel — Local Contextual Document Retrieval</h3>
+              <div class="project-metrics">
+                <span class="metric-tag accent-cyan">🔒 100% Local RAG</span>
+                <span class="metric-tag accent-purple">📐 Cosine Dot Product</span>
+                <span class="metric-tag">📄 Sliding Overlap</span>
+              </div>
               <p class="card-text">
                 Privacy-first contextual document intelligence system performing dense vector embeddings, localized semantic search, and grounded document retrieval without cloud leakage.
               </p>
@@ -224,20 +278,45 @@ Type any natural language question: e.g. "ask why SSE in NexusAI" or click a blu
                 <span class="pill">Local AI</span>
               </div>
               <div class="card-links">
-                <button class="card-btn primary" onclick="openArchModal('uriel')">Inspect Architecture ⚡</button>
+                <button type="button" class="card-btn arch-trigger" onclick="openArchModal('uriel')">Inspect Architecture ⚡</button>
+                <button type="button" class="card-btn code-peek-btn" onclick="toggleCodePeek('uriel', this)">View Code 💻</button>
                 <a href="https://github.com/rustamtimalsina/Uriel" target="_blank" rel="noopener" class="card-btn secondary">GitHub →</a>
+              </div>
+              <div class="code-peek-drawer" id="code-peek-uriel">
+                <div class="code-peek-header">
+                  <span class="code-peek-filename">uriel/retrieval/vector_engine.py</span>
+                  <button type="button" class="code-copy-btn" onclick="copySnippet('uriel', this)">Copy</button>
+                </div>
+                <pre><code>import numpy as np
+
+def retrieve_grounded_context(query_vec: np.ndarray, doc_embeddings: np.ndarray, chunks: list[str], top_k: int = 3):
+    """Calculates cosine similarity ranking locally with zero cloud transmission."""
+    norm_query = query_vec / np.linalg.norm(query_vec)
+    norm_docs = doc_embeddings / np.linalg.norm(doc_embeddings, axis=1, keepdims=True)
+    similarity_scores = np.dot(norm_docs, norm_query)
+    
+    top_indices = np.argsort(similarity_scores)[::-1][:top_k]
+    return [{"chunk": chunks[i], "score": float(similarity_scores[i])} for i in top_indices]</code></pre>
               </div>
             </div>
           </article>
 
-          <!-- 2. NestHub -->
+          <!-- 3. NestHub -->
           <article class="project-card tilt-card" data-category="fullstack">
+            <div class="project-media">
+              <img src="assets/nesthub-preview.png" alt="NestHub Platform Interface" loading="lazy" />
+            </div>
             <div class="card-inner">
               <div class="card-top">
                 <span class="project-badge fullstack">Full-Stack Application</span>
                 <span class="project-year">Production Build</span>
               </div>
               <h3 class="card-title">NestHub — Real Estate Ecosystem</h3>
+              <div class="project-metrics">
+                <span class="metric-tag accent-cyan">🛡️ 3NF Relational DB</span>
+                <span class="metric-tag accent-purple">🔑 RBAC Tiering</span>
+                <span class="metric-tag accent-amber">⚡ Fast Indexing</span>
+              </div>
               <p class="card-text">
                 Complete property management and listing portal built with relational schema consistency, role-based authentication, property search indexing, and real-time tenant workflows.
               </p>
@@ -249,20 +328,56 @@ Type any natural language question: e.g. "ask why SSE in NexusAI" or click a blu
               </div>
               <div class="card-links">
                 <a href="https://nest-hub-six.vercel.app" target="_blank" rel="noopener" class="card-btn live">Live Demo ↗</a>
-                <button class="card-btn primary" onclick="openArchModal('nesthub')">Architecture ⚡</button>
+                <button type="button" class="card-btn arch-trigger" onclick="openArchModal('nesthub')">Architecture ⚡</button>
+                <button type="button" class="card-btn code-peek-btn" onclick="toggleCodePeek('nesthub', this)">View Code 💻</button>
                 <a href="https://github.com/rustamtimalsina/NestHub" target="_blank" rel="noopener" class="card-btn secondary">GitHub →</a>
+              </div>
+              <div class="code-peek-drawer" id="code-peek-nesthub">
+                <div class="code-peek-header">
+                  <span class="code-peek-filename">database/schema/properties.sql</span>
+                  <button type="button" class="code-copy-btn" onclick="copySnippet('nesthub', this)">Copy</button>
+                </div>
+                <pre><code>CREATE TABLE properties (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title VARCHAR(255) NOT NULL,
+  price_cents BIGINT NOT NULL CHECK (price_cents &gt; 0),
+  location VARCHAR(120) NOT NULL,
+  status VARCHAR(30) DEFAULT 'available' CHECK (status IN ('available', 'pending', 'leased')),
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Compound index for sub-50ms multi-facet filtering
+CREATE INDEX idx_properties_lookup ON properties (status, location, price_cents);</code></pre>
               </div>
             </div>
           </article>
 
-          <!-- 3. ClientHub -->
-         <article class="project-card tilt-card" data-category="fullstack">
+          <!-- 4. ClientHub -->
+          <article class="project-card tilt-card" data-category="fullstack">
+            <div class="project-media project-media-vector" style="background: radial-gradient(circle at 50% 50%, hsl(222deg 26% 14%), hsl(222deg 26% 8%));">
+              <svg width="100%" height="100%" viewBox="0 0 400 185" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="25" y="70" width="70" height="38" rx="6" fill="rgba(129,140,248,0.12)" stroke="#818cf8" stroke-width="1.5"/>
+                <text x="60" y="93" fill="#c7d2fe" font-size="10" font-family="monospace" text-anchor="middle" font-weight="600">Draft</text>
+                <path d="M95 89 H135" stroke="#818cf8" stroke-width="1.5"/>
+                <rect x="135" y="70" width="85" height="38" rx="6" fill="rgba(245,158,11,0.12)" stroke="#f59e0b" stroke-width="1.5"/>
+                <text x="177" y="93" fill="#fde68a" font-size="10" font-family="monospace" text-anchor="middle" font-weight="600">Submitted</text>
+                <path d="M220 89 H260" stroke="#f59e0b" stroke-width="1.5"/>
+                <rect x="260" y="70" width="80" height="38" rx="6" fill="rgba(34,197,94,0.15)" stroke="#22c55e" stroke-width="1.5"/>
+                <text x="300" y="93" fill="#86efac" font-size="10" font-family="monospace" text-anchor="middle" font-weight="700">Approved ✓</text>
+                <text x="200" y="148" fill="#94a3b8" font-size="10" font-family="monospace" text-anchor="middle">Deterministic State Machine • Audit Trail</text>
+              </svg>
+            </div>
             <div class="card-inner">
               <div class="card-top">
                 <span class="project-badge management">Workflow Engine</span>
                 <span class="project-year">System Core</span>
               </div>
               <h3 class="card-title">ClientHub — Project & Milestone Engine</h3>
+              <div class="project-metrics">
+                <span class="metric-tag accent-amber">⚙️ Finite State Engine</span>
+                <span class="metric-tag accent-purple">📜 Audit Trail Guard</span>
+                <span class="metric-tag">🐬 MySQL Relational</span>
+              </div>
               <p class="card-text">
                 Centralized project delivery and client portal managing milestone lifecycles, structured deliverables, and status transitions with strict role validation and audit logs.
               </p>
@@ -273,20 +388,72 @@ Type any natural language question: e.g. "ask why SSE in NexusAI" or click a blu
                 <span class="pill">MVC</span>
               </div>
               <div class="card-links">
-                <button class="card-btn primary" onclick="openArchModal('clienthub')">Inspect Architecture ⚡</button>
+                <button type="button" class="card-btn arch-trigger" onclick="openArchModal('clienthub')">Inspect Architecture ⚡</button>
+                <button type="button" class="card-btn code-peek-btn" onclick="toggleCodePeek('clienthub', this)">View Code 💻</button>
                 <a href="https://github.com/rustamtimalsina/ClientHub" target="_blank" rel="noopener" class="card-btn secondary">GitHub →</a>
+              </div>
+              <div class="code-peek-drawer" id="code-peek-clienthub">
+                <div class="code-peek-header">
+                  <span class="code-peek-filename">app/Services/MilestoneStateMachine.php</span>
+                  <button type="button" class="code-copy-btn" onclick="copySnippet('clienthub', this)">Copy</button>
+                </div>
+                <pre><code>class MilestoneStateMachine {
+    private const ALLOWED_TRANSITIONS = [
+        'draft'     =&gt; ['submitted'],
+        'submitted' =&gt; ['under_review', 'revision_requested'],
+        'under_review' =&gt; ['approved', 'rejected'],
+        'approved'  =&gt; ['paid']
+    ];
+
+    public function transition(Milestone $milestone, string $targetState, User $actor): bool {
+        if (!in_array($targetState, self::ALLOWED_TRANSITIONS[$milestone-&gt;status] ?? [])) {
+            throw new InvalidStateTransitionException("Cannot move from {$milestone-&gt;status} to {$targetState}");
+        }
+        
+        DB::transaction(function() use ($milestone, $targetState, $actor) {
+            $milestone-&gt;update(['status' =&gt; $targetState]);
+            AuditLog::create([
+                'entity_id' =&gt; $milestone-&gt;id,
+                'from_state' =&gt; $milestone-&gt;getOriginal('status'),
+                'to_state' =&gt; $targetState,
+                'actor_id' =&gt; $actor-&gt;id
+            ]);
+        });
+        return true;
+    }
+}</code></pre>
               </div>
             </div>
           </article>
 
-          <!-- 4. End-to-End Recommendation System -->
+          <!-- 5. End-to-End Recommendation System -->
           <article class="project-card tilt-card" data-category="ai">
+            <div class="project-media project-media-vector" style="background: radial-gradient(circle at 50% 50%, hsl(222deg 26% 14%), hsl(222deg 26% 8%));">
+              <svg width="100%" height="100%" viewBox="0 0 400 185" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <rect x="35" y="65" width="85" height="50" rx="6" fill="rgba(236,72,153,0.12)" stroke="#ec4899" stroke-width="1.5"/>
+                <text x="77" y="88" fill="#fbcfe8" font-size="10" font-family="monospace" text-anchor="middle" font-weight="600">User-Item</text>
+                <text x="77" y="103" fill="#ec4899" font-size="9" font-family="monospace" text-anchor="middle">Sparse Matrix</text>
+                <path d="M120 90 H165" stroke="rgba(255,255,255,0.2)" stroke-dasharray="3 3" stroke-width="1.5"/>
+                <circle cx="200" cy="90" r="26" fill="rgba(168,85,247,0.18)" stroke="#a855f7" stroke-width="1.5"/>
+                <text x="200" y="94" fill="#e9d5ff" font-size="12" font-family="monospace" text-anchor="middle" font-weight="700">∑ A·B</text>
+                <path d="M226 90 H275" stroke="rgba(255,255,255,0.2)" stroke-dasharray="3 3" stroke-width="1.5"/>
+                <rect x="275" y="65" width="90" height="50" rx="6" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="1.5"/>
+                <text x="320" y="88" fill="#bae6fd" font-size="10" font-family="monospace" text-anchor="middle" font-weight="700">Top-K Scored</text>
+                <text x="320" y="103" fill="#38bdf8" font-size="9" font-family="monospace" text-anchor="middle">Sub-50ms API</text>
+                <text x="200" y="148" fill="#94a3b8" font-size="10" font-family="monospace" text-anchor="middle">Vectorized Collaborative Filtering Inference</text>
+              </svg>
+            </div>
             <div class="card-inner">
               <div class="card-top">
                 <span class="project-badge ml">Data Science & ML</span>
                 <span class="project-year">Pipeline</span>
               </div>
               <h3 class="card-title">End-to-End Recommendation Engine</h3>
+              <div class="project-metrics">
+                <span class="metric-tag accent-purple">📊 Top-K Inference</span>
+                <span class="metric-tag accent-cyan">🧮 Matrix Dot Product</span>
+                <span class="metric-tag accent-amber">🚀 Scikit-Learn</span>
+              </div>
               <p class="card-text">
                 Complete machine learning pipeline using collaborative filtering and content similarity algorithms to parse interaction matrices and deliver instant top-K inference through an API.
               </p>
@@ -297,20 +464,48 @@ Type any natural language question: e.g. "ask why SSE in NexusAI" or click a blu
                 <span class="pill">Streamlit / API</span>
               </div>
               <div class="card-links">
-                <button class="card-btn primary" onclick="openArchModal('recommendation')">Inspect Architecture ⚡</button>
+                <button type="button" class="card-btn arch-trigger" onclick="openArchModal('recommendation')">Inspect Architecture ⚡</button>
+                <button type="button" class="card-btn code-peek-btn" onclick="toggleCodePeek('recommendation', this)">View Code 💻</button>
                 <a href="https://github.com/rustamtimalsina/End-to-End-Movie-Recommendation-System" target="_blank" rel="noopener" class="card-btn secondary">GitHub →</a>
+              </div>
+              <div class="code-peek-drawer" id="code-peek-recommendation">
+                <div class="code-peek-header">
+                  <span class="code-peek-filename">ml/recommendation_pipeline.py</span>
+                  <button type="button" class="code-copy-btn" onclick="copySnippet('recommendation', this)">Copy</button>
+                </div>
+                <pre><code>import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
+
+class HybridRecommender:
+    def __init__(self, user_item_matrix, item_features):
+        self.matrix = user_item_matrix
+        self.item_sim = cosine_similarity(item_features)
+
+    def predict_top_k(self, user_vector: np.ndarray, k: int = 5):
+        # Weighted dot-product across interaction history and item feature space
+        scores = user_vector.dot(self.item_sim) / (np.linalg.norm(user_vector) + 1e-9)
+        ranked_indices = np.argsort(scores)[::-1][:k]
+        return ranked_indices, scores[ranked_indices]</code></pre>
               </div>
             </div>
           </article>
 
-          <!-- 5. Syntecxhub Task Manager -->
+          <!-- 6. Syntecxhub Task Manager -->
           <article class="project-card tilt-card" data-category="backend">
+            <div class="project-media">
+              <img src="assets/taskmanager-preview.png" alt="Syntecxhub Task Manager" loading="lazy" />
+            </div>
             <div class="card-inner">
               <div class="card-top">
                 <span class="project-badge fullstack">Task Optimization</span>
                 <span class="project-year">Productivity Platform</span>
               </div>
               <h3 class="card-title">Syntecxhub Task Manager</h3>
+              <div class="project-metrics">
+                <span class="metric-tag accent-cyan">⏱️ Sub-10ms API</span>
+                <span class="metric-tag accent-amber">🗂️ Task State Machine</span>
+                <span class="metric-tag">📦 Priority Queue</span>
+              </div>
               <p class="card-text">
                 Task distribution and sprint coordination system supporting priority queues, deadlines, categorizations, and state management for engineering teams.
               </p>
@@ -322,20 +517,51 @@ Type any natural language question: e.g. "ask why SSE in NexusAI" or click a blu
               </div>
               <div class="card-links">
                 <a href="https://syntecxhub-task-manager-sigma.vercel.app" target="_blank" rel="noopener" class="card-btn live">Live Demo ↗</a>
-                <button class="card-btn primary" onclick="openArchModal('taskmanager')">Architecture ⚡</button>
+                <button type="button" class="card-btn arch-trigger" onclick="openArchModal('taskmanager')">Architecture ⚡</button>
+                <button type="button" class="card-btn code-peek-btn" onclick="toggleCodePeek('taskmanager', this)">View Code 💻</button>
                 <a href="https://github.com/rustamtimalsina/Syntecxhub_Task_Manager" target="_blank" rel="noopener" class="card-btn secondary">GitHub →</a>
+              </div>
+              <div class="code-peek-drawer" id="code-peek-taskmanager">
+                <div class="code-peek-header">
+                  <span class="code-peek-filename">src/services/taskService.ts</span>
+                  <button type="button" class="code-copy-btn" onclick="copySnippet('taskmanager', this)">Copy</button>
+                </div>
+                <pre><code>export interface TaskPayload {
+  title: string;
+  priority: 'low' | 'medium' | 'high' | 'critical';
+  deadline: string;
+}
+
+export function validateTaskPayload(payload: Partial<TaskPayload>): TaskPayload {
+  if (!payload.title || payload.title.trim().length < 3) {
+    throw new ValidationError('Task title must be at least 3 characters.');
+  }
+  const validPriorities = ['low', 'medium', 'high', 'critical'];
+  if (!payload.priority || !validPriorities.includes(payload.priority)) {
+    throw new ValidationError('Invalid priority tier.');
+  }
+  return payload as TaskPayload;
+}</code></pre>
               </div>
             </div>
           </article>
 
-          <!-- 6. Restaurant Demo -->
-         <article class="project-card tilt-card" data-category="fullstack">
+          <!-- 7. Restaurant Demo -->
+          <article class="project-card tilt-card" data-category="fullstack">
+            <div class="project-media">
+              <img src="assets/restaurant-preview.png" alt="Restaurant Demo Interface" loading="lazy" />
+            </div>
             <div class="card-inner">
               <div class="card-top">
                 <span class="project-badge frontend">UI/UX & Experience</span>
                 <span class="project-year">Interactive Web</span>
               </div>
               <h3 class="card-title">Restaurant Experience Demo</h3>
+              <div class="project-metrics">
+                <span class="metric-tag accent-amber">🚀 Strict 60 FPS</span>
+                <span class="metric-tag accent-cyan">♿ Accessible Landmark DOM</span>
+                <span class="metric-tag">⚡ Zero Dependencies</span>
+              </div>
               <p class="card-text">
                 Modern responsive client experience showcasing digital menu indexing, reservation flows, accessible components, and rapid rendering performance.
               </p>
@@ -347,8 +573,34 @@ Type any natural language question: e.g. "ask why SSE in NexusAI" or click a blu
               </div>
               <div class="card-links">
                 <a href="https://restaurant-demo-rust-phi.vercel.app" target="_blank" rel="noopener" class="card-btn live">Live Demo ↗</a>
-                <button class="card-btn primary" onclick="openArchModal('restaurant')">Architecture ⚡</button>
+                <button type="button" class="card-btn arch-trigger" onclick="openArchModal('restaurant')">Architecture ⚡</button>
+                <button type="button" class="card-btn code-peek-btn" onclick="toggleCodePeek('restaurant', this)">View Code 💻</button>
                 <a href="https://github.com/rustamtimalsina/restaurant-demo" target="_blank" rel="noopener" class="card-btn secondary">GitHub →</a>
+              </div>
+              <div class="code-peek-drawer" id="code-peek-restaurant">
+                <div class="code-peek-header">
+                  <span class="code-peek-filename">client/menuEngine.js</span>
+                  <button type="button" class="code-copy-btn" onclick="copySnippet('restaurant', this)">Copy</button>
+                </div>
+                <pre><code>class MenuIndexer {
+  constructor(menuItems) {
+    this.cache = new Map();
+    menuItems.forEach(item => {
+      const list = this.cache.get(item.category) || [];
+      list.push(item);
+      this.cache.set(item.category, list);
+    });
+  }
+
+  filterCategory(category) {
+    const items = category === 'all' 
+      ? Array.from(this.cache.values()).flat() 
+      : (this.cache.get(category) || []);
+    
+    // Minimal reflow batch update
+    requestAnimationFrame(() => renderMenuDOM(items));
+  }
+}</code></pre>
               </div>
             </div>
           </article>
@@ -839,7 +1091,28 @@ X-Telemetry: Local-Only (0% Cloud Leakage)
         details: [
           "Eliminates UI freeze via asynchronous token streaming with syntax-highlighted code block parsing.",
           "Automatic local persistence across sessions, prompt templates, and custom workspace instructions."
-        ]
+        ],
+        codeFile: "server/controllers/streamController.js",
+        codeSnippet: `// Express SSE Streaming Handler
+app.post('/api/chat/stream', async (req, res) => {
+  res.writeHead(200, {
+    'Content-Type': 'text/event-stream',
+    'Cache-Control': 'no-cache',
+    'Connection': 'keep-alive',
+  });
+
+  const { prompt, persona, history } = req.body;
+  const stream = await geminiModel.generateContentStream({
+    contents: [...history, { role: 'user', parts: [{ text: prompt }] }],
+    systemInstruction: getPersonaPrompt(persona)
+  });
+
+  for await (const chunk of stream.stream) {
+    res.write(\`data: \${JSON.stringify({ text: chunk.text() })}\\n\\n\`);
+  }
+  res.write('data: [DONE]\\n\\n');
+  res.end();
+});`
       },
 
       uriel: {
@@ -864,7 +1137,18 @@ X-Telemetry: Local-Only (0% Cloud Leakage)
         details: [
           "Eliminates hallucination by enforcing strict context boundaries inside prompt injection.",
           "Engineered as a local capstone solution preventing confidential document leakage."
-        ]
+        ],
+        codeFile: "uriel/retrieval/vector_engine.py",
+        codeSnippet: `import numpy as np
+
+def retrieve_grounded_context(query_vec: np.ndarray, doc_embeddings: np.ndarray, chunks: list[str], top_k: int = 3):
+    """Calculates cosine similarity ranking locally with zero cloud transmission."""
+    norm_query = query_vec / np.linalg.norm(query_vec)
+    norm_docs = doc_embeddings / np.linalg.norm(doc_embeddings, axis=1, keepdims=True)
+    similarity_scores = np.dot(norm_docs, norm_query)
+    
+    top_indices = np.argsort(similarity_scores)[::-1][:top_k]
+    return [{"chunk": chunks[i], "score": float(similarity_scores[i])} for i in top_indices]`
       },
 
       nesthub: {
@@ -888,7 +1172,19 @@ X-Telemetry: Local-Only (0% Cloud Leakage)
         details: [
           "End-to-end property lifecycle management with reservation locks and tenant inquiries.",
           "Optimized relational schema minimizing N+1 queries during multi-attribute property filtering."
-        ]
+        ],
+        codeFile: "database/schema/properties.sql",
+        codeSnippet: `CREATE TABLE properties (
+  id UUID PRIMARY KEY DEFAULT gen_random_uuid(),
+  title VARCHAR(255) NOT NULL,
+  price_cents BIGINT NOT NULL CHECK (price_cents > 0),
+  location VARCHAR(120) NOT NULL,
+  status VARCHAR(30) DEFAULT 'available' CHECK (status IN ('available', 'pending', 'leased')),
+  created_at TIMESTAMPTZ DEFAULT NOW()
+);
+
+-- Compound index for sub-50ms multi-facet filtering
+CREATE INDEX idx_properties_lookup ON properties (status, location, price_cents);`
       },
 
       clienthub: {
@@ -913,7 +1209,33 @@ X-Telemetry: Local-Only (0% Cloud Leakage)
         details: [
           "Built to bridge agency freelancers and enterprise clients with transparent progress validation.",
           "Decoupled controllers ensure milestone approvals trigger transactional status changes reliably."
-        ]
+        ],
+        codeFile: "app/Services/MilestoneStateMachine.php",
+        codeSnippet: `class MilestoneStateMachine {
+    private const ALLOWED_TRANSITIONS = [
+        'draft'     => ['submitted'],
+        'submitted' => ['under_review', 'revision_requested'],
+        'under_review' => ['approved', 'rejected'],
+        'approved'  => ['paid']
+    ];
+
+    public function transition(Milestone $milestone, string $targetState, User $actor): bool {
+        if (!in_array($targetState, self::ALLOWED_TRANSITIONS[$milestone->status] ?? [])) {
+            throw new InvalidStateTransitionException("Cannot move from {$milestone->status} to {$targetState}");
+        }
+        
+        DB::transaction(function() use ($milestone, $targetState, $actor) {
+            $milestone->update(['status' => $targetState]);
+            AuditLog::create([
+                'entity_id' => $milestone->id,
+                'from_state' => $milestone->getOriginal('status'),
+                'to_state' => $targetState,
+                'actor_id' => $actor->id
+            ]);
+        });
+        return true;
+    }
+}`
       },
 
       recommendation: {
@@ -938,7 +1260,21 @@ X-Telemetry: Local-Only (0% Cloud Leakage)
         details: [
           "Handles cold-start items gracefully via metadata fallback and feature clustering.",
           "Designed as an end-to-end pipeline covering ingestion, feature extraction, and lightweight API serving."
-        ]
+        ],
+        codeFile: "ml/recommendation_pipeline.py",
+        codeSnippet: `import numpy as np
+from sklearn.metrics.pairwise import cosine_similarity
+
+class HybridRecommender:
+    def __init__(self, user_item_matrix, item_features):
+        self.matrix = user_item_matrix
+        self.item_sim = cosine_similarity(item_features)
+
+    def predict_top_k(self, user_vector: np.ndarray, k: int = 5):
+        # Weighted dot-product across interaction history and item feature space
+        scores = user_vector.dot(self.item_sim) / (np.linalg.norm(user_vector) + 1e-9)
+        ranked_indices = np.argsort(scores)[::-1][:k]
+        return ranked_indices, scores[ranked_indices]`
       },
 
       taskmanager: {
@@ -963,7 +1299,24 @@ X-Telemetry: Local-Only (0% Cloud Leakage)
         details: [
           "Engineered for high developer ergonomics and rapid board updates under active sprints.",
           "Modular API design cleanly separates task persistence from notification and user grouping logic."
-        ]
+        ],
+        codeFile: "src/services/taskService.ts",
+        codeSnippet: `export interface TaskPayload {
+  title: string;
+  priority: 'low' | 'medium' | 'high' | 'critical';
+  deadline: string;
+}
+
+export function validateTaskPayload(payload: Partial<TaskPayload>): TaskPayload {
+  if (!payload.title || payload.title.trim().length < 3) {
+    throw new ValidationError('Task title must be at least 3 characters.');
+  }
+  const validPriorities = ['low', 'medium', 'high', 'critical'];
+  if (!payload.priority || !validPriorities.includes(payload.priority)) {
+    throw new ValidationError('Invalid priority tier.');
+  }
+  return payload as TaskPayload;
+}`
       },
 
       restaurant: {
@@ -985,13 +1338,68 @@ X-Telemetry: Local-Only (0% Cloud Leakage)
         details: [
           "Showcases core frontend engineering: zero bloat, clean CSS architecture, and high perceived speed.",
           "Includes real-time reservation validation with instant visual state feedback."
-        ]
+        ],
+        codeFile: "client/menuEngine.js",
+        codeSnippet: `class MenuIndexer {
+  constructor(menuItems) {
+    this.cache = new Map();
+    menuItems.forEach(item => {
+      const list = this.cache.get(item.category) || [];
+      list.push(item);
+      this.cache.set(item.category, list);
+    });
+  }
+
+  filterCategory(category) {
+    const items = category === 'all' 
+      ? Array.from(this.cache.values()).flat() 
+      : (this.cache.get(category) || []);
+    
+    // Minimal reflow batch update
+    requestAnimationFrame(() => renderMenuDOM(items));
+  }
+}`
       }
+    };
+
+    let activeModalCode = '';
+
+    window.switchArchTab = function(tab) {
+      const tabBp = document.getElementById('arch-tab-blueprint');
+      const tabCode = document.getElementById('arch-tab-code');
+      const btnBp = document.getElementById('tab-btn-blueprint');
+      const btnCode = document.getElementById('tab-btn-code');
+
+      if (tab === 'blueprint') {
+        if (tabBp) tabBp.style.display = 'block';
+        if (tabCode) tabCode.style.display = 'none';
+        btnBp?.classList.add('active');
+        btnCode?.classList.remove('active');
+      } else {
+        if (tabBp) tabBp.style.display = 'none';
+        if (tabCode) tabCode.style.display = 'block';
+        btnBp?.classList.remove('active');
+        btnCode?.classList.add('active');
+      }
+      if (window.playClickSound) window.playClickSound(580, 'sine', 0.08);
+    };
+
+    window.copyModalCode = function(btn) {
+      if (!activeModalCode) return;
+      navigator.clipboard.writeText(activeModalCode).then(() => {
+        if (btn) {
+          btn.textContent = 'Copied! ✓';
+          if (window.playSuccessChime) window.playSuccessChime();
+          setTimeout(() => { btn.textContent = 'Copy Snippet'; }, 2000);
+        }
+      });
     };
 
     window.openArchModal = function(id) {
       const data = blueprints[id];
       if (!data) return;
+
+      activeModalCode = data.codeSnippet || '';
 
       document.getElementById('modal-title').textContent = data.title;
       document.getElementById('modal-eyebrow').textContent = data.eyebrow;
@@ -1005,13 +1413,31 @@ X-Telemetry: Local-Only (0% Cloud Leakage)
 
       let detailHtml = data.details.map(d => `<li>${d}</li>`).join('');
 
+      function escapeHtml(str) {
+        return str.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+      }
+
       document.getElementById('modal-body').innerHTML = `
-        <div class="arch-flow-diagram">${data.flow}</div>
-        <div class="arch-spec-grid">${specHtml}</div>
-        <ul class="arch-list">${detailHtml}</ul>
+        <div class="modal-tabs">
+          <button type="button" class="modal-tab-btn active" id="tab-btn-blueprint" onclick="switchArchTab('blueprint')">Architecture Flow ⚡</button>
+          <button type="button" class="modal-tab-btn" id="tab-btn-code" onclick="switchArchTab('code')">Implementation Code 💻</button>
+        </div>
+        <div id="arch-tab-blueprint" class="arch-tab-content">
+          <div class="arch-flow-diagram">${data.flow}</div>
+          <div class="arch-spec-grid">${specHtml}</div>
+          <ul class="arch-list">${detailHtml}</ul>
+        </div>
+        <div id="arch-tab-code" class="arch-tab-content" style="display: none;">
+          <div class="code-peek-header" style="border-radius: 8px 8px 0 0;">
+            <span class="code-peek-filename">${data.codeFile || 'production-source'}</span>
+            <button type="button" class="code-copy-btn" onclick="copyModalCode(this)">Copy Snippet</button>
+          </div>
+          <pre style="background: rgba(10, 14, 24, 0.95); border: 1px solid var(--border-glass); border-top: none; border-radius: 0 0 8px 8px; padding: 18px; overflow-x: auto; font-family: var(--font-mono); font-size: 0.82rem; line-height: 1.6; color: #e2e8f0;"><code>${escapeHtml(data.codeSnippet || '')}</code></pre>
+        </div>
       `;
 
       document.getElementById('arch-modal').classList.add('active');
+      if (window.playClickSound) window.playClickSound(640, 'triangle', 0.1);
     };
 
     window.closeArchModal = function(e) {

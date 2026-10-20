@@ -317,7 +317,42 @@
   }
 
   // --------------------------------------------------------------------------
-  // 5. BOOTSTRAP ON DOM READY
+  // 5. IN-CARD CODE PEEK DRAWER & SNIPPET COPY
+  // --------------------------------------------------------------------------
+  window.toggleCodePeek = function (id, btn) {
+    const drawer = document.getElementById(`code-peek-${id}`);
+    if (!drawer) return;
+    const isActive = drawer.classList.toggle('active');
+    if (btn) {
+      btn.textContent = isActive ? 'Hide Code ✕' : 'View Code 💻';
+      if (isActive) {
+        btn.style.borderColor = 'var(--purple-glow)';
+        btn.style.color = '#ffffff';
+      } else {
+        btn.style.borderColor = '';
+        btn.style.color = '';
+      }
+    }
+    window.playClickSound(580, 'triangle', 0.08);
+  };
+
+  window.copySnippet = function (id, btn) {
+    const drawer = document.getElementById(`code-peek-${id}`);
+    if (!drawer) return;
+    const code = drawer.querySelector('code')?.innerText || drawer.querySelector('pre')?.innerText;
+    if (!code) return;
+    navigator.clipboard.writeText(code).then(() => {
+      if (btn) {
+        const orig = btn.textContent;
+        btn.textContent = 'Copied! ✓';
+        window.playSuccessChime();
+        setTimeout(() => { btn.textContent = orig; }, 2000);
+      }
+    });
+  };
+
+  // --------------------------------------------------------------------------
+  // 6. BOOTSTRAP ON DOM READY
   // --------------------------------------------------------------------------
   if (document.readyState === 'loading') {
     document.addEventListener('DOMContentLoaded', () => {
