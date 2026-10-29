@@ -195,6 +195,12 @@
       update() {
         this.x += this.vx;
         this.y += this.vy;
+        if (window.__lenis) {
+          const vel = window.__lenis.velocity || 0;
+          const push = Math.max(-5, Math.min(5, vel * 0.05));
+          this.y += push;
+          this.x += push * 0.15;
+        }
         this.life++;
       }
 
@@ -367,4 +373,68 @@
     initTiltCards();
     initTactileListeners();
   }
+
+  // --------------------------------------------------------------------------
+  // 5. LENIS SMOOTH INERTIAL SCROLL ENGINE (Nesil Noble / Awwwards Standard)
+  // --------------------------------------------------------------------------
+  function initLenis() {
+    if (typeof Lenis === 'undefined') return;
+
+    const lenis = new Lenis({
+      lerp: 0.088,
+      wheelMultiplier: 0.92,
+      touchMultiplier: 1.4,
+      smoothWheel: true,
+      infinite: false,
+    });
+    window.__lenis = lenis;
+
+    function raf(time) {
+      lenis.raf(time);
+      requestAnimationFrame(raf);
+    }
+    requestAnimationFrame(raf);
+
+    // Inertial anchor scrolling for in-page bookmarks (#projects, #hero, etc.)
+    document.addEventListener('click', (e) => {
+      const anchor = e.target.closest('a[href^="#"]');
+      if (anchor) {
+        const targetId = anchor.getAttribute('href');
+        if (targetId && targetId !== '#') {
+          const targetEl = document.querySelector(targetId);
+          if (targetEl) {
+            e.preventDefault();
+            lenis.scrollTo(targetEl, {
+              duration: 1.3,
+              easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+            });
+            if (history.pushState) {
+              history.pushState(null, null, targetId);
+            }
+          }
+        }
+      }
+    });
+
+    // Handle back-to-top buttons
+    document.querySelectorAll('.back-top').forEach(btn => {
+      btn.onclick = (e) => {
+        e.preventDefault();
+        lenis.scrollTo(0, {
+          duration: 1.4,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t))
+        });
+      };
+    });
+
+    console.log('⚡ Lenis Smooth Scroll Engine Active');
+  }
+
+  // Initialize Lenis on DOMContentLoaded or immediate
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initLenis);
+  } else {
+    initLenis();
+  }
+
 })();
