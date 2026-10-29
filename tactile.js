@@ -437,4 +437,64 @@
     initLenis();
   }
 
+
+  // --------------------------------------------------------------------------
+  // 6. HERO SYSTEMS RIG EYE-TRACKING PHYSICS (Trigonometric Pointer Math)
+  // --------------------------------------------------------------------------
+  function initHeroRigPhysics() {
+    const pupils = [
+      document.getElementById('pupilLeft'),
+      document.getElementById('pupilRight')
+    ].filter(Boolean);
+
+    const eyeWhites = document.querySelectorAll('.hero-eye-white');
+    if (pupils.length === 0 || eyeWhites.length === 0) return;
+
+    const MAX_OFFSET = 5.2; // Maximum pupil travel radius in SVG units
+
+    window.addEventListener('pointermove', (e) => {
+      eyeWhites.forEach((w, i) => {
+        const rect = w.getBoundingClientRect();
+        const cx = rect.left + rect.width / 2;
+        const cy = rect.top + rect.height / 2;
+        const dx = e.clientX - cx;
+        const dy = e.clientY - cy;
+        const dist = Math.hypot(dx, dy) || 1;
+        const k = Math.min(1, dist / 240); // Soft clamp sensitivity
+        const px = (dx / dist) * MAX_OFFSET * k;
+        const py = (dy / dist) * MAX_OFFSET * k;
+
+        if (pupils[i]) {
+          pupils[i].style.transform = `translate(${px}px, ${py}px)`;
+        }
+      });
+    }, { passive: true });
+
+    document.documentElement.addEventListener('pointerleave', () => {
+      pupils.forEach(p => {
+        if (p) p.style.transform = 'translate(0, 0)';
+      });
+    });
+
+    // Interactive Rig Greeting on Click
+    window.triggerRigGreeting = function() {
+      const arm = document.getElementById('heroArm');
+      if (arm) {
+        arm.style.animation = 'arm-wave 0.35s ease-in-out 4';
+        setTimeout(() => {
+          arm.style.animation = 'arm-idle 4s ease-in-out infinite';
+        }, 1400);
+      }
+      if (window.playSuccessChime) {
+        window.playSuccessChime();
+      }
+    };
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initHeroRigPhysics);
+  } else {
+    initHeroRigPhysics();
+  }
+
 })();
