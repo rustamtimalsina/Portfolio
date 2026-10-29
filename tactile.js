@@ -497,4 +497,86 @@
     initHeroRigPhysics();
   }
 
+
+  // --------------------------------------------------------------------------
+  // 7. JOURNEY RULER SCRUBBER & AVATAR CORE ACTIVATION (Nesil Noble Craft)
+  // --------------------------------------------------------------------------
+  function initJourneyRuler() {
+    const rulerHead = document.getElementById('rulerHead');
+    const rulerPrompt = document.getElementById('rulerPrompt');
+    const rigLid = document.getElementById('rigLid');
+    const rigCore = document.getElementById('rigCore');
+    const stops = document.querySelectorAll('.ruler-stop');
+
+    const sections = ['hero', 'projects', 'experience', 'skills', 'contact'].map(id => ({
+      id,
+      el: document.getElementById(id),
+      stop: document.querySelector(`.ruler-stop[data-stop="${id}"]`)
+    })).filter(s => s.el);
+
+    function onScrollUpdate() {
+      const scrollY = window.__lenis ? window.__lenis.scroll : window.scrollY;
+      const docHeight = document.documentElement.scrollHeight - window.innerHeight;
+      const progress = docHeight > 0 ? Math.min(100, Math.max(0, (scrollY / docHeight) * 100)) : 0;
+
+      // 1. Move ruler needle
+      if (rulerHead) {
+        rulerHead.style.left = progress + '%';
+      }
+
+      // 2. Hide "SCROLL TO STEP INSIDE" once user starts exploring
+      if (rulerPrompt) {
+        if (scrollY > 60) {
+          rulerPrompt.classList.add('is-hidden');
+        } else {
+          rulerPrompt.classList.remove('is-hidden');
+        }
+      }
+
+      // 3. Open Avatar Cap & Activate Neural Core on Scroll
+      if (rigLid && rigCore) {
+        if (scrollY > 50) {
+          rigLid.classList.add('is-open');
+          rigCore.classList.add('is-active');
+        } else {
+          rigLid.classList.remove('is-open');
+          rigCore.classList.remove('is-active');
+        }
+      }
+
+      // 4. Highlight active milestone stop
+      const viewportMid = scrollY + window.innerHeight * 0.45;
+      let currentSectionId = 'hero';
+
+      sections.forEach(s => {
+        const top = s.el.offsetTop;
+        const bottom = top + s.el.offsetHeight;
+        if (viewportMid >= top && viewportMid <= bottom) {
+          currentSectionId = s.id;
+        }
+      });
+
+      stops.forEach(stop => {
+        if (stop.dataset.stop === currentSectionId) {
+          stop.classList.add('is-active');
+        } else {
+          stop.classList.remove('is-active');
+        }
+      });
+    }
+
+    // Attach to Lenis if active, and native scroll as fallback
+    if (window.__lenis) {
+      window.__lenis.on('scroll', onScrollUpdate);
+    }
+    window.addEventListener('scroll', onScrollUpdate, { passive: true });
+    onScrollUpdate();
+  }
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', initJourneyRuler);
+  } else {
+    initJourneyRuler();
+  }
+
 })();

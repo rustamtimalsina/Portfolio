@@ -204,8 +204,18 @@
                 <!-- Head -->
                 <rect x="122" y="112" width="96" height="92" rx="26" fill="#cbd5e1" stroke="#0f172a" stroke-width="2.5" />
 
-                <!-- Hair / Cap -->
-                <path d="M122 135 C122 105 138 98 170 98 C202 98 218 105 218 135 C205 125 190 128 170 122 C150 128 135 125 122 135 Z" fill="#0f172a" />
+                <!-- Glowing Neural Core (Revealed when cap lifts on scroll) -->
+                <g id="rigCore" class="rig-neural-core" style="opacity: 0; transform-origin: 170px 125px;">
+                  <ellipse cx="170" cy="125" rx="38" ry="8" fill="rgba(56,189,248,0.25)" stroke="#38bdf8" stroke-width="1.5" />
+                  <ellipse cx="170" cy="125" rx="26" ry="5.5" fill="rgba(168,85,247,0.3)" stroke="#c084fc" stroke-width="1.2" />
+                  <ellipse cx="170" cy="125" rx="14" ry="3" fill="#38bdf8" />
+                  <line x1="170" y1="122" x2="170" y2="92" stroke="#38bdf8" stroke-width="2" stroke-dasharray="3 3" opacity="0.85" />
+                </g>
+
+                <!-- Animated Cap Lid that lifts on scroll (Nesil Noble Craft) -->
+                <g id="rigLid" class="rig-lid">
+                  <path d="M122 135 C122 105 138 98 170 98 C202 98 218 105 218 135 C205 125 190 128 170 122 C150 128 135 125 122 135 Z" fill="#0f172a" stroke="#1e293b" stroke-width="1.5" />
+                </g>
 
                 <!-- Glasses Frame -->
                 <rect x="133" y="136" width="30" height="26" rx="6" fill="rgba(56,189,248,0.12)" stroke="#0f172a" stroke-width="2.5" />
@@ -850,6 +860,28 @@ export function validateTaskPayload(payload: Partial<TaskPayload>): TaskPayload 
       </div>
     </section>
   </main>
+
+  
+  <!-- Nesil Noble-Style Bottom Film-Strip Scrubber & Journey Ruler -->
+  <aside class="site-ruler" id="siteRuler" aria-label="Journey Progress Ruler">
+    <div class="ruler-prompt" id="rulerPrompt">
+      <span class="ruler-prompt-dot"></span>
+      <span class="ruler-prompt-text">SCROLL TO STEP INSIDE</span>
+    </div>
+
+    <div class="ruler-track">
+      <div class="ruler-ticks" aria-hidden="true"></div>
+      <div class="ruler-head" id="rulerHead" aria-hidden="true"></div>
+
+      <div class="ruler-stops">
+        <a href="#hero" class="ruler-stop is-active" data-stop="hero" style="left: 3%;">01 ARCH</a>
+        <a href="#projects" class="ruler-stop" data-stop="projects" style="left: 28%;">02 SYSTEMS</a>
+        <a href="#experience" class="ruler-stop" data-stop="experience" style="left: 52%;">03 MILESTONES</a>
+        <a href="#skills" class="ruler-stop" data-stop="skills" style="left: 76%;">04 TECH MATRIX</a>
+        <a href="#contact" class="ruler-stop" data-stop="contact" style="left: 96%;">05 DISPATCH</a>
+      </div>
+    </div>
+  </aside>
 
   <footer class="footer">
     <div class="container footer-content">
