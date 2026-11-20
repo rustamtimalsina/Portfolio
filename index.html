@@ -299,15 +299,21 @@ Type any natural language question: e.g. "ask why SSE in NexusAI" or click a blu
         <div class="project-filters">
           <button type="button" class="filter-btn active" onclick="filterProjects('all')">All Systems <span class="filter-count">10</span></button>
           <button type="button" class="filter-btn" onclick="filterProjects('motion')">Motion Design & Video <span class="filter-count">3</span></button>
-          <button type="button" class="filter-btn" onclick="filterProjects('ai')">AI & Retrieval</button>
-          <button type="button" class="filter-btn" onclick="filterProjects('backend')">Backend & Architecture</button>
-          <button type="button" class="filter-btn" onclick="filterProjects('fullstack')">Full-Stack / UI</button>
+          <button type="button" class="filter-btn" onclick="filterProjects('ai')">AI & Retrieval <span class="filter-count">3</span></button>
+          <button type="button" class="filter-btn" onclick="filterProjects('backend')">Backend & Architecture <span class="filter-count">4</span></button>
+          <button type="button" class="filter-btn" onclick="filterProjects('fullstack')">Full-Stack / UI <span class="filter-count">5</span></button>
         </div>
         <div class="projects-grid">
           <!-- Motion Project 1: TikTok Algorithm Explainer (9:16 Vertical) -->
-          <article class="project-card tilt-card" data-category="motion fullstack">
-            <div class="project-media">
-              <video src="assets/videos/tiktok_algorithm.mp4" poster="assets/thumb-tiktok.jpg" controls playsinline preload="metadata"></video>
+          <article class="project-card tilt-card" data-category="motion">
+            <div class="project-media video-preview-media" onclick="openVideoModal('tiktok')" role="button" tabindex="0" title="Watch full uncropped 9:16 vertical video">
+              <img src="assets/thumb-tiktok-card.jpg" alt="TikTok Algorithm Explainer" loading="lazy" />
+              <div class="video-play-overlay">
+                <div class="play-btn-circle">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+                <span class="video-format-chip">📱 9:16 Vertical • 0:20</span>
+              </div>
             </div>
             <div class="card-inner">
               <div class="card-top">
@@ -330,16 +336,22 @@ Type any natural language question: e.g. "ask why SSE in NexusAI" or click a blu
                 <span class="pill">H.264 / FFmpeg</span>
               </div>
               <div class="card-links">
-                <a href="assets/videos/tiktok_algorithm.mp4" target="_blank" class="card-btn live">Watch Video ↗</a>
-                <a href="https://github.com/rustamtimalsina/Portfolio/tree/main/assets/videos" target="_blank" rel="noopener" class="card-btn secondary">Source Video →</a>
+                <button type="button" class="card-btn live" onclick="openVideoModal('tiktok')">Watch Video ▶</button>
+                <a href="assets/videos/tiktok_algorithm.mp4" target="_blank" rel="noopener" class="card-btn secondary">Direct MP4 ↗</a>
               </div>
             </div>
           </article>
 
           <!-- Motion Project 2: Veloce (Poster Color-Block) -->
-          <article class="project-card tilt-card" data-category="motion fullstack">
-            <div class="project-media">
-              <video src="assets/videos/veloce.mp4" poster="assets/thumb-veloce.jpg" controls playsinline preload="metadata"></video>
+          <article class="project-card tilt-card" data-category="motion">
+            <div class="project-media video-preview-media" onclick="openVideoModal('veloce')" role="button" tabindex="0" title="Watch full 16:9 typography video">
+              <img src="assets/thumb-veloce.jpg" alt="Veloce Kinetic Typography" loading="lazy" />
+              <div class="video-play-overlay">
+                <div class="play-btn-circle">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+                <span class="video-format-chip">⚡ 16:9 HD • 0:12</span>
+              </div>
             </div>
             <div class="card-inner">
               <div class="card-top">
@@ -362,16 +374,22 @@ Type any natural language question: e.g. "ask why SSE in NexusAI" or click a blu
                 <span class="pill">Beat Locking</span>
               </div>
               <div class="card-links">
-                <a href="assets/videos/veloce.mp4" target="_blank" class="card-btn live">Watch Video ↗</a>
-                <a href="https://github.com/rustamtimalsina/Portfolio/tree/main/assets/videos" target="_blank" rel="noopener" class="card-btn secondary">Source Video →</a>
+                <button type="button" class="card-btn live" onclick="openVideoModal('veloce')">Watch Video ▶</button>
+                <a href="assets/videos/veloce.mp4" target="_blank" rel="noopener" class="card-btn secondary">Direct MP4 ↗</a>
               </div>
             </div>
           </article>
 
           <!-- Motion Project 3: NovaPay (3D Fintech Promo) -->
-          <article class="project-card tilt-card" data-category="motion fullstack">
-            <div class="project-media">
-              <video src="assets/videos/novapay.mp4" poster="assets/thumb-novapay.jpg" controls playsinline preload="metadata"></video>
+          <article class="project-card tilt-card" data-category="motion">
+            <div class="project-media video-preview-media" onclick="openVideoModal('novapay')" role="button" tabindex="0" title="Watch full 16:9 3D promo video">
+              <img src="assets/thumb-novapay.jpg" alt="NovaPay 3D Smart Card" loading="lazy" />
+              <div class="video-play-overlay">
+                <div class="play-btn-circle">
+                  <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22"><path d="M8 5v14l11-7z"/></svg>
+                </div>
+                <span class="video-format-chip">💳 16:9 3D • 0:18</span>
+              </div>
             </div>
             <div class="card-inner">
               <div class="card-top">
@@ -394,8 +412,8 @@ Type any natural language question: e.g. "ask why SSE in NexusAI" or click a blu
                 <span class="pill">Future Bass Sync</span>
               </div>
               <div class="card-links">
-                <a href="assets/videos/novapay.mp4" target="_blank" class="card-btn live">Watch Video ↗</a>
-                <a href="https://github.com/rustamtimalsina/Portfolio/tree/main/assets/videos" target="_blank" rel="noopener" class="card-btn secondary">Source Video →</a>
+                <button type="button" class="card-btn live" onclick="openVideoModal('novapay')">Watch Video ▶</button>
+                <a href="assets/videos/novapay.mp4" target="_blank" rel="noopener" class="card-btn secondary">Direct MP4 ↗</a>
               </div>
             </div>
           </article>
@@ -462,7 +480,7 @@ app.post('/api/chat/stream', async (req, res) => {
           </article>
 
           <!-- 2. Uriel -->
-          <article class="project-card tilt-card" data-category="ai">
+          <article class="project-card tilt-card" data-category="ai backend">
             <div class="project-media project-media-vector" style="background: radial-gradient(circle at 50% 50%, hsl(222deg 26% 14%), hsl(222deg 26% 8%));">
               <svg width="100%" height="100%" viewBox="0 0 400 185" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <circle cx="80" cy="92" r="28" fill="rgba(56,189,248,0.12)" stroke="#38bdf8" stroke-width="1.5"/>
@@ -574,7 +592,7 @@ CREATE INDEX idx_properties_lookup ON properties (status, location, price_cents)
           </article>
 
           <!-- 4. ClientHub -->
-          <article class="project-card tilt-card" data-category="fullstack">
+          <article class="project-card tilt-card" data-category="backend fullstack">
             <div class="project-media project-media-vector" style="background: radial-gradient(circle at 50% 50%, hsl(222deg 26% 14%), hsl(222deg 26% 8%));">
               <svg width="100%" height="100%" viewBox="0 0 400 185" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <rect x="25" y="70" width="70" height="38" rx="6" fill="rgba(129,140,248,0.12)" stroke="#818cf8" stroke-width="1.5"/>
@@ -712,7 +730,7 @@ class HybridRecommender:
           </article>
 
           <!-- 6. Syntecxhub Task Manager -->
-          <article class="project-card tilt-card" data-category="backend">
+          <article class="project-card tilt-card" data-category="backend fullstack">
             <div class="project-media">
               <img src="assets/taskmanager-preview.png" alt="Syntecxhub Task Manager" loading="lazy" />
             </div>
@@ -1001,6 +1019,22 @@ export function validateTaskPayload(payload: Partial<TaskPayload>): TaskPayload 
       </div>
       <div id="modal-body" class="modal-body-content">
         <!-- Injected dynamically via JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Video Showcase Lightbox Modal -->
+  <div id="video-modal" class="video-modal-backdrop" onclick="closeVideoModal(event)">
+    <div class="video-modal-dialog" onclick="event.stopPropagation()">
+      <div class="video-modal-topbar">
+        <div class="video-modal-meta">
+          <span id="video-modal-badge" class="video-modal-badge">MOTION DESIGN</span>
+          <h3 id="video-modal-title" class="video-modal-title">Project Video</h3>
+        </div>
+        <button class="video-modal-close" onclick="forceCloseVideoModal()" aria-label="Close modal">✕</button>
+      </div>
+      <div id="video-player-container" class="video-player-container">
+        <!-- Injected dynamically: video with true native aspect ratio -->
       </div>
     </div>
   </div>
@@ -1832,12 +1866,110 @@ export function validateTaskPayload(payload: Partial<TaskPayload>): TaskPayload 
       } else {
         if (e.key === 'Escape') {
           window.forceCloseModal();
+          window.forceCloseVideoModal();
         }
       }
     });
+
     // -------------------------------------------------------------
-    // PROJECT FILTER SYSTEM
+    // VIDEO SHOWCASE LIGHTBOX MODAL CONTROLLER
     // -------------------------------------------------------------
+    const VIDEO_REGISTRY = {
+      tiktok: {
+        title: 'TikTok Algorithm — Forensic Neuro-Retention Short',
+        badge: '9:16 VERTICAL EXPLAINER • VISUAL JOURNALISM',
+        src: 'assets/videos/tiktok_algorithm.mp4',
+        poster: 'assets/thumb-tiktok.jpg',
+        aspect: 'vertical'
+      },
+      veloce: {
+        title: 'Veloce — High-Velocity Brand Manifesto',
+        badge: 'KINETIC TYPOGRAPHY • POSTER COLOR-BLOCK',
+        src: 'assets/videos/veloce.mp4',
+        poster: 'assets/thumb-veloce.jpg',
+        aspect: 'widescreen'
+      },
+      novapay: {
+        title: 'NovaPay — Next-Gen Borderless Smart Card',
+        badge: '3D FINTECH PROMO • PRODUCT LAUNCH',
+        src: 'assets/videos/novapay.mp4',
+        poster: 'assets/thumb-novapay.jpg',
+        aspect: 'widescreen'
+      }
+    };
+
+    window.openVideoModal = function(key) {
+      const item = VIDEO_REGISTRY[key];
+      if (!item) return;
+      const modal = document.getElementById('video-modal');
+      const container = document.getElementById('video-player-container');
+      const title = document.getElementById('video-modal-title');
+      const badge = document.getElementById('video-modal-badge');
+
+      if (title) title.textContent = item.title;
+      if (badge) badge.textContent = item.badge;
+      
+      if (container) {
+        container.className = 'video-player-container ' + (item.aspect === 'vertical' ? 'ratio-vertical' : 'ratio-widescreen');
+        container.innerHTML = `
+          <video id="active-modal-video" src="${item.src}" poster="${item.poster}" controls autoplay playsinline preload="auto"></video>
+        `;
+      }
+
+      if (modal) modal.classList.add('active');
+      document.body.style.overflow = 'hidden';
+      if (window.playClickSound) window.playClickSound(640, 'triangle', 0.1);
+    };
+
+    window.closeVideoModal = function(e) {
+      if (e.target.id === 'video-modal') {
+        window.forceCloseVideoModal();
+      }
+    };
+
+    window.forceCloseVideoModal = function() {
+      const modal = document.getElementById('video-modal');
+      const container = document.getElementById('video-player-container');
+      if (modal) modal.classList.remove('active');
+      if (container) {
+        const video = container.querySelector('video');
+        if (video) {
+          video.pause();
+          video.src = '';
+          video.load();
+        }
+        container.innerHTML = '';
+      }
+      document.body.style.overflow = '';
+    };
+
+    // -------------------------------------------------------------
+    // PROJECT FILTER SYSTEM & DYNAMIC BADGE COUNTS
+    // -------------------------------------------------------------
+    window.updateFilterCounts = function() {
+      const cards = document.querySelectorAll('.projects-grid .project-card');
+      const buttons = document.querySelectorAll('.project-filters .filter-btn');
+      buttons.forEach(btn => {
+        const match = btn.getAttribute('onclick')?.match(/filterProjects\('([^']+)'\)/);
+        if (!match) return;
+        const cat = match[1];
+        let count = 0;
+        cards.forEach(card => {
+          const cardCat = card.getAttribute('data-category') || '';
+          if (cat === 'all' || cardCat.split(/\s+/).includes(cat)) {
+            count++;
+          }
+        });
+        let badge = btn.querySelector('.filter-count');
+        if (!badge) {
+          badge = document.createElement('span');
+          badge.className = 'filter-count';
+          btn.appendChild(badge);
+        }
+        badge.textContent = count;
+      });
+    };
+
     window.filterProjects = function(category) {
       const buttons = document.querySelectorAll('.filter-btn');
       const cards = document.querySelectorAll('.projects-grid .project-card');
@@ -1850,13 +1982,19 @@ export function validateTaskPayload(payload: Partial<TaskPayload>): TaskPayload 
 
       cards.forEach(card => {
         const cardCat = card.getAttribute('data-category') || '';
-        if (category === 'all' || cardCat.includes(category)) {
+        if (category === 'all' || cardCat.split(/\s+/).includes(category)) {
           card.classList.remove('hidden');
         } else {
           card.classList.add('hidden');
         }
       });
     };
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', window.updateFilterCounts);
+    } else {
+      window.updateFilterCounts();
+    }
   </script>
 </body>
 </html>
